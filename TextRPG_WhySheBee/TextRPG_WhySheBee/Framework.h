@@ -12,10 +12,11 @@
 #include "BaseMonster.h"
 #include "Goblin.h"
 #include "Orc.h"
-#include "IBattleManager.h"
+#include "Troll.h"
+#include "Slime.h"
+#include "BossMonster.h"
 #include "EnemyFactory.h"
-#include "BattleManager_ver1.h"
-#include "BattleManager_ver2.h"
+#include "BattleManager.h"
 
 #include <iostream>
 #include <vector>

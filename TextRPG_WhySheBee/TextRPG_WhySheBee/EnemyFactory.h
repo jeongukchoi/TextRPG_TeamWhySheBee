@@ -1,7 +1,19 @@
 #pragma once
-class EnemyFactory {
 
+enum MonsterType
+{
+	GOBLIN,
+	ORC,
+	SLIME,
+	TROLL,
+};
+
+class EnemyFactory 
+{
 public:
-	BaseMonster* getMonster(int id, int level);
+	static BaseMonster* CreateBasicMonster(const int& PlayerLevel);
+	static BaseMonster* CreateBossMonster(const int& PlayerLevel);
+private:
+	static MonsterType GetRandomMonsterType();
 };
 
