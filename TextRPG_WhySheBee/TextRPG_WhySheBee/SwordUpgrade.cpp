@@ -1,7 +1,7 @@
 #include "Framework.h"
-#include "AttackUpgrade.h"
+#include "SwordUpgrade.h"
 
-AttackUpgrade::AttackUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATTACK), UpgradeAmount(5)
+SwordUpgrade::SwordUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATTACK), UpgradeAmount(5)
 {
 	switch (equipment->GetEquipmentLevel())
 	{
@@ -27,7 +27,7 @@ AttackUpgrade::AttackUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(A
 	}
 }
 
-void AttackUpgrade::PrintItemInfo()
+void SwordUpgrade::PrintItemInfo()
 {
 	equipment->PrintItemInfo();
 	if (UpgradeName != "")
@@ -36,10 +36,12 @@ void AttackUpgrade::PrintItemInfo()
 	}
 }
 
-void AttackUpgrade::Use()
+void SwordUpgrade::Use()
 {
 	equipment->Use();
 	PlayerCharacter* character = PlayerCharacter::GetInstance();
 	character->IncreaseStat(TargetStat, UpgradeAmount);
 }
+
+
 

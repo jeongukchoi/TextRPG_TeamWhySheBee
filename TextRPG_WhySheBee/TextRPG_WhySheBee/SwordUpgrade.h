@@ -1,5 +1,5 @@
 #pragma once
-class AttackUpgrade : public EquipmentDecorator
+class SwordUpgrade : public EquipmentDecorator
 {
 protected:
 	string UpgradeName;
@@ -7,7 +7,7 @@ protected:
 	int UpgradeAmount;
 
 public:
-	AttackUpgrade(Equipment* e);
+	SwordUpgrade(Equipment* e);
 
 	// 아이템 이름
 	string GetName() const override { return equipment->GetName(); }

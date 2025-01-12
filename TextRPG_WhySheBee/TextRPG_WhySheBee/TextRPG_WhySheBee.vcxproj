@@ -19,8 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Armor.cpp" />
     <ClCompile Include="AttackBoost.cpp" />
-    <ClCompile Include="AttackUpgrade.cpp" />
+    <ClCompile Include="SwordUpgrade.cpp" />
     <ClCompile Include="BaseMonster.cpp" />
     <ClCompile Include="BattleManager_ver1.cpp" />
     <ClCompile Include="BattleManager_ver2.cpp" />
@@ -35,7 +36,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
-    <ClCompile Include="HealthUpgrade.cpp" />
+    <ClCompile Include="ArmorUpgrade.cpp" />
     <ClCompile Include="IBattleManager.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -48,8 +49,9 @@
     <ClCompile Include="EquipmentDecorator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Armor.h" />
     <ClInclude Include="AttackBoost.h" />
-    <ClInclude Include="AttackUpgrade.h" />
+    <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
     <ClInclude Include="BattleManager_ver1.h" />
     <ClInclude Include="BattleManager_ver2.h" />
@@ -61,7 +63,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="HealthPotion.h" />
-    <ClInclude Include="HealthUpgrade.h" />
+    <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="IBattleManager.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Item.h" />

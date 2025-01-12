@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "Sword.h"
 
-Sword::Sword() : ItemName("검"), Type(EQUIPMENT), Price(500), TargetStat(ATTACK), StatAmount(10)
+Sword::Sword() : ItemName("배틀 소드"), Type(EQUIPMENT), Price(500), TargetStat(ATTACK), StatAmount(20)
 {
 }
 

@@ -81,10 +81,13 @@
     <ClCompile Include="EquipmentDecorator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="AttackUpgrade.cpp">
+    <ClCompile Include="SwordUpgrade.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="HealthUpgrade.cpp">
+    <ClCompile Include="ArmorUpgrade.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Armor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,10 +155,13 @@
     <ClInclude Include="EquipmentDecorator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="AttackUpgrade.h">
+    <ClInclude Include="SwordUpgrade.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="HealthUpgrade.h">
+    <ClInclude Include="ArmorUpgrade.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Armor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
