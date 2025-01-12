@@ -15,7 +15,7 @@ bool BattleManager::Battle()
 	CreateMonster();
 
 	// 전투 시작
-	while (IsPlayerDead() || IsMonsterDead())
+	while (!IsPlayerDead() && !IsMonsterDead())
 	{
 		// 플레이어 공격
 		PlayerAttack();
@@ -34,8 +34,8 @@ bool BattleManager::Battle()
 			*
 			*
 			*/
-			DeleteMonster();
 
+			Monster.reset();
 			// 승리 반환
 			return true;
 		}
@@ -49,16 +49,12 @@ bool BattleManager::Battle()
 			// Player GetName 메서드 작성되면 변경.
 			cout << "Player이(가) 사망했습니다.";
 			
-			DeleteMonster();
-
+			Monster.reset();
 			// 패배 반환
 			return false;
 		}
 	}
-
-	//비정상 전투 종료
-	cout << "비정상 전투 종료" << endl;
-	return false;
+	throw runtime_error("== 비정상 전투 종료: BattleManager::Battle 메서드 오류 ==");
 }
 
 /*
@@ -103,7 +99,7 @@ void BattleManager::PlayerAttack()
 // 몬스터 공격 메서드
 void BattleManager::MonsterAttack()
 {
-	BossMonster* Boss = dynamic_cast<BossMonster*>(Monster);
+	BossMonster* Boss = dynamic_cast<BossMonster*>(Monster.get());
 	// 보스 몬스터 공격 로직
 	if (Boss != nullptr)
 	{
@@ -148,11 +144,4 @@ bool BattleManager::IsPlayerDead()
 bool BattleManager::IsMonsterDead()
 {
 	return Monster->IsDead;
-}
-
-// 몬스터 삭제 메서드
-void BattleManager::DeleteMonster() 
-{
-	delete Monster;
-	Monster = nullptr;
 }

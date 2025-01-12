@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 enum MonsterType
 {
 	GOBLIN,
@@ -11,8 +13,8 @@ enum MonsterType
 class EnemyFactory 
 {
 public:
-	static BaseMonster* CreateBasicMonster(const int& PlayerLevel);
-	static BaseMonster* CreateBossMonster(const int& PlayerLevel);
+	static unique_ptr<BaseMonster> CreateBasicMonster(const int& PlayerLevel);
+	static unique_ptr<BaseMonster> CreateBossMonster(const int& PlayerLevel);
 private:
 	static MonsterType GetRandomMonsterType();
 };

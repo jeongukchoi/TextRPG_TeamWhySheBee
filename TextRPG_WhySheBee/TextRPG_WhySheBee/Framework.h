@@ -26,5 +26,6 @@
 #include <random>
 #include <cstdlib>
 #include <ctime>
+#include <memory>	
 
 using namespace std;
