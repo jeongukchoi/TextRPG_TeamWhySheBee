@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AttackBoost.cpp" />
+    <ClCompile Include="AttackUpgrade.cpp" />
     <ClCompile Include="BaseMonster.cpp" />
     <ClCompile Include="BattleManager_ver1.cpp" />
     <ClCompile Include="BattleManager_ver2.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnragedState.cpp" />
     <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -33,6 +35,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
+    <ClCompile Include="HealthUpgrade.cpp" />
     <ClCompile Include="IBattleManager.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -41,19 +44,24 @@
     <ClCompile Include="NormalState.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="EquipmentDecorator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="AttackUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
     <ClInclude Include="BattleManager_ver1.h" />
     <ClInclude Include="BattleManager_ver2.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnragedState.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="Equipment.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="HealthPotion.h" />
+    <ClInclude Include="HealthUpgrade.h" />
     <ClInclude Include="IBattleManager.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Item.h" />
@@ -61,6 +69,8 @@
     <ClInclude Include="NormalState.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="PlayerCharacter.h" />
+    <ClInclude Include="Sword.h" />
+    <ClInclude Include="EquipmentDecorator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

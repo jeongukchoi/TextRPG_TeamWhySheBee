@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 
 class ItemManager
 {
@@ -9,7 +10,7 @@ private:
 public:
 	ItemManager();
 	~ItemManager();
-	Item* GetItem(ItemID ID);
-	Item* GetRandomItem();
+	Item* GetItem(ItemID ID) const;
+	Item* GetRandomItem() const;
 };
 

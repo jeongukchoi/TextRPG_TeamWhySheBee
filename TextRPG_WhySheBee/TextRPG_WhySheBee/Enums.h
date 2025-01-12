@@ -10,7 +10,8 @@ enum STATUS
 
 enum ItemID {
     HEALTH_POTION = 0,
-    ATTACK_BOOST
+    ATTACK_BOOST,
+    SWORD
 };
 
 enum ItemType {
