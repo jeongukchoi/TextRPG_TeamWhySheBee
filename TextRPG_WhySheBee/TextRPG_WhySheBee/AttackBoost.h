@@ -9,7 +9,7 @@ private:
 public:
 	AttackBoost();
 	string GetName() const override { return ItemName; }
-	//STATUS GetTargetStat() const override { return TargetStat; }
+	STATUS GetTargetStat() const override { return TargetStat; }
 	int GetStatAmount() const override { return StatAmount; }
 
 	void Use(PlayerCharacter* character) override;

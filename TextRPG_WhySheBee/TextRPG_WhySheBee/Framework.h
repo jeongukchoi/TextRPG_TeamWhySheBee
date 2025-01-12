@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Enums.h"
 #include "GameManager.h"
 #include "Item.h"
 #include "PlayerCharacter.h"

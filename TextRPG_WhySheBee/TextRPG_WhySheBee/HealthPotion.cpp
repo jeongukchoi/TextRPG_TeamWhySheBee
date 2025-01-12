@@ -7,7 +7,6 @@ HealthPotion::HealthPotion() : ItemName("HealthPotion"), TargetStat(HP)
 
 void HealthPotion::Use(PlayerCharacter* character)
 {
-	cout << "HealthPotion 포션을 사용해 공격력이 " << StatAmount << " 증가합니다." << endl;
 	character->IncreaseStat(TargetStat, StatAmount);
 }
 

@@ -12,7 +12,6 @@ ItemManager::~ItemManager()
 {
 	for (Item* i : ItemsList)
 	{
-		cout << "deleting\n";
 		delete i;
 	}
 }
