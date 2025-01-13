@@ -17,8 +17,7 @@ void GameManager::StartGame()
             ShowEnding();
             break;
         }
-
-        /*
+        
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
         cin >> choice;
@@ -32,36 +31,58 @@ void GameManager::StartGame()
             Battle();
         }
 
-        */
+        
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
             cout << "레벨 10에 도달했습니다! 보스와의 전투를 시작합니다." << endl;
             break;
         }
+
     }
 }
 
 void GameManager::CreateCharacter()
 {
     string playerName;
+    int playerJobNum;
 
     cout << "플레이어 캐릭터의 이름을 입력하세요: ";
     getline(cin, playerName); // 캐릭터 이름 입력 받기
 
-    PlayerCharacter* player = PlayerCharacter::GetInstance(playerName);
+    cout << "직업을 선택하세요: " << endl;
+    cout << "1.전사 2.마법사 " << endl;
+    cin >> playerJobNum;
 
+    switch (playerJobNum)
+    {
+    case 1:
+    {
+        unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, WARRIOR);
+    }
+    break;
+    case 2:
+    {
+        unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, MAGE);
+    }
+    break;
+    default:
+        cout << "선택하신직업이 없습니다. 다시 선택해주세요 " << endl;
+    }
 }
 
 void GameManager::DisplayInventory()
 {
     cout << "인벤토리 목록" << endl;
     // 인벤토리 출력 로직
+
 }
 
 void GameManager::VisitShop()
 {
     cout << "상점에 방문하셨습니다!" << endl;
+
     // 상점 방문 로직 (아이템 구매 등)
+
 }
 
 void GameManager::ShowEnding()
@@ -69,10 +90,12 @@ void GameManager::ShowEnding()
     /*엔딩처리*/
 }
 
-void GameManager::Battle() {
-    BattleManager battleManager;
+void GameManager::Battle() 
+{
+   
+    BattleManager* battleManager= new BattleManager();
 
-    bool battleResult = battleManager.Battle();
+    bool battleResult = battleManager->Battle();
 
     // 결과 처리
     if (battleResult) {

@@ -74,7 +74,7 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
             _experience -= _level * 10;
             LevelUp(); // 레벨 업에 필요한 경험치 차감
         }
-        break; 
+        break;
     case STR:
             // 자식 클래스에서 특별히 처리할 수 있도록 함
             if (Warrior* warrior = dynamic_cast<Warrior*>(this))
@@ -82,7 +82,7 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
                 warrior->IncreaseStr(amount);  // Mage일 경우에만 INT 증가
             }
             break;
-    case INT:
+    case INTELLGENCE:
         // 자식 클래스에서 특별히 처리할 수 있도록 함
         if (Mage* mage = dynamic_cast<Mage*>(this))
         {

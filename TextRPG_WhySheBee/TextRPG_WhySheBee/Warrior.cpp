@@ -50,6 +50,7 @@ int Warrior::RandomAttack()
 	}
 
 	cout << "총 데미지: " << Damage << endl;
+
 	return Damage;
 }
 

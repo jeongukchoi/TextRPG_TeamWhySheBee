@@ -8,7 +8,7 @@ Mage::Mage(const string& name) :PlayerCharacter(name), _int(1)
 	_attack = 50;
 	_experience = 0;
 	_gold = 0;
-	_speed = 4;
+	_attackDelay = 4;
 }
 
 int Mage::Attack()

@@ -3,6 +3,9 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
+
+	CreateMonster();
+
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
@@ -15,7 +18,6 @@ bool BattleManager::Battle()
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	// 플레이어 레벨에 기반해서 몬스터 생성
-	CreateMonster();
 
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
@@ -25,10 +27,11 @@ bool BattleManager::Battle()
 		CurrentAttackDelay--;
 
 		// 플레이어 공격
-		if(PlayerAttackDelay <= 0)
+		if(CurrentAttackDelay <= 0)
 		{
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
+			Sleep(1000);
 		}
 
 		// 플레이어 전투 승리
@@ -52,7 +55,9 @@ bool BattleManager::Battle()
 		{
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
+			Sleep(1000);
 		}
+
 
 		// 플레이어 전투 패배
 		if (IsPlayerDead())

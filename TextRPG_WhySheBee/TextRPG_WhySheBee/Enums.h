@@ -8,7 +8,7 @@ enum STATUS
     EXP,
     MP,
     STR,
-    INT,
+    INTELLGENCE,
     SPEED
 };
 
