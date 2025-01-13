@@ -37,6 +37,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="NormalState.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="SwordUpgrade.cpp" />
@@ -79,6 +81,8 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Troll.h" />
     <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Shop.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
