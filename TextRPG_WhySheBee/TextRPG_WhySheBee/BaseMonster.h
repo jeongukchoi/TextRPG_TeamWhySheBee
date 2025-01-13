@@ -1,4 +1,5 @@
 #pragma once
+
 class BaseMonster
 {
 protected:
@@ -6,7 +7,6 @@ protected:
 	int MaxHP;
 	int CurrentHP;
 	int Damage;
-	bool IsDead;
 	IState* CurrentState;
 
 public:
@@ -17,16 +17,17 @@ public:
 	void Calculate_HPandDamage(const int& PlayerLevel);
 
 	// 플레이어에게 공격 당했을 때, 데미지 적용 메서드
-	void TakeDamage(const int& DamagedAmount);
+	void TakeDamaged(const int& DamagedAmount);
 
 	// 몬스터 상태 변경 메서드
 	void SetState(IState* NewState);
 
-	// 고유 스킬 순수 가상 메서드 / 추후 상태 패턴으로 구현으로 바뀔 예정입니다.
-	virtual void UseSkill() = 0;
+	// 분노 상태 스킬 메서드 
+	virtual void EnragedSkill() = 0;
 
+	bool IsDead;
 	string GetName() { return Name; }
-	int GetHP() { return CurrentHP; }
+	int GetHealth() { return CurrentHP; }
 	int GetDamage() { return Damage; }
 };
 
