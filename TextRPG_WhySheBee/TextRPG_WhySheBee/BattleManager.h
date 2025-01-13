@@ -6,7 +6,7 @@
 class BattleManager
 {
 private:
-	PlayerCharacter* Player;
+	shared_ptr<PlayerCharacter> Player;
 	unique_ptr<BaseMonster> Monster;
 	int PlayerLevel;
 

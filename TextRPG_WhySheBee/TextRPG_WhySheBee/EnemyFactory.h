@@ -1,14 +1,7 @@
 #pragma once
 
 #include <memory>
-
-enum MonsterType
-{
-	GOBLIN,
-	ORC,
-	SLIME,
-	TROLL,
-};
+#include "Enums.h"
 
 class EnemyFactory 
 {

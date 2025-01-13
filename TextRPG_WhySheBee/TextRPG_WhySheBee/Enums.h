@@ -20,6 +20,15 @@ enum ItemType {
     EQUIPMENT
 };
 
+enum MonsterType
+{
+    GOBLIN,
+    ORC,
+    SLIME,
+    TROLL,
+};
+
+
 class Enums
 {
 };

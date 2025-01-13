@@ -26,14 +26,17 @@ bool BattleManager::Battle()
 			cout << "Player이(가) " << Monster->GetName() << "를 처치했습니다!" << endl; // Player GetName 메서드 작성되면 변경.
 
 			Player->IncreaseStat(EXP, 50);
-			Player->IncreaseStat(GOLD, 12);
+			Player->IncreaseStat(GOLD, rand() % 101 + 100);
 			cout << "Player이(가) " << "50 EXP와 12 Gold를 획득했습니다."; 
 			cout << " 현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
-			// 전투 승리 시, 30퍼센트 확률로 아이템 얻기 구현 필요.
-			/*
-			*
-			*
-			*/
+			//30 퍼센트 확률로 아이템 드랍후 플레이어에게 전달
+			int Random_Number = rand() % 101;
+			if (Random_Number <= 30)
+			{
+				ItemManager Get_ItemManager;
+				Item* Get_Item = Get_ItemManager.GetRandomItem();
+				Player->AddItem(Get_Item);
+			}
 
 			Monster.reset();
 			// 승리 반환
