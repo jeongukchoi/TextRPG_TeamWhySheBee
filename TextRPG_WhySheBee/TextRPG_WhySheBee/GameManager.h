@@ -10,7 +10,7 @@ public:
     void DisplayInventory();
     void VisitShop();
     void ShowEnding();
-
+    void Battle();
 private:
     bool bossCleared;
     // bool over;

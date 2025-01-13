@@ -11,9 +11,7 @@ void GameManager::StartGame()
     CreateCharacter();
     while (true)
     {
-        GenerateMonster();
         Battle();
-
         if (bossCleared)
         {
             ShowEnding();
@@ -38,7 +36,6 @@ void GameManager::StartGame()
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
             cout << "레벨 10에 도달했습니다! 보스와의 전투를 시작합니다." << endl;
-            Battle();
             break;
         }
     }
@@ -53,25 +50,6 @@ void GameManager::CreateCharacter()
 
     PlayerCharacter* player = PlayerCharacter::GetInstance(playerName);
 
-}
-
-void GameManager::GenerateMonster()
-{
-    cout << "몬스터가 생성되었습니다!" << endl;
-}
-
-void GameManager::Battle()
-{
-    cout << "전투가 시작됩니다!" << endl;
-
-    // 전투가 끝난 후, 플레이어의 레벨 증가 또는 보스 클리어 여부 확인
-    PlayerCharacter* player = PlayerCharacter::GetInstance();
-
-
-    if (player->GetLevel() >= 10)
-    {
-        bossCleared = true; // 보스 전투 가능
-    }
 }
 
 void GameManager::DisplayInventory()
@@ -92,4 +70,21 @@ void GameManager::ShowEnding()
     cout << "엔딩 크레딧:" << endl;
     // 엔딩 크레딧 출력
     cout << "게임을 플레이 해주셔서 감사합니다!" << endl;
+}
+
+void GameManager::Battle() {
+    // BattleManager 객체 생성
+    BattleManager battleManager;
+
+    // 전투 실행
+    bool battleResult = battleManager.Battle();
+
+    // 결과 처리
+    if (battleResult) {
+        std::cout << "전투 승리!" << std::endl;
+    }
+    else {
+        std::cout << "전투 패배..." << std::endl;
+        // 패배 시 추가 처리 로직
+    }
 }
