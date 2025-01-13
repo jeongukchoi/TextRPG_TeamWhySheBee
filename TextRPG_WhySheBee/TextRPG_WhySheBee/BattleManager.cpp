@@ -10,8 +10,8 @@ bool BattleManager::Battle()
 	}
 
 	//속도 지정 ( 몬스터 스피드 추가하면 변경)
-	int MonsterSpeed = Monster->GetSpeed();
-	int PlayerSpeed = Player->GetSpeed();
+	int MonsterAttackDelay = Monster->GetSpeed();
+	int PlayerAttackDelay = Player->GetSpeed();
 
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
@@ -22,27 +22,28 @@ bool BattleManager::Battle()
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{
 		//턴 진행 
-		MonsterSpeed--;
-		PlayerSpeed--;
+		MonsterAttackDelay--;
+		PlayerAttackDelay--;
 		// 플레이어 공격
-		if(PlayerSpeed <= 0)
+		if(PlayerAttackDelay <= 0)
 		{
 			PlayerAttack();
-			PlayerSpeed = Player->GetSpeed();
+			PlayerAttackDelay = Player->GetSpeed();
 		}
 
 		// 플레이어 전투 승리
 		if (IsMonsterDead())
 		{
 			cout << "Player이(가) " << Monster->GetName() << "를 처치했습니다!" << endl; // Player GetName 메서드 작성되면 변경.
-
-			int GetExp = static_cast<int>(5 * pow(PlayerLevel, 1.5)); // 경험치 계산
-			Player->IncreaseStat(EXP, GetExp);
+			
+			int ExpIndex = PlayerLevel >= MonsterExp.size() ? MonsterExp.size() - 1 : PlayerLevel;
+			int M_Exp = MonsterExp[ExpIndex];
+			Player->IncreaseStat(EXP, M_Exp);
 			Player->IncreaseStat(GOLD, rand() % 101 + 100);
 			cout << "Player이(가) " << "50 EXP와 12 Gold를 획득했습니다."; 
 			cout << " 현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
 			//30 퍼센트 확률로 아이템 드랍후 플레이어에게 전달
-			int Random_Number = rand() % 101;
+			int Random_Number = rand() % 100;
 			if (Random_Number <= 30)
 			{
 				ItemManager Get_ItemManager;
@@ -56,10 +57,10 @@ bool BattleManager::Battle()
 		}
 
 		// 몬스터 공격
-		if (MonsterSpeed <= 0)
+		if (MonsterAttackDelay <= 0)
 		{
 			MonsterAttack();
-			MonsterSpeed = Monster->GetSpeed();
+			MonsterAttackDelay = Monster->GetSpeed();
 		}
 
 		// 플레이어 전투 패배
@@ -106,9 +107,7 @@ void BattleManager::CreateMonster()
 void BattleManager::PlayerAttack()
 {
 	// 랜덤하게 아이템 사용 구현 필요.
-	/*
-	* 
-	*/
+	UseItem();
 	cout << "Player가 " << Monster->GetName() << "를(을) 공격합니다! "; // Player GetName 메서드 작성되면 변경.
 
 	Monster->TakeDamaged(Player->GetAttack());
@@ -158,5 +157,20 @@ bool BattleManager::IsPlayerDead()
 bool BattleManager::IsMonsterDead()
 {
 	return Monster->IsDead;
+}
+
+void BattleManager::UseItem()
+{
+	int Random_Number = rand() % 100;
+	if (Random_Number <= 70)
+	{
+		
+		ItemManager ItemManager;
+		//현재 소지하고 있는아이템 갯수 필요
+		//int Index = rand() % ItemManager.ItemsList.size();
+		int Index = 0;
+		Player->UseItem(Index);
+		
+	}
 }
 

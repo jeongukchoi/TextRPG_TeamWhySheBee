@@ -9,7 +9,7 @@ private:
 	PlayerCharacter* Player;
 	unique_ptr<BaseMonster> Monster;
 	int PlayerLevel;
-
+	vector<int> MonsterExp{ 5,10,15,15,15,20,20,20,20 };
 public:
 	BattleManager() : Player(PlayerCharacter::GetPlayer()), PlayerLevel(1) {}
 
@@ -31,6 +31,8 @@ private:
 	bool IsPlayerDead();
 	// 몬스터 사망 체크
 	bool IsMonsterDead();
+	// 아이템 사용 확률
+	void UseItem();
 };
 
 
