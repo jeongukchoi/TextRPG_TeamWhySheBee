@@ -44,6 +44,7 @@
     <ClCompile Include="NormalState.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="SwordUpgrade.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Armor.h" />
     <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
     <ClInclude Include="BattleManager.h" />
