@@ -13,7 +13,7 @@ public:
     static PlayerCharacter* GetPlayer() { return instance.get(); }
 
     // 몬스터를 공격할 때의 함수
-    virtual int Attack(){};
+    virtual int Attack() { return 0; }
 
     // 몬스터에게 공격받았을 때의 함수
     void TakeDamage(int amount);

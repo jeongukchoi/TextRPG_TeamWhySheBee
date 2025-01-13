@@ -44,12 +44,30 @@ void GameManager::StartGame()
 void GameManager::CreateCharacter()
 {
     string playerName;
+    int playerJobNum;
 
     cout << "플레이어 캐릭터의 이름을 입력하세요: ";
     getline(cin, playerName); // 캐릭터 이름 입력 받기
 
-    PlayerCharacter* player = PlayerCharacter::GetInstance(playerName);
+    cout << "직업을 선택하세요: " << endl;
+    cout << "1.전사 2.마법사 " << endl;
+    cin >> playerJobNum;
 
+    switch (playerJobNum)
+    {
+    case 1:
+    {
+        unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, WARRIOR);
+    }
+    break;
+    case 2:
+    {
+        unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, MAGE);
+    }
+    break;
+    default:
+        cout << "선택하신직업이 없습니다. 다시 선택해주세요 " << endl;
+    }
 }
 
 void GameManager::DisplayInventory()
