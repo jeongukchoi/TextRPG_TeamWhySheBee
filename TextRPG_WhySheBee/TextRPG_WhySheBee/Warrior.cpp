@@ -8,7 +8,7 @@ Warrior::Warrior(const string& name) : PlayerCharacter(name),_str(1)
 	_attack = 30;
 	_experience = 0;
 	_gold = 0;
-	_speed = 2;
+	_attackDelay = 2;
 }
 
 int Warrior::Attack() 
@@ -26,7 +26,7 @@ int Warrior::GetUniqueStat()
 void Warrior::IncreaseStr(int amount)
 {
 	_str += amount;
-	cout << "전사의 STR이 " << amount << "만큼 증가했습니다! 현재 STR: " << _str << endl;
+	//cout << "전사의 STR이 " << amount << "만큼 증가했습니다! 현재 STR: " << _str << endl;
 }
 
 int Warrior::RandomAttack()

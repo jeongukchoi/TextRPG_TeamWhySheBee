@@ -24,11 +24,6 @@ public:
     // 아이템 사용 => 인벤토리와 연계
     void UseItem(int index);
 
-    // 인벤토리에 아이템 추가
-    void AddItem(Item* item);
-
-    // 인벤토리에서 아이템 제거
-    void RemoveItem(int index);
 
     // 통합 증가수치
     void IncreaseStat(STATUS stat, int amount);
@@ -44,8 +39,7 @@ public:
     int GetAttack() const { return _attack; }
     int GetGold() const { return _gold; }
     int GetExperience() const { return _experience; }
-    int GetSpeed() const { return _speed; }
-    vector<Item> GetInventory() const { return _inventory; }
+    int GetAttackDelay() const { return _attackDelay; }
     virtual int GetUniqueStat() const { return 0; }
 
 protected:
@@ -58,8 +52,6 @@ protected:
     int _attack;
     int _experience;
     int _gold;
-    int _speed;
+    int _attackDelay;
 
-public:
-    vector<Item> _inventory;
 };

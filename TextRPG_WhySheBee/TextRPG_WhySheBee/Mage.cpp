@@ -50,5 +50,5 @@ int Mage::GetUniqueStat() const
 void Mage::IncreaseInt(int amount)
 {
 	_int += amount;
-	cout << "마법사의 INT가 " << amount << "만큼 증가했습니다! 현재 INT: " << _int << endl;
+	//cout << "마법사의 INT가 " << amount << "만큼 증가했습니다! 현재 INT: " << _int << endl;
 }

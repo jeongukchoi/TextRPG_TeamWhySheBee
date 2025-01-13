@@ -37,7 +37,7 @@ void PlayerCharacter::TakeDamage(int amount)
 void PlayerCharacter::DisplayStatus() const
 {
     cout << "===== " << _name << "의 상태 =====" << endl;
-    cout << "레벨: " << _level << ", 경험치: " << _experience << "/100" << endl;
+    cout << "레벨: " << _level << ", 경험치: " << _experience << "/ " << _level * 10 << endl;
     cout << "체력: " << _health << "/" << _maxHealth << ", 공격력: " << _attack << endl;
     cout << "골드: " << _gold << endl;
     cout << "======================" << endl;
@@ -50,23 +50,23 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
     case HP:
         _health += amount;
         if (_health > _maxHealth) _health = _maxHealth;
-        cout << "체력이 " << amount << "만큼 증가했습니다! 현재 체력: " << _health << "/" << _maxHealth << endl;
+        //cout << "체력이 " << amount << "만큼 증가했습니다! 현재 체력: " << _health << "/" << _maxHealth << endl;
         break;
     case MAXHP:
         _maxHealth += amount;
-        cout << "최대 체력이 " << amount << "만큼 증가했습니다! 현재 최대 체력: " << _maxHealth << endl;
+        //cout << "최대 체력이 " << amount << "만큼 증가했습니다! 현재 최대 체력: " << _maxHealth << endl;
         break;
     case ATTACK:
         _attack += amount;
-        cout << "공격력이 " << amount << "만큼 증가했습니다! 현재 공격력: " << _attack << endl;
+        //cout << "공격력이 " << amount << "만큼 증가했습니다! 현재 공격력: " << _attack << endl;
         break;
     case GOLD:
         _gold += amount;
-        cout << "골드가 " << amount << "만큼 증가했습니다! 현재 골드: " << _gold << endl;
+        //cout << "골드가 " << amount << "만큼 증가했습니다! 현재 골드: " << _gold << endl;
         break;
     case EXP:
         _experience += amount;
-        cout << "경험치가 " << amount << "만큼 증가했습니다! 현재 경험치: " << _experience << "/100" << endl;
+        //cout << "경험치가 " << amount << "만큼 증가했습니다! 현재 경험치: " << _experience << "/100" << endl;
 
         // 레벨 업 확인
         while (_experience >= _level * 10)
@@ -90,8 +90,8 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
         }
         break;
     case SPEED:
-        _speed += amount;
-        cout << "속도가 " << amount << "만큼 증가했습니다! 현재 속도: " << _gold << endl;
+        _attackDelay += amount;
+        //cout << "속도가 " << amount << "만큼 증가했습니다! 현재 속도: " << _gold << endl;
         break;
 
     default:
@@ -117,32 +117,6 @@ void PlayerCharacter::LevelUp()
 
 void PlayerCharacter::UseItem(int index)
 {
-    if (index < 0 || index >= _inventory.size())
-    {
-        cout << "잘못된 인덱스입니다!" << endl;
-        return;
-    }
-
-    Item* item = _inventory[index];
-    item->Use();
-
     // 아이템 사용 후 제거
-    RemoveItem(index);
 }
 
-void PlayerCharacter::AddItem(Item* item)
-{
-    _inventory.push_back(item);
-    cout << item->GetName() << "을(를) 획득했습니다!" << endl;
-}
-
-void PlayerCharacter::RemoveItem(int index)
-{
-
-    if (index < 0 || index >= _inventory.size())
-    {
-        throw out_of_range("잘못된 인덱스입니다!");
-    }
-    _inventory.erase(_inventory.begin() + index);
-
-}
