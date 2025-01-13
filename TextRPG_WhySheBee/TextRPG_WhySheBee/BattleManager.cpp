@@ -9,6 +9,10 @@ bool BattleManager::Battle()
 		return false;
 	}
 
+	//속도 지정 ( 몬스터 스피드 추가하면 변경)
+	int MonsterSpeed = Monster->GetSpeed();
+	int PlayerSpeed = Player->GetSpeed();
+
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	// 플레이어 레벨에 기반해서 몬스터 생성
@@ -17,15 +21,23 @@ bool BattleManager::Battle()
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{
+		//턴 진행 
+		MonsterSpeed--;
+		PlayerSpeed--;
 		// 플레이어 공격
-		PlayerAttack();
+		if(PlayerSpeed <= 0)
+		{
+			PlayerAttack();
+			PlayerSpeed = Player->GetSpeed();
+		}
 
 		// 플레이어 전투 승리
 		if (IsMonsterDead())
 		{
 			cout << "Player이(가) " << Monster->GetName() << "를 처치했습니다!" << endl; // Player GetName 메서드 작성되면 변경.
 
-			Player->IncreaseStat(EXP, 50);
+			int GetExp = 5 * pow(PlayerLevel, 1.5f);
+			Player->IncreaseStat(EXP, GetExp);
 			Player->IncreaseStat(GOLD, rand() % 101 + 100);
 			cout << "Player이(가) " << "50 EXP와 12 Gold를 획득했습니다."; 
 			cout << " 현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
@@ -44,7 +56,11 @@ bool BattleManager::Battle()
 		}
 
 		// 몬스터 공격
-		MonsterAttack();
+		if (MonsterSpeed <= 0)
+		{
+			MonsterAttack();
+			MonsterSpeed = Monster->GetSpeed();
+		}
 
 		// 플레이어 전투 패배
 		if (IsPlayerDead())
@@ -114,10 +130,8 @@ void BattleManager::MonsterAttack()
 		else
 		{
 			cout << Boss->GetName() << "이 Player에게 일반 공격을 합니다! "; // Player GetName 메서드 작성되면 변경.
-			// PlaterChacter의 TakeDamaged 메서드 구현 필요.
-			/*
-			*
-			*/
+			Player->TakeDamage(Monster->GetDamage());
+			
 			cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 		}
 	}
@@ -125,10 +139,7 @@ void BattleManager::MonsterAttack()
 	else
 	{
 		cout << Monster->GetName() << "이(가)" << " Player를 공격합니다! "; // Player GetName 메서드 작성되면 변경.
-		// PlaterChacter의 TakeDamaged 메서드 구현 필요.
-		/*
-		*
-		*/
+		Player->TakeDamage(Monster->GetDamage());
 		cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 	}
 }
