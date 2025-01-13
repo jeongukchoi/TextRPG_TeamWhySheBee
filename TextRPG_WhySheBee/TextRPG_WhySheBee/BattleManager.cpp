@@ -36,7 +36,7 @@ bool BattleManager::Battle()
 		{
 			cout << "Player이(가) " << Monster->GetName() << "를 처치했습니다!" << endl; // Player GetName 메서드 작성되면 변경.
 
-			int GetExp = 5 * pow(PlayerLevel, 1.5f);
+			int GetExp = static_cast<int>(5 * pow(PlayerLevel, 1.5)); // 경험치 계산
 			Player->IncreaseStat(EXP, GetExp);
 			Player->IncreaseStat(GOLD, rand() % 101 + 100);
 			cout << "Player이(가) " << "50 EXP와 12 Gold를 획득했습니다."; 
