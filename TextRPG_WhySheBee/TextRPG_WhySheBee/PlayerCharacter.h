@@ -1,12 +1,23 @@
 #pragma once
-#include <vector>
+
+enum JOB
+{
+    WARRIOR = 0,
+    MAGE
+};
 
 class PlayerCharacter
 {
 public:
     PlayerCharacter(const string& name);
 
-    static PlayerCharacter* GetInstance(const string& name = "");
+    static PlayerCharacter* GetInstance(const string& name = "", JOB job = JOB::WARRIOR);
+
+    //몬스터를 공격할때의 함수
+    virtual void Attack();
+
+    //몬스터에게 공격받았을때의 함수
+    void TakeDamage(int amount);
 
     // 상태 출력 => 공격력 / 체력
     void DisplayStatus() const;
@@ -27,6 +38,7 @@ public:
 
 
     // 기타 Getter함수 (다른분 참조용)
+    string GetName() const { return _name; }
     int GetLevel() const { return _level; }
     int GetHealth() const { return _health; }
     int GetMaxHealth() const { return _maxHealth; }
@@ -36,7 +48,7 @@ public:
 
 
 
-private:
+protected:
     static PlayerCharacter* instance; // 싱글톤 인스턴스
 
     string _name;
@@ -49,4 +61,3 @@ private:
 
     vector<Item*> _inventory;
 };
-

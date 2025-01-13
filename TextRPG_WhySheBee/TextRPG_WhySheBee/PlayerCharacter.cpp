@@ -1,13 +1,23 @@
 #include "Framework.h"
-#include "PlayerCharacter.h"
 
 PlayerCharacter* PlayerCharacter::instance = nullptr;
 
-PlayerCharacter* PlayerCharacter::GetInstance(const string& name)
+PlayerCharacter* PlayerCharacter::GetInstance(const string& name, JOB job)
 {
     if (!instance)
     {
-        instance = new PlayerCharacter(name);
+        switch (job)
+        {
+        case JOB::WARRIOR:
+            instance = new Warrior(name);
+            break;
+        case JOB::MAGE:
+            instance = new Mage(name);
+            break;
+        default:
+            instance = new PlayerCharacter(name); // 기본 캐릭터
+            break;
+        }
     }
     return instance;
 }
@@ -15,6 +25,13 @@ PlayerCharacter* PlayerCharacter::GetInstance(const string& name)
 PlayerCharacter::PlayerCharacter(const string& name)
     : _name(name), _level(1), _health(200), _maxHealth(200), _attack(30), _experience(0), _gold(0)
 {
+}
+
+void PlayerCharacter::TakeDamage(int amount)
+{
+    _health -= amount;
+    cout << "플레이어의 체력이 : " << amount << "만큼 감소했습니다." << endl;
+    cout << "현재 체력 : " << _health << endl;
 }
 
 void PlayerCharacter::DisplayStatus() const
@@ -98,7 +115,7 @@ void PlayerCharacter::LevelUp()
 
 void PlayerCharacter::UseItem(int index)
 {
-    
+
     if (index < 0 || index >= _inventory.size())
     {
         cout << "잘못된 인덱스입니다!" << endl;
@@ -111,7 +128,7 @@ void PlayerCharacter::UseItem(int index)
 
     // 아이템 사용 후 제거
     RemoveItem(index);
-    
+
     return;
 }
 void PlayerCharacter::AddItem(Item* item)
@@ -124,15 +141,14 @@ void PlayerCharacter::AddItem(Item* item)
 
 void PlayerCharacter::RemoveItem(int index)
 {
-    
+
     if (index < 0 || index >= _inventory.size())
     {
         throw out_of_range("잘못된 인덱스입니다!");
     }
     _inventory.erase(_inventory.begin() + index);
-    
+
     return;
 }
-
 
 
