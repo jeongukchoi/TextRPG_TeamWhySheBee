@@ -66,7 +66,7 @@ void GameManager::VisitShop()
 
 void GameManager::ShowEnding()
 {
-    ShowEnding();
+    /*엔딩처리*/
 }
 
 void GameManager::Battle() {
