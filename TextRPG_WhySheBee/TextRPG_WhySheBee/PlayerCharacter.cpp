@@ -37,7 +37,7 @@ void PlayerCharacter::TakeDamage(int amount)
 void PlayerCharacter::DisplayStatus() const
 {
     cout << "===== " << _name << "의 상태 =====" << endl;
-    cout << "레벨: " << _level << ", 경험치: " << _experience << "/100" << endl;
+    cout << "레벨: " << _level << ", 경험치: " << _experience << "/ " << _level * 10 << endl;
     cout << "체력: " << _health << "/" << _maxHealth << ", 공격력: " << _attack << endl;
     cout << "골드: " << _gold << endl;
     cout << "======================" << endl;
@@ -90,7 +90,7 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
         }
         break;
     case SPEED:
-        _speed += amount;
+        _attackDelay += amount;
         //cout << "속도가 " << amount << "만큼 증가했습니다! 현재 속도: " << _gold << endl;
         break;
 

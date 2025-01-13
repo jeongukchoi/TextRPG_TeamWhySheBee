@@ -8,7 +8,7 @@ Warrior::Warrior(const string& name) : PlayerCharacter(name),_str(1)
 	_attack = 30;
 	_experience = 0;
 	_gold = 0;
-	_speed = 2;
+	_attackDelay = 2;
 }
 
 int Warrior::Attack() 
