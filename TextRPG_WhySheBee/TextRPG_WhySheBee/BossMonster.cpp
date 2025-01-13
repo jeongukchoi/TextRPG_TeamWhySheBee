@@ -1,12 +1,11 @@
 #include "Framework.h"
-#include "BossMonster.h"
 
 
 void BossMonster::EnragedSkill()
 {
-	cout << GetName() << "이 잃은 체력의 절반을 회복합니다! " << endl;
+	cout << Name << "이 잃은 체력의 절반을 회복합니다! " << endl;
 	CurrentHP += (MaxHP - CurrentHP) / 2;
-	cout << GetName() << " 체력: " << to_string(GetHealth());
+	cout << Name << " 체력: " << CurrentHP;
 }
 
 void BossMonster::UseRandomSkill()
@@ -22,29 +21,26 @@ void BossMonster::UseRandomSkill()
 		QuickAttack();
 		break;
 	default:
-		FireBress();
+		QuickAttack();
 		break;
 	}
 }
 
 void BossMonster::FireBress()
 {
-	cout << GetName() << "이 용의 숨결 스킬로 공격합니다!" << endl;
-	// PlaterChacter의 TakeDamaged 메서드 구현 필요.
-	/*
-	* 기본 공격력의 1.5배 공격
-	*/
-	cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
+	cout << Name << "이 용의 숨결 스킬로 공격합니다!" << endl;
+	
+	// 기본 공격력의 1.5배 데미지
+	Player->TakeDamage(Damage * 1.5);
 }
 
 void BossMonster::QuickAttack()
 {
-	cout << GetName() << "이 재빠르게 두 번 공격합니다!" << endl;
-	// PlaterChacter의 TakeDamaged 메서드 구현 필요.
-	/*
-	* 첫 번째는 기본 공격, 두 번째는 기본 공격의 0.5배 공격
-	*/
-	cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
+	cout << Name << "이 재빠르게 두 번 공격합니다!" << endl;
+
+	// 기본 공격력, 기본 공격력 0.3배 데미지
+	Player->TakeDamage(Damage);
+	Player->TakeDamage(Damage * 0.3);
 }
 
 

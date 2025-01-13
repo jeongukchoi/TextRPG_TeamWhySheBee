@@ -6,12 +6,12 @@
 class BattleManager
 {
 private:
-	shared_ptr<PlayerCharacter> Player;
+	PlayerCharacter* Player;
 	unique_ptr<BaseMonster> Monster;
 	int PlayerLevel;
 
 public:
-	BattleManager() : Player(PlayerCharacter::GetInstance()), PlayerLevel(1) {}
+	BattleManager() : Player(PlayerCharacter::GetPlayer()), PlayerLevel(1) {}
 
 	// 전투 메서드(플레이어의 승,패 여부를 반환합니다)
 	bool Battle();

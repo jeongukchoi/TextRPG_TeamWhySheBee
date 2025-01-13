@@ -7,6 +7,7 @@ protected:
 	int MaxHP;
 	int CurrentHP;
 	int Damage;
+	int Speed;
 	IState* CurrentState;
 
 public:
