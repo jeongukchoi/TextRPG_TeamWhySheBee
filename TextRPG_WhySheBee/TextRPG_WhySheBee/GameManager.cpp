@@ -3,7 +3,7 @@
 
 using namespace std;
 
-GameManager::GameManager() : bossCleared(false) {}
+GameManager::GameManager() : over(false) {}
 
 void GameManager::StartGame()
 {
@@ -12,10 +12,10 @@ void GameManager::StartGame()
     while (true)
     {
         Battle();
-        if (bossCleared)
+        if (over)
         {
             ShowEnding();
-            break;
+            return;
         }
 
         /*
@@ -96,20 +96,25 @@ void GameManager::ShowEnding()
     cout << "        Thank you for playing our game!   " << endl;
     cout << "==========================================" << endl;
     cout << "\n";
+    over = true;
 }
 
 
-void GameManager::Battle() {
+void GameManager::Battle() 
+{
     BattleManager battleManager;
 
     bool battleResult = battleManager.Battle();
 
     // 결과 처리
-    if (battleResult) {
+    if (battleResult) 
+    {
         std::cout << "전투 승리!" << std::endl;
     }
-    else {
+
+    else 
+    {
         std::cout << "전투 패배..." << std::endl;
-        ShowEnding();
+        over = true;
     }
 }

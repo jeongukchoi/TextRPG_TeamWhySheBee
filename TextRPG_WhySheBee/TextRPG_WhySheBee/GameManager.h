@@ -12,7 +12,6 @@ public:
     void VisitShop();
     void ShowEnding();
 private:
-    bool bossCleared;
-    // bool over;
+    bool over;
 };
 
