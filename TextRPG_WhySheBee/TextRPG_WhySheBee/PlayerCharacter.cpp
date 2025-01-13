@@ -138,9 +138,11 @@ void PlayerCharacter::AddItem(Item* item)
 
 void PlayerCharacter::RemoveItem(int index)
 {
+
     if (index < 0 || index >= _inventory.size())
     {
         throw out_of_range("잘못된 인덱스입니다!");
     }
     _inventory.erase(_inventory.begin() + index);
+
 }

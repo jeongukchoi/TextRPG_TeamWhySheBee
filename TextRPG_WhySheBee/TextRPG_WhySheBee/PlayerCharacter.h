@@ -45,6 +45,7 @@ public:
     int GetGold() const { return _gold; }
     int GetExperience() const { return _experience; }
     int GetSpeed() const { return _speed; }
+    vector<Item> GetInventory() const { return _inventory; }
     virtual int GetUniqueStat() const { return 0; }
 
 protected:
@@ -59,5 +60,6 @@ protected:
     int _gold;
     int _speed;
 
-    vector<Item*> _inventory;
+public:
+    vector<Item> _inventory;
 };
