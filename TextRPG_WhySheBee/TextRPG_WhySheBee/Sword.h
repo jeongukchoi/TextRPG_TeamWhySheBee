@@ -16,6 +16,8 @@ public:
 	ItemType GetType() const override { return Type; }
 	// 아이템 가격
 	int GetPrice() const override { return Price; }
+	// 아이템 ID
+	ItemID GetID() const override { return SWORD; }
 	// 변경할 스탯
 	STATUS GetTargetStat() const override { return TargetStat; }
 	// 변경할 스탯 수치

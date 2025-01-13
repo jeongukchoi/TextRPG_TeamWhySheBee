@@ -12,7 +12,7 @@ void Sword::PrintItemInfo()
 
 void Sword::Use()
 {
-	PlayerCharacter* character = PlayerCharacter::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
 }
 

@@ -7,7 +7,7 @@ AttackBoost::AttackBoost() : ItemName("공격력 증가 물약 (1턴간 유효)"
 
 void AttackBoost::Use()
 {
-	PlayerCharacter* character = PlayerCharacter::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
 }
 

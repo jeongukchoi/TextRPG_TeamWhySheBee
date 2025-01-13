@@ -11,7 +11,8 @@ public:
 	ItemManager();
 	~ItemManager();
 	Item* GetItem(ItemID ID) const;
-	Item* GetRandomItem() const;
+	ItemID GetRandomItem() const;
+	int GetItemsListSize() const;
 };
 
 

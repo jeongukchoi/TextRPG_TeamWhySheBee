@@ -26,12 +26,23 @@ Item* ItemManager::GetItem(ItemID ID) const
 	throw out_of_range("\nItemID 로 아이템을 불러오는 과정에서 문제가 발생했습니다.");
 }
 
-Item* ItemManager::GetRandomItem() const
+ItemID ItemManager::GetRandomItem() const
 {
-	if (!ItemsList.empty())
+	// 5% 확률로 장비 드랍 (갑옷 70% / 무기 30%)
+	int Random = rand() % 100;
+	if (Random < 5)
 	{
-		return ItemsList[rand() % ItemsList.size()];
+		Random = rand() % 100;
+		return Random < 70 ? ARMOR : SWORD;
+		
 	}
-	throw out_of_range("\n랜덤 아이템을 불러오는 과정에서 문제가 발생했습니다.");
+	// 소모품 드랍 (체력 회복 물약 70% / 공격력 증가 물약 30%
+	Random = rand() % 100;
+	return Random < 70 ? HEALTH_POTION : ATTACK_BOOST;
+}
+
+int ItemManager::GetItemsListSize() const
+{
+	return ItemsList.size();
 }
 

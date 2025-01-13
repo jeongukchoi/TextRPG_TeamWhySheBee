@@ -1,7 +1,10 @@
 #include "Framework.h"
 #include "Inventory.h"
 
-Inventory::Inventory() : _Inventory({}), InventoryCount({}), EquippedItem(nullptr)
+// 정적 멤버 변수 초기화
+Inventory* Inventory::Instance = nullptr;
+
+Inventory::Inventory() : _Inventory({}), InventoryCount({}), EquippedWeapon(nullptr), EquippedArmor(nullptr)
 {
 }
 
@@ -13,6 +16,15 @@ Inventory::~Inventory()
 	}
 }
 
+Inventory* Inventory::GetInstance()
+{
+	if (Instance == nullptr)
+	{
+		Instance = new Inventory();
+	}
+	return Instance;
+}
+
 const vector<Item*>& Inventory::GetInventory()
 {
 	return _Inventory;
@@ -20,7 +32,8 @@ const vector<Item*>& Inventory::GetInventory()
 
 void Inventory::AddItem(ItemID ID)
 {
-	ItemType Type = _ItemManager.GetItem(ID)->GetType();
+	Item* ItemFromDB = _ItemManager.GetItem(ID);
+	ItemType Type = ItemFromDB->GetType();
 	// 추가할 아이템이 소모품인 경우
 	if (Type == CONSUMABLES)
 	{
@@ -52,10 +65,12 @@ void Inventory::AddItem(ItemID ID)
 		{
 		case SWORD:
 			_Inventory.push_back(new Sword());
+			AutoEquip(_Inventory.back());
 			break;
 
 		case ARMOR:
 			_Inventory.push_back(new Armor());
+			AutoEquip(_Inventory.back());
 			break;
 
 		default:
@@ -64,10 +79,10 @@ void Inventory::AddItem(ItemID ID)
 	}
 }
 
-void Inventory::RemoveItem(ItemID ID, int index)
+void Inventory::RemoveItem(Item* item, int index)
 {	
-	Item* ItemByID = _ItemManager.GetItem(ID);
-	ItemType Type = ItemByID->GetType();
+	ItemID ID = item->GetID();
+	ItemType Type = item->GetType();
 	// 제거할 아이템이 소모품인 경우
 	if (Type == CONSUMABLES)
 	{
@@ -78,13 +93,19 @@ void Inventory::RemoveItem(ItemID ID, int index)
 		}
 	}
 
-	// 제거할 아이템이 장비인 경우
-	else if (Type == EQUIPMENT)
+	// 제거할 아이템이 무기인 경우 (SellItem() 통해서만 제거됨 -> 인덱스 알 수 있음)
+	else if (ID == SWORD)
 	{
 		// 인덱스로 인벤토리에서 장비를 제거
 		if (index > _Inventory.size())
 		{
 			throw out_of_range("\n-----------인벤토리에서 아이템을 제거하는 중 오류가 발생하였습니다.\n");
+		}
+		
+		// 착용 중인 경우
+		if (EquippedWeapon == item)
+		{
+			Unequip(item);
 		}
 
 		if (_Inventory[index]->GetType() == EQUIPMENT)
@@ -99,11 +120,11 @@ void Inventory::RemoveItem(ItemID ID, int index)
 	}
 }
 
-void Inventory::UseItem(ItemID ID)
+void Inventory::UseItem(Item* item)
 {
-	Item* ItemByID = _ItemManager.GetItem(ID);
-	string Name = ItemByID->GetName();
-	ItemType Type = ItemByID->GetType();
+	ItemID ID = item->GetID();
+	ItemType Type = item->GetType();
+	string Name = item->GetName();
 
 	// 소모품인 경우 사용 후 인벤토리에서 삭제
 	if (Type == CONSUMABLES)
@@ -111,38 +132,94 @@ void Inventory::UseItem(ItemID ID)
 		auto InventoryIt = InventoryCount.find(ID);
 		if (InventoryIt != InventoryCount.end() && InventoryIt->second > 0)
 		{
-			ItemByID->Use();
-			RemoveItem(ID, 0);
+			item->Use();
+			RemoveItem(item, 0);
 		}
 		else
 		{
 			cout << endl << Name << " 아이템을 보유하고 있지 않아 사용하지 못했습니다.\n";
 		}
+		return;
 	}
 
 	// 장비인 경우 착용 중인 장비 해제 후 해당 장비 착용
-	else if (Type == EQUIPMENT)
+	if (Type == EQUIPMENT)
 	{
-		for (int i = 0; i < _Inventory.size(); i++)
+		switch (ID)
 		{
-			if (_Inventory[i]->GetName() == Name)
-			{
-				cout << "\n아래 아이템을 착용하려면 1을 입력하세요.";
-				_Inventory[i]->PrintItemInfo();
-				cout << "1: 착용 / (다른 입력 시 계속해서 인벤토리 내에 같은 아이템을 찾습니다.)\n입력: ";
+		case SWORD:
+			// 현재 장비 해제 후 아이템 사용
+			Unequip(EquippedWeapon);
+			item->Use();
+			EquippedWeapon = reinterpret_cast<Equipment*>(item);
+			break;
 
-				int Choice;
-				cin >> Choice;
-
-				if (Choice == 1)
-				{
-					// 현재 장비 해제 구현
-					//UnEquip();
-					_Inventory[i]->Use();
-				}
-			}
+		case ARMOR:
+			Unequip(EquippedArmor);
+			item->Use();
+			EquippedArmor = reinterpret_cast<Equipment*>(item);
+			break;
 		}
+
 	}
 }
 
+void Inventory::Unequip(Item* item)
+{
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
+	switch (item->GetID())
+	{
+	case SWORD:
+		if (EquippedWeapon != nullptr)
+		{
+			// 장비 효과 해제
+			character->IncreaseStat(EquippedWeapon->GetTargetStat(), EquippedWeapon->GetTargetStat() * -1);
+
+			EquippedWeapon = nullptr;
+		}
+	case ARMOR:
+		if (EquippedArmor != nullptr)
+		{
+			// 장비 효과 해제
+			character->IncreaseStat(EquippedArmor->GetTargetStat(), EquippedArmor->GetTargetStat() * -1);
+		}
+	}
+	
+}
+
+void Inventory::AutoEquip(Item* item)
+{
+	// 현재 착용 중인 장비가 없으면 바로 착용
+	// 있으면 증가 스탯 비교하여 높으면 새로운 장비 착용
+	switch (item->GetID())
+	{
+	case SWORD:
+		if (EquippedWeapon == nullptr)
+		{
+			UseItem(item);
+		}
+		else
+		{
+			if (EquippedWeapon->GetStatAmount() < item->GetStatAmount())
+			{
+				UseItem(item);
+			}
+		}
+		break;
+
+	case ARMOR:
+		if (EquippedArmor == nullptr)
+		{
+			UseItem(item);
+		}
+		else
+		{
+			if (EquippedArmor->GetStatAmount() < item->GetStatAmount())
+			{
+				UseItem(item);
+			}
+		}
+		break;
+	}
+}
 

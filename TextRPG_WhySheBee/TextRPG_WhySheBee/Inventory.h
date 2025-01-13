@@ -1,4 +1,5 @@
 #pragma once
+
 class Inventory
 {
 private:
@@ -11,14 +12,25 @@ private:
 	// 아이템 ID로 아이템을 불러올 ItemManager
 	ItemManager _ItemManager;
 	// 착용 중인 장비
-	Equipment* EquippedItem;
+	Equipment* EquippedWeapon;
+	Equipment* EquippedArmor;
 
-public:
+	// 인벤토리의 싱글톤 인스턴스
+	static Inventory* Instance;
+	// 프라이빗 생성자 & 소멸자
 	Inventory();
 	~Inventory();
+	// 복사 및 대입 생성자 삭제
+	Inventory(const Inventory&) = delete;
+	Inventory& operator=(const Inventory&) = delete;
+
+public:
+	static Inventory* GetInstance();
 	const vector<Item*>& GetInventory();
 	void AddItem(ItemID ID);
-	void RemoveItem(ItemID ID, int index);
-	void UseItem(ItemID ID);
+	void RemoveItem(Item* item, int index);
+	void UseItem(Item* item);
+	void Unequip(Item* item);
+	void AutoEquip(Item* item);
 };
 

@@ -7,7 +7,7 @@ HealthPotion::HealthPotion() : ItemName("체력 회복 물약"), Type(CONSUMABLE
 
 void HealthPotion::Use()
 {
-	PlayerCharacter* character = PlayerCharacter::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
 }
 

@@ -43,7 +43,7 @@ void SwordUpgrade::PrintItemInfo()
 void SwordUpgrade::Use()
 {
 	equipment->Use();
-	PlayerCharacter* character = PlayerCharacter::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, UpgradeAmount);
 }
 

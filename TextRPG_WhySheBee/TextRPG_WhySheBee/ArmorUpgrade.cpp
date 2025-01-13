@@ -43,7 +43,7 @@ void ArmorUpgrade::PrintItemInfo()
 void ArmorUpgrade::Use()
 {
 	equipment->Use();
-	PlayerCharacter* character = PlayerCharacter::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, UpgradeAmount);
 	character->IncreaseStat(HP, UpgradeAmount);
 }

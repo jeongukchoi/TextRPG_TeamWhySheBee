@@ -8,7 +8,8 @@
 #include <random>
 #include <cstdlib>
 #include <ctime>
-#include <memory>	
+#include <memory>
+#include <unordered_map>
 
 using namespace std;
 
