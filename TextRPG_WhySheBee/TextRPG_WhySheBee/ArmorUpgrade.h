@@ -30,3 +30,4 @@ public:
 	int GetEquipmentLevel() const override { return equipment->GetEquipmentLevel() + 1; }
 };
 
+

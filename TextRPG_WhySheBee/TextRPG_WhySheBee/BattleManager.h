@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "PlayerCharacter.h"
 #include <memory>
@@ -32,4 +32,5 @@ private:
 	// 몬스터 사망 체크
 	bool IsMonsterDead();
 };
+
 

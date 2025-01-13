@@ -15,3 +15,5 @@ void AttackBoost::PrintItemInfo()
 {
 	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "Attack +" << StatAmount << endl;
 }
+
+

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "BaseMonster.h"
 #include "PlayerCharacter.h"
@@ -14,4 +14,5 @@ public:
 private:
 	PlayerCharacter* Player = PlayerCharacter::GetInstance();
 };
+
 

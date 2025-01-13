@@ -15,3 +15,4 @@ void HealthPotion::PrintItemInfo()
 {
 	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "체력 +" << StatAmount << endl;
 }
+

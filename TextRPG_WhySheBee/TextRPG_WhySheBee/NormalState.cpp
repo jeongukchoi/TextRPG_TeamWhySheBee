@@ -5,3 +5,4 @@ void NormalState::HandleState(BaseMonster* Monster)
 {
 	return;
 }
+

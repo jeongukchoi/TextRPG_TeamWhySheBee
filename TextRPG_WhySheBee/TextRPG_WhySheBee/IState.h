@@ -9,3 +9,4 @@ public:
 	virtual void HandleState(BaseMonster* Monster) = 0;
 };
 
+

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "BaseMonster.h"
 #include <string>
@@ -11,3 +11,4 @@ public:
 	Troll(const string& name, const int& PlayerLevel) : BaseMonster(name, PlayerLevel) {}
 	void EnragedSkill() override;
 };
+

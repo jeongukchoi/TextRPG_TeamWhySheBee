@@ -35,3 +35,4 @@ Item* ItemManager::GetRandomItem() const
 	}
 	throw out_of_range("\n랜덤 아이템을 불러오는 과정에서 문제가 발생했습니다.");
 }
+

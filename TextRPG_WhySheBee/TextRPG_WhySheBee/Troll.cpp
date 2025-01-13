@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 
 void Troll::EnragedSkill()
 {
@@ -6,3 +6,5 @@ void Troll::EnragedSkill()
 
 	CurrentHP = MaxHP;
 }
+
+

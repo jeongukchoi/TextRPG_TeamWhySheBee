@@ -16,3 +16,4 @@ void Sword::Use()
 	character->IncreaseStat(TargetStat, StatAmount);
 }
 
+

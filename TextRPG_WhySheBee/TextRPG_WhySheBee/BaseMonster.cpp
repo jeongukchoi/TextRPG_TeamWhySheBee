@@ -52,3 +52,4 @@ void BaseMonster::SetState(IState* NewState)
 	}
 	CurrentState = NewState;
 }
+
