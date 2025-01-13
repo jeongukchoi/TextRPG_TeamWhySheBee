@@ -84,8 +84,20 @@ void GameManager::VisitShop()
 
 void GameManager::ShowEnding()
 {
-    /*엔딩처리*/
+    cout << "\n";
+    cout << "==========================================" << endl;
+    cout << "                GAME CREDITS              " << endl;
+    cout << "==========================================" << endl;
+    cout << "\n";
+    cout << "                제작: 1기 12조            " << endl;
+    cout << "   강창훈, 김동현, 최정욱, 한상혁, 백인범, 김지황" << endl;
+    cout << "\n";
+    cout << "==========================================" << endl;
+    cout << "        Thank you for playing our game!   " << endl;
+    cout << "==========================================" << endl;
+    cout << "\n";
 }
+
 
 void GameManager::Battle() {
     BattleManager battleManager;
