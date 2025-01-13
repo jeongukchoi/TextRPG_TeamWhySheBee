@@ -2,7 +2,7 @@
 
 unique_ptr<PlayerCharacter> PlayerCharacter::instance = nullptr;
 
-unique_ptr<PlayerCharacter> PlayerCharacter::GetInstance(const string& name, JOB job)
+unique_ptr<PlayerCharacter>& PlayerCharacter::GetInstance(const string& name, JOB job)
 {
     if (!instance)
     {
@@ -19,7 +19,7 @@ unique_ptr<PlayerCharacter> PlayerCharacter::GetInstance(const string& name, JOB
             break;
         }
     }
-    return move(instance); // 소유권을 이전
+    return instance; //주소값만 리턴해준다.
 }
 
 PlayerCharacter::PlayerCharacter(const string& name)
@@ -74,8 +74,15 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
             _experience -= _level * 10;
             LevelUp(); // 레벨 업에 필요한 경험치 차감
         }
-        break;
-    case STATUS::INT:
+        break; 
+    case STR:
+            // 자식 클래스에서 특별히 처리할 수 있도록 함
+            if (Warrior* warrior = dynamic_cast<Warrior*>(this))
+            {
+                warrior->IncreaseStr(amount);  // Mage일 경우에만 INT 증가
+            }
+            break;
+    case INT:
         // 자식 클래스에서 특별히 처리할 수 있도록 함
         if (Mage* mage = dynamic_cast<Mage*>(this))
         {

@@ -8,10 +8,12 @@ public:
     PlayerCharacter(const string& name);
 
     // 스마트 포인터를 사용하여 인스턴스를 관리
-    static unique_ptr<PlayerCharacter> GetInstance(const string& name = "", JOB job = JOB::WARRIOR);
+    static unique_ptr<PlayerCharacter>& GetInstance(const string& name = "", JOB job = JOB::WARRIOR);
+
+    static PlayerCharacter* GetPlayer() { return instance.get(); }
 
     // 몬스터를 공격할 때의 함수
-    virtual void Attack(){};
+    virtual int Attack(){};
 
     // 몬스터에게 공격받았을 때의 함수
     void TakeDamage(int amount);

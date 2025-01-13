@@ -6,7 +6,7 @@
 class BossMonster : public BaseMonster
 {
 private:
-	PlayerCharacter* Player = PlayerCharacter::GetInstance();
+	PlayerCharacter* Player = PlayerCharacter::GetPlayer();
 
 public:
 	BossMonster(const string& name, const int& PlayerLevel) : BaseMonster(name, PlayerLevel) {}
