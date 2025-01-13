@@ -5,7 +5,11 @@ enum STATUS
     MAXHP,
     ATTACK,
     GOLD,
-    EXP
+    EXP,
+    MP,
+    STR,
+    INT,
+    SPEED
 };
 
 enum ItemID {
@@ -18,6 +22,12 @@ enum ItemID {
 enum ItemType {
     CONSUMABLES = 0,
     EQUIPMENT
+};
+
+enum JOB
+{
+    WARRIOR = 0,
+    MAGE
 };
 
 class Enums
