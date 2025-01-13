@@ -19,6 +19,7 @@ private:
 public:
 	BattleManager() : Player(PlayerCharacter::GetPlayer()), PlayerInventory(Inventory::GetInstance()), PlayerLevel(1), PlayerAttackDelay(Player->GetAttackDelay()) {}
 
+
 	// 전투 메서드(플레이어의 승,패 여부를 반환합니다)
 	bool Battle();
 

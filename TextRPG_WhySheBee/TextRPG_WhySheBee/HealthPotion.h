@@ -13,6 +13,7 @@ public:
 	string GetName() const override { return ItemName; }
 	ItemType GetType() const override { return Type; }
 	int GetPrice() const override { return Price; }
+	ItemID GetID() const override { return HEALTH_POTION; }
 	STATUS GetTargetStat() const override { return TargetStat; }
 	int GetStatAmount() const override { return StatAmount; }
 
