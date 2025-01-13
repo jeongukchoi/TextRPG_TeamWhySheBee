@@ -66,17 +66,12 @@ void GameManager::VisitShop()
 
 void GameManager::ShowEnding()
 {
-    cout << "축하합니다! 게임 엔딩을 보셨습니다!" << endl;
-    cout << "엔딩 크레딧:" << endl;
-    // 엔딩 크레딧 출력
-    cout << "게임을 플레이 해주셔서 감사합니다!" << endl;
+    ShowEnding();
 }
 
 void GameManager::Battle() {
-    // BattleManager 객체 생성
     BattleManager battleManager;
 
-    // 전투 실행
     bool battleResult = battleManager.Battle();
 
     // 결과 처리
@@ -85,6 +80,6 @@ void GameManager::Battle() {
     }
     else {
         std::cout << "전투 패배..." << std::endl;
-        // 패배 시 추가 처리 로직
+        ShowEnding();
     }
 }
