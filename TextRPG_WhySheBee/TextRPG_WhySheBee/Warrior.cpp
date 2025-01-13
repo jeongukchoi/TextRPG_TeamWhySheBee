@@ -26,7 +26,7 @@ int Warrior::GetUniqueStat()
 void Warrior::IncreaseStr(int amount)
 {
 	_str += amount;
-	cout << "전사의 STR이 " << amount << "만큼 증가했습니다! 현재 STR: " << _str << endl;
+	//cout << "전사의 STR이 " << amount << "만큼 증가했습니다! 현재 STR: " << _str << endl;
 }
 
 int Warrior::RandomAttack()
