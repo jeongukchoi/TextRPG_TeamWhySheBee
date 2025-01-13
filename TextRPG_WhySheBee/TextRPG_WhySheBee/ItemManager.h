@@ -14,3 +14,4 @@ public:
 	Item* GetRandomItem() const;
 };
 
+

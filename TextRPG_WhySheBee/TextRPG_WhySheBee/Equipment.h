@@ -7,3 +7,4 @@ public:
 	virtual int GetEquipmentLevel() const = 0;
 };
 
+

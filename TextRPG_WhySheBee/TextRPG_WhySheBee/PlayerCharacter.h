@@ -49,3 +49,4 @@ private:
 
     vector<Item*> _inventory;
 };
+

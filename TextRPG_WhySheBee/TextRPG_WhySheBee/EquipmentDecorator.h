@@ -9,3 +9,4 @@ public:
 	virtual ~EquipmentDecorator() { delete equipment; }
 };
 
+

@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 #include "BossMonster.h"
 
 
@@ -46,5 +46,6 @@ void BossMonster::QuickAttack()
 	*/
 	cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 }
+
 
 

@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 
 unique_ptr<BaseMonster> EnemyFactory::CreateBasicMonster(const int& PlayerLevel)
 {
@@ -30,3 +30,4 @@ MonsterType EnemyFactory::GetRandomMonsterType()
 
 	return static_cast<MonsterType>(RandomValue);
 }
+

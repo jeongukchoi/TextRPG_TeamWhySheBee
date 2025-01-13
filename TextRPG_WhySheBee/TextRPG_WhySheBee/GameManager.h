@@ -15,3 +15,4 @@ private:
     bool bossCleared;
     // bool over;
 };
+

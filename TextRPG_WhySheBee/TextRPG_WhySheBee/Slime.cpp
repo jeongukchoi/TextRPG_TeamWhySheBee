@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 
 void Slime::EnragedSkill()
 {
@@ -6,3 +6,4 @@ void Slime::EnragedSkill()
 	
 	CurrentHP += Player->GetAttack();
 }
+

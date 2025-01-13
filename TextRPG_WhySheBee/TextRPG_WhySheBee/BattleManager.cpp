@@ -145,3 +145,4 @@ bool BattleManager::IsMonsterDead()
 {
 	return Monster->IsDead;
 }
+
