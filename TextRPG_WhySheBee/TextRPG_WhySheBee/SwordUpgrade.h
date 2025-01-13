@@ -16,6 +16,8 @@ public:
 	ItemType GetType() const override { return equipment->GetType(); }
 	// 아이템 가격
 	int GetPrice() const override { return equipment->GetPrice() + UpgradeCost; }
+	// 아이템 ID
+	ItemID GetID() const override { return SWORD; }
 	// 변경할 스탯
 	STATUS GetTargetStat() const override { return TargetStat; }
 	// 최종 스탯 수치
