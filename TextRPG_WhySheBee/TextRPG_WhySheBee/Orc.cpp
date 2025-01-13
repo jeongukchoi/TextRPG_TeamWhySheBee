@@ -1,7 +1,8 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 void Orc::EnragedSkill()
 {
-	cout << GetName() << "°¡ ÀÒÀº Ã¼·ÂÀÇ Àý¹ÝÀ» È¸º¹ÇÕ´Ï´Ù!" << endl;
+	cout << GetName() << "ê°€ ìžƒì€ ì²´ë ¥ì˜ ì ˆë°˜ì„ íšŒë³µí•©ë‹ˆë‹¤!" << endl;
 	CurrentHP += (MaxHP - CurrentHP) / 2;
 }
+

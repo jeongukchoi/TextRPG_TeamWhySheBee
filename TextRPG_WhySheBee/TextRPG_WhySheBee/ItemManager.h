@@ -1,10 +1,6 @@
 #pragma once
 #include <vector>
-
-enum ItemID {
-	HEALTH_POTION = 0,
-	ATTACK_BOOST
-};
+#include <memory>
 
 class ItemManager
 {
@@ -14,7 +10,7 @@ private:
 public:
 	ItemManager();
 	~ItemManager();
-	Item* GetItem(ItemID ID);
-	Item* GetRandomItem();
+	Item* GetItem(ItemID ID) const;
+	Item* GetRandomItem() const;
 };
 

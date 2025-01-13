@@ -1,17 +1,17 @@
 #include "Framework.h"
 #include "HealthPotion.h"
 
-HealthPotion::HealthPotion() : ItemName("HealthPotion"), TargetStat(HP)
+HealthPotion::HealthPotion() : ItemName("HealthPotion"), Type(CONSUMABLES), Price(100), TargetStat(HP), StatAmount(50)
 {
 }
 
-void HealthPotion::Use(PlayerCharacter* character)
+void HealthPotion::Use()
 {
-	cout << "HealthPotion 포션을 사용해 공격력이 " << StatAmount << " 증가합니다." << endl;
+	PlayerCharacter* character = PlayerCharacter::GetInstance();
 	character->IncreaseStat(TargetStat, StatAmount);
 }
 
 void HealthPotion::PrintItemInfo()
 {
-	cout << "아이템: " << ItemName << "\n효과: " << "Health +" << StatAmount << endl;
+	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "체력 +" << StatAmount << endl;
 }

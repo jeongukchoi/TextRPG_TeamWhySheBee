@@ -1,8 +1,8 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 void Troll::EnragedSkill()
 {
-	cout << this->GetName() << "ÀÌ ±«¼ºÀ» Áö¸£¸ç ÃÖ´ë Ã¼·ÂÀ¸·Î È¸º¹ÇÕ´Ï´Ù." << endl;
+	cout << this->GetName() << "ì´ ê´´ì„±ì„ ì§€ë¥´ë©° ìµœëŒ€ ì²´ë ¥ìœ¼ë¡œ íšŒë³µí•©ë‹ˆë‹¤." << endl;
 
 	CurrentHP = MaxHP;
 }

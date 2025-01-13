@@ -1,7 +1,14 @@
 #pragma once
 
+#include "Enums.h"
 #include "GameManager.h"
 #include "Item.h"
+#include "Equipment.h"
+#include "Sword.h"
+#include "Armor.h"
+#include "EquipmentDecorator.h"
+#include "SwordUpgrade.h"
+#include "ArmorUpgrade.h"
 #include "PlayerCharacter.h"
 #include "AttackBoost.h"
 #include "HealthPotion.h"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "BaseMonster.h"
 #include "PlayerCharacter.h"
@@ -16,3 +16,4 @@ private:
 	void FireBress();
 	void QuickAttack();
 };
+

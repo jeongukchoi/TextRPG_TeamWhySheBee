@@ -1,7 +1,7 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 void Goblin::EnragedSkill()
 {
-	cout << this->GetName() << "ÀÌ ½ÅÃ¼¸¦ °­È­½ÃÄÑ µ¥¹ÌÁö°¡ 2¹è »ó½ÂÇÕ´Ï´Ù!" << endl;
+	cout << this->GetName() << "ì´ ì‹ ì²´ë¥¼ ê°•í™”ì‹œì¼œ ë°ë¯¸ì§€ê°€ 2ë°° ìƒìŠ¹í•©ë‹ˆë‹¤!" << endl;
 	Damage *= 2;
 }

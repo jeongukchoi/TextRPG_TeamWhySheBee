@@ -19,12 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Armor.cpp" />
+    <ClCompile Include="ArmorUpgrade.cpp" />
     <ClCompile Include="AttackBoost.cpp" />
     <ClCompile Include="BaseMonster.cpp" />
     <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="BossMonster.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnragedState.cpp" />
+    <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="EquipmentDecorator.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -40,15 +45,23 @@
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
     <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="SwordUpgrade.cpp" />
     <ClCompile Include="Troll.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Armor.h" />
+    <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
     <ClInclude Include="BattleManager.h" />
     <ClInclude Include="BossMonster.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnragedState.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="Equipment.h" />
+    <ClInclude Include="EquipmentDecorator.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Goblin.h" />
@@ -60,6 +73,7 @@
     <ClInclude Include="Orc.h" />
     <ClInclude Include="PlayerCharacter.h" />
     <ClInclude Include="Slime.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="Troll.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

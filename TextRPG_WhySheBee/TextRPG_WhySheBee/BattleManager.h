@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "PlayerCharacter.h"
 #include <memory>
@@ -13,23 +13,23 @@ private:
 public:
 	BattleManager() : Player(PlayerCharacter::GetInstance()), PlayerLevel(1) {}
 
-	// ÀüÅõ ¸Ş¼­µå(ÇÃ·¹ÀÌ¾îÀÇ ½Â,ÆĞ ¿©ºÎ¸¦ ¹İÈ¯ÇÕ´Ï´Ù)
+	// ì „íˆ¬ ë©”ì„œë“œ(í”Œë ˆì´ì–´ì˜ ìŠ¹,íŒ¨ ì—¬ë¶€ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤)
 	bool Battle();
 
 	BaseMonster* GetMonster() const { return  Monster.get(); }
 
 private:
-	// ¸ó½ºÅÍ »ı¼º ¸Ş¼­µå
+	// ëª¬ìŠ¤í„° ìƒì„± ë©”ì„œë“œ
 	void CreateMonster();
 
-	// ÇÃ·¹ÀÌ¾î °ø°İ ¸Ş¼­µå
+	// í”Œë ˆì´ì–´ ê³µê²© ë©”ì„œë“œ
 	void PlayerAttack();
-	// ¸ó½ºÅÍ °ø°İ ¸Ş¼­µå
+	// ëª¬ìŠ¤í„° ê³µê²© ë©”ì„œë“œ
 	void MonsterAttack();
 
-	// ÇÃ·¹ÀÌ¾î »ç¸Á Ã¼Å©
+	// í”Œë ˆì´ì–´ ì‚¬ë§ ì²´í¬
 	bool IsPlayerDead();
-	// ¸ó½ºÅÍ »ç¸Á Ã¼Å©
+	// ëª¬ìŠ¤í„° ì‚¬ë§ ì²´í¬
 	bool IsMonsterDead();
 };
 

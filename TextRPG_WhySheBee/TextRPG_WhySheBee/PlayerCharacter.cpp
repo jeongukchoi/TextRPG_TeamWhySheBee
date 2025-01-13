@@ -107,7 +107,7 @@ void PlayerCharacter::UseItem(int index)
 
     Item* item = _inventory[index];
 
-    item->Use(this);
+    item->Use();
 
     // 아이템 사용 후 제거
     RemoveItem(index);

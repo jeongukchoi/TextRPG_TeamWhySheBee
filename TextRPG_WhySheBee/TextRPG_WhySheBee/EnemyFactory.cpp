@@ -1,4 +1,4 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 unique_ptr<BaseMonster> EnemyFactory::CreateBasicMonster(const int& PlayerLevel)
 {
@@ -7,21 +7,21 @@ unique_ptr<BaseMonster> EnemyFactory::CreateBasicMonster(const int& PlayerLevel)
 	switch (Type)
 	{
 	case GOBLIN:
-		return make_unique<Goblin>("°íºí¸°", PlayerLevel);
+		return make_unique<Goblin>("ê³ ë¸”ë¦°", PlayerLevel);
 	case ORC:
-		return make_unique<Orc>("¿ÀÅ©", PlayerLevel);
+		return make_unique<Orc>("ì˜¤í¬", PlayerLevel);
 	case SLIME:
-		return make_unique<Slime>("½½¶óÀÓ", PlayerLevel);
+		return make_unique<Slime>("ìŠ¬ë¼ì„", PlayerLevel);
 	case TROLL:
-		return make_unique<Troll>("Æ®·Ñ", PlayerLevel);
+		return make_unique<Troll>("íŠ¸ë¡¤", PlayerLevel);
 	default:
-		throw runtime_error("== ±âº» ¸ó½ºÅÍ Å¸ÀÔ, ¿À·ù ¹ß»ı ==");
+		throw runtime_error("== ê¸°ë³¸ ëª¬ìŠ¤í„° íƒ€ì…, ì˜¤ë¥˜ ë°œìƒ ==");
 	}
 }
 
 unique_ptr<BaseMonster> EnemyFactory::CreateBossMonster(const int& PlayerLevel)
 {
-	return make_unique<BossMonster>("·¹µå µå·¡°ï", PlayerLevel);
+	return make_unique<BossMonster>("ë ˆë“œ ë“œë˜ê³¤", PlayerLevel);
 }
 
 MonsterType EnemyFactory::GetRandomMonsterType()

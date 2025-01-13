@@ -1,15 +1,6 @@
 #pragma once
 #include <vector>
 
-enum STATUS
-{
-    HP = 0,
-    MAXHP,
-    ATTACK,
-    GOLD,
-    EXP
-};
-
 class PlayerCharacter
 {
 public:

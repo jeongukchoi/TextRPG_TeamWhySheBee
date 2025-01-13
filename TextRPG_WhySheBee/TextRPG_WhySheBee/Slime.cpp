@@ -1,8 +1,8 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 
 void Slime::EnragedSkill()
 {
-	cout << this->GetName() << "ÀÌ ÇÃ·¹ÀÌ¾îÀÇ ¹æ±Ý °ø°ÝÀ» ¹«È¿È­ Çß½À´Ï´Ù!" << endl;
+	cout << this->GetName() << "ì´ í”Œë ˆì´ì–´ì˜ ë°©ê¸ˆ ê³µê²©ì„ ë¬´íš¨í™” í–ˆìŠµë‹ˆë‹¤!" << endl;
 	
 	CurrentHP += Player->GetAttack();
 }

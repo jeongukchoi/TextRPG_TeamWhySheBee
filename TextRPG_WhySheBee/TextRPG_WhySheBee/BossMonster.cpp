@@ -1,12 +1,12 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "BossMonster.h"
 
 
 void BossMonster::EnragedSkill()
 {
-	cout << GetName() << "ÀÌ ÀÒÀº Ã¼·ÂÀÇ Àý¹ÝÀ» È¸º¹ÇÕ´Ï´Ù! " << endl;
+	cout << GetName() << "ì´ ìžƒì€ ì²´ë ¥ì˜ ì ˆë°˜ì„ íšŒë³µí•©ë‹ˆë‹¤! " << endl;
 	CurrentHP += (MaxHP - CurrentHP) / 2;
-	cout << GetName() << " Ã¼·Â: " << to_string(GetHealth());
+	cout << GetName() << " ì²´ë ¥: " << to_string(GetHealth());
 }
 
 void BossMonster::UseRandomSkill()
@@ -29,22 +29,22 @@ void BossMonster::UseRandomSkill()
 
 void BossMonster::FireBress()
 {
-	cout << GetName() << "ÀÌ ¿ëÀÇ ¼û°á ½ºÅ³·Î °ø°ÝÇÕ´Ï´Ù!" << endl;
-	// PlaterChacterÀÇ TakeDamaged ¸Þ¼­µå ±¸Çö ÇÊ¿ä.
+	cout << GetName() << "ì´ ìš©ì˜ ìˆ¨ê²° ìŠ¤í‚¬ë¡œ ê³µê²©í•©ë‹ˆë‹¤!" << endl;
+	// PlaterChacterì˜ TakeDamaged ë©”ì„œë“œ êµ¬í˜„ í•„ìš”.
 	/*
-	* ±âº» °ø°Ý·ÂÀÇ 1.5¹è °ø°Ý
+	* ê¸°ë³¸ ê³µê²©ë ¥ì˜ 1.5ë°° ê³µê²©
 	*/
-	cout << "Player Ã¼·Â: " << to_string(Player->GetHealth()) << endl;
+	cout << "Player ì²´ë ¥: " << to_string(Player->GetHealth()) << endl;
 }
 
 void BossMonster::QuickAttack()
 {
-	cout << GetName() << "ÀÌ Àçºü¸£°Ô µÎ ¹ø °ø°ÝÇÕ´Ï´Ù!" << endl;
-	// PlaterChacterÀÇ TakeDamaged ¸Þ¼­µå ±¸Çö ÇÊ¿ä.
+	cout << GetName() << "ì´ ìž¬ë¹ ë¥´ê²Œ ë‘ ë²ˆ ê³µê²©í•©ë‹ˆë‹¤!" << endl;
+	// PlaterChacterì˜ TakeDamaged ë©”ì„œë“œ êµ¬í˜„ í•„ìš”.
 	/*
-	* Ã¹ ¹øÂ°´Â ±âº» °ø°Ý, µÎ ¹øÂ°´Â ±âº» °ø°ÝÀÇ 0.5¹è °ø°Ý
+	* ì²« ë²ˆì§¸ëŠ” ê¸°ë³¸ ê³µê²©, ë‘ ë²ˆì§¸ëŠ” ê¸°ë³¸ ê³µê²©ì˜ 0.5ë°° ê³µê²©
 	*/
-	cout << "Player Ã¼·Â: " << to_string(Player->GetHealth()) << endl;
+	cout << "Player ì²´ë ¥: " << to_string(Player->GetHealth()) << endl;
 }
 
 
