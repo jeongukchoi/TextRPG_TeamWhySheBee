@@ -30,7 +30,7 @@ public:
 	string GetName() { return Name; }
 	int GetHealth() { return CurrentHP; }
 	int GetDamage() { return Damage; }
-	int GetSpeed() { return Speed; }
+	int GetAttackDelay() { return Speed; }
 };
 
 

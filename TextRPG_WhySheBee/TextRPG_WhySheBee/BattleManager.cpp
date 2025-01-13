@@ -10,9 +10,8 @@ bool BattleManager::Battle()
 	}
 
 	//속도 지정 ( 몬스터 스피드 추가하면 변경)
-	int MonsterAttackDelay = Monster->GetSpeed();
-	int PlayerAttackDelay = Player->GetSpeed();
-
+	int MonsterAttackDelay = Monster->GetAttackDelay();
+	int CurrentAttackDelay = PlayerAttackDelay;
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	// 플레이어 레벨에 기반해서 몬스터 생성
@@ -23,33 +22,25 @@ bool BattleManager::Battle()
 	{
 		//턴 진행 
 		MonsterAttackDelay--;
-		PlayerAttackDelay--;
+		CurrentAttackDelay--;
+
 		// 플레이어 공격
 		if(PlayerAttackDelay <= 0)
 		{
 			PlayerAttack();
-			PlayerAttackDelay = Player->GetSpeed();
+			CurrentAttackDelay = PlayerAttackDelay;
 		}
 
 		// 플레이어 전투 승리
 		if (IsMonsterDead())
 		{
-			cout << "Player이(가) " << Monster->GetName() << "를 처치했습니다!" << endl; // Player GetName 메서드 작성되면 변경.
+			cout << Player->GetName() << "이(가) " << Monster->GetName() << "를 처치했습니다!" << endl;
 			
-			int ExpIndex = PlayerLevel >= MonsterExp.size() ? MonsterExp.size() - 1 : PlayerLevel;
-			int M_Exp = MonsterExp[ExpIndex];
-			Player->IncreaseStat(EXP, M_Exp);
-			Player->IncreaseStat(GOLD, rand() % 101 + 100);
-			cout << "Player이(가) " << "50 EXP와 12 Gold를 획득했습니다."; 
-			cout << " 현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
-			//30 퍼센트 확률로 아이템 드랍후 플레이어에게 전달
-			int Random_Number = rand() % 100;
-			if (Random_Number <= 30)
-			{
-				ItemManager Get_ItemManager;
-				Item* Get_Item = Get_ItemManager.GetRandomItem();
-				Player->AddItem(Get_Item);
-			}
+			// 전투 보상 획득
+			GetRewards();
+			
+			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
+			GetRandomItem();
 
 			Monster.reset();
 			// 승리 반환
@@ -60,14 +51,13 @@ bool BattleManager::Battle()
 		if (MonsterAttackDelay <= 0)
 		{
 			MonsterAttack();
-			MonsterAttackDelay = Monster->GetSpeed();
+			MonsterAttackDelay = Monster->GetAttackDelay();
 		}
 
 		// 플레이어 전투 패배
 		if (IsPlayerDead())
 		{
-			// Player GetName 메서드 작성되면 변경.
-			cout << "Player이(가) 사망했습니다.";
+			cout << Player->GetName() << "이(가) 사망했습니다." << endl;
 			
 			Monster.reset();
 			// 패배 반환
@@ -106,9 +96,9 @@ void BattleManager::CreateMonster()
 // 플레이어 공격 메서드
 void BattleManager::PlayerAttack()
 {
-	// 랜덤하게 아이템 사용 구현 필요.
-	UseItem();
-	cout << "Player가 " << Monster->GetName() << "를(을) 공격합니다! "; // Player GetName 메서드 작성되면 변경.
+	RandomUseItem();
+
+	cout << Player->GetName() << "이(가) " << Monster->GetName() << "를(을) 공격합니다! "; 
 
 	Monster->TakeDamaged(Player->GetAttack());
 	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl;
@@ -159,18 +149,39 @@ bool BattleManager::IsMonsterDead()
 	return Monster->IsDead;
 }
 
-void BattleManager::UseItem()
+void BattleManager::GetRewards()
 {
-	int Random_Number = rand() % 100;
-	if (Random_Number <= 70)
+	if (PlayerLevel < 10)
 	{
-		
-		ItemManager ItemManager;
-		//현재 소지하고 있는아이템 갯수 필요
-		//int Index = rand() % ItemManager.ItemsList.size();
-		int Index = 0;
-		Player->UseItem(Index);
-		
+		int M_Exp = MonsterExp[PlayerLevel - 1];
+		int M_Gold = rand() % 101 + 100;
+
+		Player->IncreaseStat(EXP, M_Exp);
+		Player->IncreaseStat(GOLD, M_Gold);
+
+		cout << Player->GetName() << "이(가) " << to_string(M_Exp) << "EXP와" << to_string(M_Gold) << "Gold를 획득했습니다.";
+		cout << " 현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
+	}
+}
+
+// 확률적으로 아이템 드롭 및 인벤토리 저장 메서드
+void BattleManager::GetRandomItem()
+{
+	int RandomNumber = rand() % 100;
+	if (RandomNumber < 30)
+	{
+		ItemID DropItem = Item_Manager.GetRandomItem();
+		PlayerInventory->AddItem(DropItem);
+	}
+}
+
+// 확률적으로 아이템 사용 메서드
+void BattleManager::RandomUseItem()
+{
+	int RandomNumber = rand() % 100;
+	if (RandomNumber < 30)
+	{
+		PlayerInventory->UseConsumables();
 	}
 }
 
