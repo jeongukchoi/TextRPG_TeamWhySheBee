@@ -5,7 +5,11 @@ enum STATUS
     MAXHP,
     ATTACK,
     GOLD,
-    EXP
+    EXP,
+    MP,
+    STR,
+    INT,
+    SPEED
 };
 
 enum ItemID {
@@ -28,6 +32,12 @@ enum MonsterType
     TROLL,
 };
 
+
+enum JOB
+{
+    WARRIOR = 0,
+    MAGE
+};
 
 class Enums
 {

@@ -1,20 +1,37 @@
 #include "Framework.h"
-#include "PlayerCharacter.h"
 
-PlayerCharacter* PlayerCharacter::instance = nullptr;
+unique_ptr<PlayerCharacter> PlayerCharacter::instance = nullptr;
 
-PlayerCharacter* PlayerCharacter::GetInstance(const string& name)
+unique_ptr<PlayerCharacter> PlayerCharacter::GetInstance(const string& name, JOB job)
 {
     if (!instance)
     {
-        instance = new PlayerCharacter(name);
+        switch (job)
+        {
+        case JOB::WARRIOR:
+            instance = make_unique<Warrior>(name);
+            break;
+        case JOB::MAGE:
+            instance = make_unique<Mage>(name);
+            break;
+        default:
+            instance = make_unique<PlayerCharacter>(name); // 기본 캐릭터
+            break;
+        }
     }
-    return instance;
+    return move(instance); // 소유권을 이전
 }
 
 PlayerCharacter::PlayerCharacter(const string& name)
     : _name(name), _level(1), _health(200), _maxHealth(200), _attack(30), _experience(0), _gold(0)
 {
+}
+
+void PlayerCharacter::TakeDamage(int amount)
+{
+    _health -= amount;
+    cout << "플레이어의 체력이 : " << amount << "만큼 감소했습니다." << endl;
+    cout << "현재 체력 : " << _health << endl;
 }
 
 void PlayerCharacter::DisplayStatus() const
@@ -31,54 +48,49 @@ void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
     switch (stat)
     {
     case HP:
-    {
         _health += amount;
         if (_health > _maxHealth) _health = _maxHealth;
         cout << "체력이 " << amount << "만큼 증가했습니다! 현재 체력: " << _health << "/" << _maxHealth << endl;
-    }
-    break;
-
+        break;
     case MAXHP:
-    {
         _maxHealth += amount;
         cout << "최대 체력이 " << amount << "만큼 증가했습니다! 현재 최대 체력: " << _maxHealth << endl;
-    }
-    break;
-
-
+        break;
     case ATTACK:
-    {
         _attack += amount;
         cout << "공격력이 " << amount << "만큼 증가했습니다! 현재 공격력: " << _attack << endl;
-    }
-    break;
-
+        break;
     case GOLD:
-    {
         _gold += amount;
         cout << "골드가 " << amount << "만큼 증가했습니다! 현재 골드: " << _gold << endl;
-    }
-    break;
-
+        break;
     case EXP:
-    {
         _experience += amount;
         cout << "경험치가 " << amount << "만큼 증가했습니다! 현재 경험치: " << _experience << "/100" << endl;
 
         // 레벨 업 확인
-        while (_experience >= 100)
+        while (_experience >= _level * 10)
         {
-            LevelUp();
-            _experience -= 100; // 레벨 업에 필요한 경험치 차감
+            _experience -= _level * 10;
+            LevelUp(); // 레벨 업에 필요한 경험치 차감
         }
-    }
-    break;
+        break;
+    case STATUS::INT:
+        // 자식 클래스에서 특별히 처리할 수 있도록 함
+        if (Mage* mage = dynamic_cast<Mage*>(this))
+        {
+            mage->IncreaseInt(amount);  // Mage일 경우에만 INT 증가
+        }
+        break;
+    case SPEED:
+        _speed += amount;
+        cout << "속도가 " << amount << "만큼 증가했습니다! 현재 속도: " << _gold << endl;
+        break;
 
     default:
         cout << "알 수 없는 Stat 값입니다!" << endl;
         break;
     }
-
 }
 
 void PlayerCharacter::LevelUp()
@@ -98,7 +110,6 @@ void PlayerCharacter::LevelUp()
 
 void PlayerCharacter::UseItem(int index)
 {
-    
     if (index < 0 || index >= _inventory.size())
     {
         cout << "잘못된 인덱스입니다!" << endl;
@@ -106,33 +117,23 @@ void PlayerCharacter::UseItem(int index)
     }
 
     Item* item = _inventory[index];
-
     item->Use();
 
     // 아이템 사용 후 제거
     RemoveItem(index);
-    
-    return;
 }
+
 void PlayerCharacter::AddItem(Item* item)
 {
-
     _inventory.push_back(item);
     cout << item->GetName() << "을(를) 획득했습니다!" << endl;
-
 }
 
 void PlayerCharacter::RemoveItem(int index)
 {
-    
     if (index < 0 || index >= _inventory.size())
     {
         throw out_of_range("잘못된 인덱스입니다!");
     }
     _inventory.erase(_inventory.begin() + index);
-    
-    return;
 }
-
-
-
