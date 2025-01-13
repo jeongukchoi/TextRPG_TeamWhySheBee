@@ -120,6 +120,8 @@ void Inventory::RemoveItem(Item* item, int index)
 	}
 }
 
+
+
 void Inventory::UseItem(Item* item)
 {
 	ItemID ID = item->GetID();
@@ -164,6 +166,19 @@ void Inventory::UseItem(Item* item)
 	}
 }
 
+void Inventory::UseConsumables()
+{
+	for (Item* item : _Inventory)
+	{
+		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
+		{
+			UseItem(_ItemManager.GetItem(item->GetID()));
+		}
+	}
+}
+
+
+
 void Inventory::Unequip(Item* item)
 {
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
@@ -184,7 +199,6 @@ void Inventory::Unequip(Item* item)
 			character->IncreaseStat(EquippedArmor->GetTargetStat(), EquippedArmor->GetTargetStat() * -1);
 		}
 	}
-	
 }
 
 void Inventory::AutoEquip(Item* item)
