@@ -41,6 +41,7 @@
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="Mage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NormalState.cpp" />
     <ClCompile Include="Orc.cpp" />
@@ -50,13 +51,13 @@
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="SwordUpgrade.cpp" />
     <ClCompile Include="Troll.cpp" />
+    <ClCompile Include="Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Armor.h" />
     <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
-    <ClInclude Include="Inventory.h" />
-    <ClInclude Include="Shop.h" />
+    <ClInclude Include="Mage.h" />
     <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
     <ClInclude Include="BattleManager.h" />
@@ -79,6 +80,9 @@
     <ClInclude Include="Slime.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Troll.h" />
+    <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Shop.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
