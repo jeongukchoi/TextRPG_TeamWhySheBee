@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "HealthPotion.h"
 
-HealthPotion::HealthPotion() : ItemName("HealthPotion"), Type(CONSUMABLES), Price(100), TargetStat(HP), StatAmount(50)
+HealthPotion::HealthPotion() : ItemName("체력 회복 물약"), Type(CONSUMABLES), Price(100), TargetStat(HP), StatAmount(50)
 {
 }
 

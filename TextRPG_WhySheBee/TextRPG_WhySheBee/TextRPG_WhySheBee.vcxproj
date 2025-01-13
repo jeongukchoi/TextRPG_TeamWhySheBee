@@ -37,6 +37,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Armor.h" />
     <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
@@ -166,6 +168,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Framework.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -3,7 +3,11 @@
 
 SwordUpgrade::SwordUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATTACK), UpgradeAmount(5)
 {
-	switch (equipment->GetEquipmentLevel())
+	int EquipmentLevel = equipment->GetEquipmentLevel();
+	UpgradeCost = (EquipmentLevel + 1) * 200;
+	UpgradeAmount = (EquipmentLevel + 1) * 20;
+
+	switch (EquipmentLevel)
 	{
 	case 0:
 		UpgradeName = "칼날 다듬기";

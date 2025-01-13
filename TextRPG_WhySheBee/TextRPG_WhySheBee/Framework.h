@@ -24,6 +24,8 @@
 #include "BossMonster.h"
 #include "EnemyFactory.h"
 #include "BattleManager.h"
+#include "Inventory.h"
+
 
 #include <iostream>
 #include <vector>
@@ -33,7 +35,8 @@
 #include <random>
 #include <cstdlib>
 #include <ctime>
-#include <memory>	
+#include <memory>
+#include <unordered_map>
 
 using namespace std;
 

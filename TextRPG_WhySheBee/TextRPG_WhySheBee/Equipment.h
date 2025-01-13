@@ -5,6 +5,8 @@ public:
 	virtual ~Equipment() {}
 	// 장비 강화 레벨
 	virtual int GetEquipmentLevel() const = 0;
+	// 장비 해제
+
 };
 
 

@@ -1,9 +1,13 @@
 #include "Framework.h"
 #include "ArmorUpgrade.h"
 
-ArmorUpgrade::ArmorUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(MAXHP), UpgradeAmount(20)
+ArmorUpgrade::ArmorUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(MAXHP)
 {
-	switch (equipment->GetEquipmentLevel())
+	int EquipmentLevel = equipment->GetEquipmentLevel();
+	UpgradeCost = (EquipmentLevel + 1) * 150;
+	UpgradeAmount = (EquipmentLevel + 1) * 20;
+
+	switch (EquipmentLevel)
 	{
 	case 0:
 		UpgradeName = "무두질";

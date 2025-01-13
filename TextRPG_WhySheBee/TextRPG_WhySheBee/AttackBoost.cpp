@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "AttackBoost.h"
 
-AttackBoost::AttackBoost() : ItemName("AttackBoost"), Type(CONSUMABLES), Price(200), TargetStat(ATTACK), StatAmount(10)
+AttackBoost::AttackBoost() : ItemName("공격력 증가 물약 (1턴간 유효)"), Type(CONSUMABLES), Price(200), TargetStat(ATTACK), StatAmount(10)
 {
 }
 

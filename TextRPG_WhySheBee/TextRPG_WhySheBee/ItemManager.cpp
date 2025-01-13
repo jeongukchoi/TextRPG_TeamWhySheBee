@@ -6,8 +6,7 @@ ItemManager::ItemManager()
 	ItemsList.push_back(new HealthPotion());
 	ItemsList.push_back(new AttackBoost());
 	ItemsList.push_back(new Sword());
-	ItemsList.push_back(new Armor());
-	srand(time(NULL));
+	ItemsList.push_back(new Armor());	
 }
 
 ItemManager::~ItemManager()
