@@ -100,10 +100,14 @@ void Inventory::RemoveItem(Item* item, int index)
 		if (InventoryCount.find(ID) != InventoryCount.end() && InventoryCount.find(ID)->second > 0) {
 			// 카운트 감소
 			InventoryCount[ID]--;
+			if (InventoryCount[ID] == 0)
+			{
+				_Inventory.erase(_Inventory.begin() + index);
+			}
 
 			cout << "\n^*._아이템 제거_.*^\n\n" << item->GetName() << " 아이템이 인벤토리에서 제거되었습니다.\n\n";
-			return;
 		}
+		return;
 	}
 
 	// 제거할 아이템이 장비인 경우
@@ -260,6 +264,11 @@ void Inventory::AutoEquip(Item* item)
 
 void Inventory::ShowInven()
 {
+	if (_Inventory.empty())
+	{
+		cout << "*************인벤토리가 비어 있습니다.*************\n";
+	}
+
 	cout << "*************인벤토리 목록*************" << endl;
 	for (int i = 0; i < _Inventory.size(); i++)
 	{

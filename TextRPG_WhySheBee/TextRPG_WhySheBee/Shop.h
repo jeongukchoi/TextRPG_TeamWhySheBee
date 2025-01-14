@@ -13,8 +13,6 @@ private:
 public:
 	Shop();
 	void StartShop();
-	void BuyItems();
-	void SellItems();
 	void UpgradeEquipment();
 	void UpgradeEquipment(Equipment* e, int index);
 	int UpgradeSuccessRate(Equipment* e);

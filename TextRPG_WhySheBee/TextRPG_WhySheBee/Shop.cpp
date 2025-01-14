@@ -52,26 +52,32 @@ void Shop::StartShop()
 	}
 }
 
-void Shop::BuyItems()
-{
-}
-
-void Shop::SellItems()
-{
-}
-
 void Shop::UpgradeEquipment()
 {
-	cout << "\n|++++++++++|장비 강화|++++++++++|\n강화 가능한 장비를 표시하고, 강화 여부를 확인하겠습니다.\n(골드가 부족하거나 최대 레벨에 도달한 장비는 표시되지 않습니다.)\n";
-	
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	vector<Item*> _Inventory = PInventory->GetInventory();
 
-	for (int i = 0; i < _Inventory.size(); i++)
+	cout << "\n|++++++++++|장비 강화|++++++++++|\n\n";
+
+	while(true)
 	{
+		// 인벤 출력
+		PInventory->ShowInven();
+
+		cout << "\n강화할 아이템의 번호를 입력하세요.\n입력: ";
+
+		int i = -1;
+		cin >> i;
+		if (i < 0 || i >= _Inventory.size())
+		{
+			cout << "\n잘못된 입력입니다.\n";
+			continue;
+		}
+
 		// 장비 아닌 아이템은 패스
 		if (_Inventory[i]->GetType() != EQUIPMENT)
 		{
+			cout << "\n선택한 아이템이 장비 아이템이 아닙니다.\n";
 			continue;
 		}
 
@@ -84,30 +90,18 @@ void Shop::UpgradeEquipment()
 		if (ID == ARMOR)
 		{
 			//UpgradeName = ArmorUpgrade(ItemToUpgrade).GetUpgradeName();
-			UpgradeAmount = ARMOR_UPGRADE_AMOUNT;
-			UpgradeCost = ARMOR_UPGRADE_COST;
+			UpgradeAmount = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeAmount() + ARMOR_UPGRADE_AMOUNT;
+			UpgradeCost = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeCost() + ARMOR_UPGRADE_COST;
 		}
 		else if (ID == SWORD)
 		{
 			//UpgradeName = SwordUpgrade(ItemToUpgrade).GetUpgradeName();
-			UpgradeAmount = SWORD_UPGRADE_AMOUNT;
-			UpgradeCost = SWORD_UPGRADE_COST;
+			UpgradeAmount = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeAmount() + SWORD_UPGRADE_AMOUNT;
+			UpgradeCost = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeCost() + SWORD_UPGRADE_COST;
 		}
 		else
 		{
 			throw runtime_error("----강화 중 유효하지 않은 ID가 발견되었습니다.");
-		}
-
-		// 골드 부족하면 패스
-		if (character->GetGold() < UpgradeCost)
-		{
-			continue;
-		}
-
-		// 최대 레벨 도달했으면 패스
-		if (dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() >= UPGRADE_MAX_LEVEL)
-		{
-			continue;
 		}
 
 		// 강화 정보 출력 및 사용자 확인
@@ -115,24 +109,42 @@ void Shop::UpgradeEquipment()
 		_Inventory[i]->PrintItemInfo();
 		//cout << "[강화: " << UpgradeName << "]\n";
 		cout << "--> 현재 강화 레벨 : " << dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() << " / 최대 강화 레벨 : " << UPGRADE_MAX_LEVEL << endl;
-		cout << "--> 강화 효과 : " << _Inventory[i]->GetTargetStatString() << " +" << dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeAmount() + UpgradeAmount << " 추가로 증가\n";
+		cout << "--> 강화 효과 : " << _Inventory[i]->GetTargetStatString() << " +" << UpgradeAmount << " 추가로 증가\n";
 		cout << "--> 강화 성공 확률 : " << UpgradeSuccessRate(dynamic_cast<Equipment*>(_Inventory[i])) << "%\n";
 		cout << "--> 강화 비용 : " << UpgradeCost << " 골드 (현재 소지 골드: " << character->GetGold() << ")\n" << endl;
-		cout << "1: 강화하기 / 다른 입력: 다른 아이템 보기 / 0: 상점 메뉴로 돌아가기\n선택: ";
+		cout << "1: 강화하기 / 0: 상점 메뉴로 돌아가기\n선택: ";
 
 		int Choice;
 		cin >> Choice;
 		if (Choice == 1)
 		{
+			// 골드 부족하면 패스
+			if (character->GetGold() < UpgradeCost)
+			{
+				cout << "\n골드가 부족합니다!\n";
+				continue;
+			}
+
+			// 최대 레벨 도달했으면 패스
+			if (dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() >= UPGRADE_MAX_LEVEL)
+			{
+				cout << "\n장비가 최대 레벨에 도달했습니다!\n";
+				continue;
+			}
+
 			// 종류별 강화 함수 호출
 			switch (ID)
 			{
 			case SWORD:
+				// 강화 비용 지출
+				character->IncreaseStat(GOLD, UpgradeCost * -1);
 				UpgradeEquipment(dynamic_cast<Equipment*>(_Inventory[i]), i);
 				cout << "\n다음 아이템을 표시합니다.\n";
 				return;
 
 			case ARMOR:
+				// 강화 비용 지출
+				character->IncreaseStat(GOLD, UpgradeCost * -1);
 				UpgradeEquipment(dynamic_cast<Equipment*>(_Inventory[i]), i);
 				cout << "\n다음 아이템을 표시합니다.\n";
 				return;
@@ -140,8 +152,17 @@ void Shop::UpgradeEquipment()
 				cout << "\n강화할 수 없는 아이템 입니다. 다음 아이템을 표시합니다.\n";
 			}
 		}
+		else if (Choice == 0)
+		{
+			cout << "\n상점 메뉴로 돌아갑니다.\n";
+			break;
+		}
+		else
+		{
+			cout << "\n잘못된 입력입니다.\n";
+			continue;
+		}
 	}
-	cout << "\n강화를 마치고 상점 메뉴로 돌아갑니다.\n";
 	Sleep(1000);
 }
 
@@ -203,8 +224,8 @@ void Shop::BuyItems()
 {
 	cout << "어서오세요 상점입니다 구입할 물품들을 골라보세요!" << endl;
 	int Choice;
-	cout << "***************판매목록***************" << endl;
-	cout << "0.체력 포션 1.힘 증가 물약 2.무기 3.방어구" << endl;
+	cout << "\n***************판매목록***************" << endl;
+	cout << "0.체력 포션\n1.힘 증가 물약\n2.무기\n3.방어구" << endl;
 	cout << "번호 선택: ";
 	cin >> Choice;
 	Inventory* inventory = Inventory::GetInstance();
@@ -273,12 +294,12 @@ void Shop::BuyItems()
 	Item* item;
 	shop.BuyItems(character,item);*/
 
+	cout << "현재 소지한 골드: " << character->GetGold() << endl;
 
 }
 
 void Shop::SellItems()
 {
-
 	Inventory* inventory = Inventory::GetInstance();
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	inventory->ShowInven();
@@ -291,15 +312,10 @@ void Shop::SellItems()
 	{
 		character->IncreaseStat(GOLD, inventory->GetInventory()[choice]->GetPrice() * 0.6);
 		inventory->RemoveItem(inventory->GetInventory()[choice], choice);
+		cout << "판매가 완료되었습니다!\n현재 소지한 골드: " << character->GetGold() << endl;
 	}
 	else
 	{
 		cout << "잘못 입력 하셨습니다!" << endl;
 	}
-
-
-
-
-
-
 }
