@@ -3,7 +3,6 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
-	Player->IncreaseStat(HP, Player->GetMaxHealth()); // 체력 회복
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	Player->DisplayStatus();
