@@ -256,3 +256,27 @@ void Inventory::AutoEquip(Item* item)
 	}
 }
 
+void Inventory::ShowInven()
+{
+	cout << "*************인벤토리 목록*************" << endl;
+	for (int i = 0; i < _Inventory.size(); i++)
+	{
+		cout << i << endl;
+		if (_Inventory[i]->GetType() == CONSUMABLES)
+		{
+			cout << "이름: " << _Inventory[i]->GetName() << endl;
+			cout << "개수: " << InventoryCount[_Inventory[i]->GetID()] << endl;
+			cout << "판매가: " << _Inventory[i]->GetPrice() * 0.6 << endl;
+		}
+		else if (_Inventory[i]->GetType() == EQUIPMENT)
+		{
+			cout << "이름: " << _Inventory[i]->GetName() << endl;
+			cout << "강화 레벨: " << dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() << endl;
+			cout << "판매가: " << _Inventory[i]->GetPrice() * 0.6 << endl;
+
+		}
+	}
+
+
+}
+

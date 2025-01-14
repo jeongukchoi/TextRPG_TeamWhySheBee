@@ -9,5 +9,7 @@ public:
 	void UpgradeSword(Equipment* e, PlayerCharacter* character);
 	void UpgradeArmor(Equipment* e, PlayerCharacter* character);
 	int UpgradeSuccessRate(Equipment* e);
+	void BuyItems();
+	void SellItems();
 };
 

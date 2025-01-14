@@ -33,5 +33,6 @@ public:
 	void UseConsumables();
 	void Unequip(Item* item);
 	void AutoEquip(Item* item);
+	void ShowInven();
 };
 
