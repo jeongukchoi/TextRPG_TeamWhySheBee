@@ -3,6 +3,7 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
+	Player->IncreaseStat(HP, Player->GetMaxHealth());
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	Player->DisplayStatus();
@@ -45,7 +46,7 @@ bool BattleManager::Battle()
 			GetRewards();
 			
 			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
-			//GetRandomItem();
+			GetRandomItem();
 
 			Monster.reset();
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경

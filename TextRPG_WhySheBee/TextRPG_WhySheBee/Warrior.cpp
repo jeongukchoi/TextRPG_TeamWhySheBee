@@ -3,9 +3,9 @@
 Warrior::Warrior(const string& name) : PlayerCharacter(name),_str(1)
 {
 	_level = 1;
-	_health = 200;
-	_maxHealth = 200;
-	_attack = 20;
+	_health = 150;
+	_maxHealth = 150;
+	_attack = 30;
 	_experience = 0;
 	_gold = 0;
 	_attackDelay = 2;
@@ -35,28 +35,28 @@ int Warrior::RandomAttack()
 	int randomWeight = (rand() % 100) + 1;
 	int Damage = 0;
 	Skill* _randomSkill = nullptr;
-	if (randomWeight <= 50)
+	if (randomWeight <= 70)
 	{
 		cout << "기본 공격!!" << endl;
 		Damage = _attack; // 기본 공격은 _attack 값
 		cout << "데미지: " << Damage << endl;
 		return Damage;
 	}
-	else if (randomWeight <= 80)
+	else if (randomWeight <= 90)
 	{
 		cout << "스킬(파워스트라이크!)을 사용합니다!" << endl;
-		Damage = _attack  + _str * 15; // 스킬은 공격력의 1.5배
+		Damage = _attack  + _str * 20; // 스킬은 공격력의 1.5배
 		_randomSkill = new PowerStrike();
 	}
 	else
 	{
 		cout << "궁극기를 사용합니다!" << endl;
-		Damage = _attack  + _str* 30; // 궁극기는 공격력의 3배
+		Damage = _attack  + _str* 50; // 궁극기는 공격력의 3배
 		_randomSkill = new LastStrike();		
 	}
 	
 
-	Damage = _randomSkill->Activate(_attack,_str);
+	//Damage = _randomSkill->Activate(_attack,_str);
 
 	cout << "데미지: " << Damage << endl;
 

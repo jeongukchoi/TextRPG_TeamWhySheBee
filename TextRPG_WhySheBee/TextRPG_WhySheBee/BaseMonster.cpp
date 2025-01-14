@@ -24,7 +24,7 @@ BaseMonster::~BaseMonster()
 void BaseMonster::Calculate_HPandDamage(const int& PlayerLevel)
 {
 	int HP_Multiplier = (rand() % 51) + 50;
-	int Damage_Multiplier = (rand() % 7) + 7;
+	int Damage_Multiplier = (rand() % 5) + 10;
 
 	MaxHP += PlayerLevel * HP_Multiplier;
 	Damage += PlayerLevel * Damage_Multiplier;

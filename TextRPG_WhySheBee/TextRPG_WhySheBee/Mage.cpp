@@ -45,7 +45,7 @@ int Mage::RandomAttack()
 		_randomSkill = new Meteor();
 	}	
 
-	Damage = _randomSkill->Activate(_attack, _int);
+	//Damage = _randomSkill->Activate(_attack, _int);
 
 	cout << "데미지: " << Damage << endl;
 	return Damage;

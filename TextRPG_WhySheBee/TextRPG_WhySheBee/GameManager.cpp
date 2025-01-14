@@ -36,7 +36,7 @@ void GameManager::StartGame()
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
             cout << "레벨 10에 도달했습니다! 보스와의 전투를 시작합니다." << endl;
-            break;
+            //break;
         }
     }
 }
