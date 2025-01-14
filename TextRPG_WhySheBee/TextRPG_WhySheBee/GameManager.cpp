@@ -9,8 +9,11 @@ void GameManager::StartGame()
 {
     cout << "게임을 시작합니다. " << endl;
     CreateCharacter();
+    Shop* shop = new Shop();
     while (true)
     {
+
+
         Battle();
         if (over)
         {
@@ -18,21 +21,25 @@ void GameManager::StartGame()
             return;
         }
 
-        /*
+
+
+        
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
         cin >> choice;
 
         if (choice == 'Y' || choice == 'y')
         {
-            VisitShop();
+            VisitShop(shop);
         }
         else if (choice == 'N' || choice == 'n')
         {
             Battle();
         }
 
-        */
+        
+
+
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
             cout << "레벨 10에 도달했습니다! 보스와의 전투를 시작합니다." << endl;
@@ -74,12 +81,15 @@ void GameManager::DisplayInventory()
 {
     cout << "인벤토리 목록" << endl;
     // 인벤토리 출력 로직
+    Inventory* inven = Inventory::GetInstance();
+    inven->ShowInven();
 }
 
-void GameManager::VisitShop()
+void GameManager::VisitShop(Shop* shop)
 {
     cout << "상점에 방문하셨습니다!" << endl;
-    // 상점 방문 로직 (아이템 구매 등)
+    
+    shop->StartShop();
 }
 
 void GameManager::ShowEnding()

@@ -7,7 +7,7 @@ Warrior::Warrior(const string& name) : PlayerCharacter(name),_str(1)
 	_maxHealth = 200;
 	_attack = 30;
 	_experience = 0;
-	_gold = 0;
+	_gold = 10000;
 	_attackDelay = 2;
 	_job = WARRIOR;
 }
@@ -35,14 +35,14 @@ int Warrior::RandomAttack()
 	int randomWeight = (rand() % 100) + 1;
 	int Damage = 0;
 	Skill* _randomSkill = nullptr;
-	if (randomWeight <= 10)
+	if (randomWeight <= 70)
 	{
 		cout << "기본 공격!!" << endl;
 		Damage = _attack; // 기본 공격은 _attack 값
 		cout << "데미지: " << Damage << endl;
 		return Damage;
 	}
-	else if (randomWeight <= 80)
+	else if (randomWeight <= 90)
 	{
 		_randomSkill = new PowerStrike();
 	}
