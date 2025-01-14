@@ -298,6 +298,6 @@ void Inventory::ShowInven()
 
 		}
 	}
-	cout << endl;
+	cout << endl << endl;
 }
 

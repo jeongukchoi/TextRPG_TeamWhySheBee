@@ -71,6 +71,11 @@ void Shop::BuyItems()
 		}
 		else if (Choice >= 0 && Choice < ItemDB.size())
 		{
+			if (character->GetGold() < ItemDB[Choice]->GetPrice())
+			{
+				cout << "\n!----골드가 부족합니다!----!\n\n";
+				continue;
+			}
 			// 골드 차감 후 인벤토리에 추가
 			character->IncreaseStat(GOLD, ItemDB[Choice]->GetPrice() * -1);
 			inventory->AddItem(ItemDB[Choice]->GetID());
@@ -149,12 +154,13 @@ void Shop::UpgradeEquipment()
 		if (i == -1)
 		{
 			cout << "\n상점 메뉴로 돌아갑니다.\n";
-			return;
+			break;
 		}
 
 		if (i < 0 || i >= _Inventory.size())
 		{
 			cout << "\n잘못된 입력입니다.\n";
+			Sleep(500);
 			continue;
 		}
 
@@ -162,6 +168,7 @@ void Shop::UpgradeEquipment()
 		if (_Inventory[i]->GetType() != EQUIPMENT)
 		{
 			cout << "\n선택한 아이템이 장비 아이템이 아닙니다.\n";
+			Sleep(500);
 			continue;
 		}
 
@@ -206,6 +213,7 @@ void Shop::UpgradeEquipment()
 			if (character->GetGold() < UpgradeCost)
 			{
 				cout << "\n골드가 부족합니다!\n";
+				Sleep(500);
 				continue;
 			}
 
@@ -213,6 +221,7 @@ void Shop::UpgradeEquipment()
 			if (dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() >= UPGRADE_MAX_LEVEL)
 			{
 				cout << "\n장비가 최대 레벨에 도달했습니다!\n";
+				Sleep(500);
 				continue;
 			}
 
@@ -223,17 +232,20 @@ void Shop::UpgradeEquipment()
 				// 강화 비용 지출
 				character->IncreaseStat(GOLD, UpgradeCost * -1);
 				UpgradeEquipment(dynamic_cast<Equipment*>(_Inventory[i]), i);
-				cout << "\n다음 아이템을 표시합니다.\n";
+				cout << "\n상점 메뉴로 돌아갑니다.\n";
+				Sleep(500);
 				return;
 
 			case ARMOR:
 				// 강화 비용 지출
 				character->IncreaseStat(GOLD, UpgradeCost * -1);
 				UpgradeEquipment(dynamic_cast<Equipment*>(_Inventory[i]), i);
-				cout << "\n다음 아이템을 표시합니다.\n";
+				cout << "\n상점 메뉴로 돌아갑니다.\n";
+				Sleep(500);
 				return;
 			default:
-				cout << "\n강화할 수 없는 아이템 입니다. 다음 아이템을 표시합니다.\n";
+				cout << "\n(로직 오류) 강화 중 강화할 수 없는 아이템을 맞닥뜨렸습니다.\n";
+				return;
 			}
 		}
 		else if (Choice == 0)
@@ -244,6 +256,7 @@ void Shop::UpgradeEquipment()
 		else
 		{
 			cout << "\n잘못된 입력입니다.\n";
+			Sleep(500);
 			continue;
 		}
 	}
@@ -295,7 +308,6 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 	}
 	
 	PInventory->AutoEquip(_Inventory[index]);
-	Sleep(1000);
 }
 
 // 강화 성공 확률 = 90 - (강화 레벨)*20

@@ -7,17 +7,24 @@ UniquePotion::UniquePotion() : ItemName("유니크 스탯 증가 비약"), Type(
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	switch (character->GetPlayerJob())
 	{
-	// 워리어의 경우
+		// 워리어의 경우
 	case WARRIOR:
 		TargetStat = STR;
 		StatAmount = 15;
 		break;
 
-	// 메이지의 경우
+		// 메이지의 경우
 	case MAGE:
 		TargetStat = INTELLGENCE;
 		StatAmount = 10;
+		break;
+
+
+	default:
+		TargetStat = (STATUS) 0;
+		StatAmount = 0;
 	}
+
 }
 
 string UniquePotion::GetTargetStatString() const
@@ -42,8 +49,7 @@ void UniquePotion::Use()
 {
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
-	cout << GetTargetStatString() << "이 " << StatAmount << " 증가하였습니다.\n"
-		<< "현재 " << GetTargetStatString() << ": " << character->GetUniqueStat();
+	cout << GetTargetStatString() << "이 " << StatAmount << " 증가하였습니다.\n";
 }
 
 void UniquePotion::PrintItemInfo()
