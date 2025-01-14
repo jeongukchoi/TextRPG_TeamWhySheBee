@@ -17,7 +17,7 @@ public:
 	ItemID GetID() const override { return UNIQUE_POTION; }
 	STATUS GetTargetStat() const override { return TargetStat; }
 	// 변경할 스탯 스트링
-	string GetTargetStatString() const override { return "체력"; }
+	string GetTargetStatString() const override;
 	int GetStatAmount() const override { return StatAmount; }
 
 	void Use() override;

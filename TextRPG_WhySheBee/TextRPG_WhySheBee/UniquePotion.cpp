@@ -5,7 +5,7 @@ UniquePotion::UniquePotion() : ItemName("유니크 스탯 증가 비약"), Type(
 {
 	
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
-	switch (character->GetJob())
+	switch (character->GetPlayerJob())
 	{
 	// 워리어의 경우
 	case WARRIOR:
@@ -17,6 +17,24 @@ UniquePotion::UniquePotion() : ItemName("유니크 스탯 증가 비약"), Type(
 	case MAGE:
 		TargetStat = INTELLGENCE;
 		StatAmount = 10;
+	}
+}
+
+string UniquePotion::GetTargetStatString() const
+{
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
+	switch (character->GetPlayerJob())
+	{
+	// 워리어의 경우
+	case WARRIOR:
+		return "힘";
+
+	// 메이지의 경우
+	case MAGE:
+		return "지능";
+
+	default:
+		return "";
 	}
 }
 
