@@ -6,9 +6,13 @@ Mage::Mage(const string& name) :PlayerCharacter(name), _int(1)
 	_health = 100;
 	_maxHealth = 100;
 	_attack = 50;
+	_health = 150;
+	_maxHealth = 150;
+	_attack = 15;
 	_experience = 0;
 	_gold = 0;
 	_attackDelay = 4;
+	_attackDelay = 3;
 }
 
 int Mage::Attack()
@@ -23,6 +27,7 @@ int Mage::RandomAttack()
 	int randomWeight = (rand() % 100) + 1;
 	int Damage = 0;
 	if (randomWeight <= 50)
+	if (randomWeight <= 40)
 	{
 		cout << "기본 공격을 사용합니다!" << endl;
 		Damage = _attack; // 기본 공격은 _attack 값
@@ -31,11 +36,13 @@ int Mage::RandomAttack()
 	{
 		cout << _name << "이(가) 매직에로우를 시전했습니다!" << endl;
 		Damage = _attack * 2 + _int * 5; // 스킬은 공격력의 1.5배 + 알파
+		Damage = _attack + _int * 70; // 스킬은 공격력의 1.5배 + 알파
 	}
 	else
 	{
 		cout << "궁극기를 사용합니다!" << endl;
 		Damage = _attack * 3 + _int * 20; // 궁극기는 공격력의 3배 + 알파
+		Damage = _attack + _int * 200; // 궁극기는 공격력의 3배 + 알파 // tnwjd 
 	}
 
 	cout << "총 데미지: " << Damage << endl;

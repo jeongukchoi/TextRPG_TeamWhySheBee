@@ -45,6 +45,8 @@ private:
 	void GetRandomItem();
 	// 확률적으로 아이템 사용 메서드
 	void RandomUseItem();
+	// 공격 최소 데미지 최고 데미지 변경
+	float AttackMinaMax(float min, float max);
 };
 
 

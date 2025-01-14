@@ -57,7 +57,6 @@ bool BattleManager::Battle()
 		{
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
-			//Sleep(200);
 		}
 
 
@@ -97,7 +96,6 @@ void BattleManager::CreateMonster()
 		cout << "보스 몬스터 " << Monster->GetName() << "이 불을 내뿜으며 등장합니다!";
 		cout << " 체력: " << to_string(Monster->GetHealth()) << ", 공격력 : " << to_string(Monster->GetDamage()) << endl;
 	}
-	cout << "전투가 시작됩니다!" << endl;
 }
 
 // 플레이어 공격 메서드
@@ -109,6 +107,9 @@ void BattleManager::PlayerAttack()
 
 	Monster->TakeDamaged(Player->GetAttack());
 	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl;
+	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
+	Monster->TakeDamaged(HitDamage);
+	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl ;
 }
 
 // 몬스터 공격 메서드
@@ -126,6 +127,7 @@ void BattleManager::MonsterAttack()
 		else
 		{
 			cout << Boss->GetName() << "이 Player에게 일반 공격을 합니다! "; // Player GetName 메서드 작성되면 변경.
+			cout << Boss->GetName() << "이 "<< Player->GetName() << " 에게 일반 공격을 합니다! ";
 			Player->TakeDamage(Monster->GetDamage());
 			
 			//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
@@ -135,6 +137,7 @@ void BattleManager::MonsterAttack()
 	else
 	{
 		cout << Monster->GetName() << "이(가)" << " Player를 공격합니다! "; // Player GetName 메서드 작성되면 변경.
+		cout << Monster->GetName() << "이(가)" << Player->GetName() <<"를 공격합니다! "; 
 		Player->TakeDamage(Monster->GetDamage());
 		//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 	}
@@ -191,5 +194,14 @@ void BattleManager::RandomUseItem()
 	{
 		PlayerInventory->UseConsumables();
 	}
+}
+
+float BattleManager::AttackMinaMax(float min , float max)
+{
+	random_device Rd; // 시드용 랜덤 장치
+	mt19937 Gen(Rd()); //  Mersenne Twister dpswls
+	uniform_real_distribution<float> Dis(0.7f, 1.0); //0.7부터 1.0까지 균일 하게
+	float randomValue = Dis(Gen);
+	return randomValue;
 }
 

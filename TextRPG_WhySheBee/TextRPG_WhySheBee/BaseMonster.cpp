@@ -23,8 +23,8 @@ BaseMonster::~BaseMonster()
 // MaxHP와 Damage 초기화 메서드
 void BaseMonster::Calculate_HPandDamage(const int& PlayerLevel)
 {
-	int HP_Multiplier = (rand() % 51) + 30;
-	int Damage_Multiplier = (rand() % 8) + 5;
+	int HP_Multiplier = (rand() % 51) + 50;
+	int Damage_Multiplier = (rand() % 7) + 7;
 
 	MaxHP += PlayerLevel * HP_Multiplier;
 	Damage += PlayerLevel * Damage_Multiplier;
