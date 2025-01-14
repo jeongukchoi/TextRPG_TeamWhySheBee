@@ -53,6 +53,9 @@ void Inventory::AddItem(ItemID ID)
 				_Inventory.push_back(new AttackBoost());
 				break;
 
+			case UNIQUE_POTION:
+				_Inventory.push_back(new UniquePotion());
+
 			default:
 				cout << "\n아이템 ID가 유효하지 않아 인벤토리에 추가하지 못했습니다.\n";
 				break;
@@ -267,12 +270,13 @@ void Inventory::ShowInven()
 	if (_Inventory.empty())
 	{
 		cout << "*************인벤토리가 비어 있습니다.*************\n";
+		return;
 	}
 
 	cout << "*************인벤토리 목록*************" << endl;
 	for (int i = 0; i < _Inventory.size(); i++)
 	{
-		cout << i << endl;
+		cout << "[아이템 번호 " << i + 1 << "]" << endl;
 		if (_Inventory[i]->GetType() == CONSUMABLES)
 		{
 			cout << "이름: " << _Inventory[i]->GetName() << endl;
@@ -287,7 +291,6 @@ void Inventory::ShowInven()
 
 		}
 	}
-
-
+	cout << endl;
 }
 

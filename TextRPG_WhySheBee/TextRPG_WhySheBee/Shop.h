@@ -18,5 +18,6 @@ public:
 	int UpgradeSuccessRate(Equipment* e);
 	void BuyItems();
 	void SellItems();
+	void DrinkTea();
 };
 

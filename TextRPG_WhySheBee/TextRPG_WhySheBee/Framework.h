@@ -50,6 +50,7 @@ using namespace std;
 #include "Armor.h"
 #include "AttackBoost.h"
 #include "HealthPotion.h"
+#include "UniquePotion.h"
 #include "ItemManager.h"
 #include "Inventory.h"
 #include "Shop.h"
