@@ -55,6 +55,7 @@ int Warrior::RandomAttack()
 
 	cout << "데미지: " << Damage << endl;
 
+	delete _randomSkill;
 	return Damage;
 }
 

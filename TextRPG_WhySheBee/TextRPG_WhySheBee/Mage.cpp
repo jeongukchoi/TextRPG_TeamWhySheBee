@@ -43,6 +43,7 @@ int Mage::RandomAttack()
 	Damage = _randomSkill->Activate(_attack, _int);
 
 	cout << "데미지: " << Damage << endl;
+	delete _randomSkill;
 	return Damage;
 }
 
