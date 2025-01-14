@@ -7,7 +7,7 @@ Sword::Sword() : ItemName("배틀 소드"), Type(EQUIPMENT), Price(500), TargetS
 
 void Sword::PrintItemInfo()
 {
-	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "공격력 +" << StatAmount << endl;
+	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "공격력 +" << StatAmount << endl << endl;
 }
 
 void Sword::Use()

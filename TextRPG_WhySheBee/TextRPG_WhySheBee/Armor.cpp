@@ -7,7 +7,7 @@ Armor::Armor() : ItemName("레더 아머"), Type(EQUIPMENT), Price(300), TargetS
 
 void Armor::PrintItemInfo()
 {
-	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "체력 +" << StatAmount << endl;
+	cout << "\n아이템: " << ItemName << "\n가격: " << Price << "\n효과: " << "최대 체력 +" << StatAmount << endl << endl;
 }
 
 void Armor::Use()
