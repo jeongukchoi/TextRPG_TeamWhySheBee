@@ -35,6 +35,14 @@ using namespace std;
 
 //플레이어관련
 
+#include "Skill.h"
+#include "PowerStrike.h"
+#include "MagicArrow.h"
+#include "Meteor.h"
+#include "LastStrike.h"
+
+
+
 #include "PlayerCharacter.h"
 #include "Warrior.h"
 #include "Mage.h"
