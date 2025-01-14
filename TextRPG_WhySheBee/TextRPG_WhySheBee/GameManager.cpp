@@ -117,14 +117,10 @@ void GameManager::Battle()
     bool battleResult = battleManager.Battle();
 
     // 결과 처리
-    if (battleResult) 
+   
+    if (!battleResult) 
     {
-        std::cout << "전투 승리!" << std::endl;
-    }
-
-    else 
-    {
-        std::cout << "전투 패배..." << std::endl;
         over = true;
     }
+  
 }

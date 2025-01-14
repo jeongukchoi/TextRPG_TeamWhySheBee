@@ -32,7 +32,7 @@ bool BattleManager::Battle()
 		{
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
-			//Sleep(200);
+			Sleep(200);
 		}
 
 		// 플레이어 전투 승리
@@ -58,7 +58,7 @@ bool BattleManager::Battle()
 		{
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
-			//Sleep(200);			
+			Sleep(200);			
 		}
 
 
