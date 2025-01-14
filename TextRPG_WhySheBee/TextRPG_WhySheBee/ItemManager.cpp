@@ -67,16 +67,14 @@ void ItemManager::ShowItemDB()
 {
 	if (ItemsList.empty())
 	{
-		cout << "*************인벤토리가 비어 있습니다.*************\n";
+		cout << "*************(오류) 아이템 DB가 비어 있습니다.*************\n";
 		return;
 	}
 
-	cout << "*************인벤토리 목록*************" << endl;
 	for (int i = 0; i < ItemsList.size(); i++)
 	{
 		cout << "[아이템 번호 " << i + 1 << "]" << endl;
 		ItemsList[i]->PrintItemInfo();
 	}
-	cout << endl;
 }
 

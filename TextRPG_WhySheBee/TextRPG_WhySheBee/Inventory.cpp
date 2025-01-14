@@ -197,6 +197,14 @@ void Inventory::UseItem(Item* item)
 	Sleep(1000);
 }
 
+void Inventory::ReplaceItem(Item* item, int index)
+{
+	if (item != nullptr && index >= 0 && index < _Inventory.size())
+	{
+		_Inventory[index] = item;
+	}
+}
+
 void Inventory::UseConsumables()
 {
 	for (Item* item : _Inventory)
@@ -221,6 +229,7 @@ void Inventory::Unequip(ItemID ID)
 			character->IncreaseStat(EquippedWeapon->GetTargetStat(), EquippedWeapon->GetTargetStat() * -1);
 			EquippedWeapon = nullptr;
 		}
+		break;
 	case ARMOR:
 		if (EquippedArmor != nullptr)
 		{
@@ -229,6 +238,7 @@ void Inventory::Unequip(ItemID ID)
 			character->IncreaseStat(EquippedArmor->GetTargetStat(), EquippedArmor->GetTargetStat() * -1);
 			EquippedArmor = nullptr;
 		}
+		break;
 	}
 }
 

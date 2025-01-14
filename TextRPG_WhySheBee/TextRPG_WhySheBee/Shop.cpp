@@ -51,14 +51,13 @@ void Shop::BuyItems()
 	ItemManager IM;
 	const vector<Item*>& ItemDB = IM.GetItemsList();
 
-	cout << "구입할 물품을 골라보세요!" << endl;
 	while (true)
 	{
+		cout << "\n구입할 물품을 골라보세요!\n";
 		cout << "\n***************상점 아이템 목록***************" << endl;
-		cout << "(현재 소지한 골드: " << character->GetGold() << ")" << endl;
-
 		IM.ShowItemDB();
 		cout << "0: 상점 메뉴로 돌아가기\n\n";
+		cout << "(현재 소지한 골드: " << character->GetGold() << ")\n\n" << endl;
 		cout << "번호를 입력하세요: ";
 		int Choice;
 		cin >> Choice;
@@ -74,8 +73,10 @@ void Shop::BuyItems()
 			if (character->GetGold() < ItemDB[Choice]->GetPrice())
 			{
 				cout << "\n!----골드가 부족합니다!----!\n\n";
+				Sleep(1000);
 				continue;
 			}
+			cout << endl;
 			// 골드 차감 후 인벤토리에 추가
 			character->IncreaseStat(GOLD, ItemDB[Choice]->GetPrice() * -1);
 			inventory->AddItem(ItemDB[Choice]->GetID());
@@ -83,6 +84,7 @@ void Shop::BuyItems()
 		else
 		{
 			cout << "\n유효하지 않은 입력입니다.\n";
+			Sleep(1000);
 		}
 	}
 }
@@ -92,11 +94,11 @@ void Shop::SellItems()
 	Inventory* inventory = Inventory::GetInstance();
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 
-	cout << "판매할 물품을 골라보세요!" << endl;
 	while (true)
 	{
+		cout << "\n판매할 물품을 골라보세요!\n";
 		inventory->ShowInven();
-		cout << "0: 상점 메뉴로 돌아가기\n\n";
+		cout << "0: 상점 메뉴로 돌아가기\n";
 		int choice;
 		cout << "번호를 입력하세요: ";
 		cin >> choice;
@@ -112,10 +114,12 @@ void Shop::SellItems()
 			character->IncreaseStat(GOLD, inventory->GetInventory()[choice]->GetPrice() * 0.6); // double ->int 어떻게?
 			inventory->RemoveItem(inventory->GetInventory()[choice], choice);
 			cout << "\n현재 소지한 골드: " << character->GetGold() << endl;
+			Sleep(1000);
 		}
 		else
 		{
-			cout << "잘못 입력 하셨습니다!" << endl;
+			cout << "\n유효하지 않은 입력입니다.\n";
+			Sleep(1000);
 		}
 	}
 }
@@ -136,7 +140,7 @@ void Shop::DrinkTea()
 void Shop::UpgradeEquipment()
 {
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
-	vector<Item*> _Inventory = PInventory->GetInventory();
+	const vector<Item*>& _Inventory = PInventory->GetInventory();
 
 	cout << "\n|++++++++++|장비 강화|++++++++++|\n";
 
@@ -284,19 +288,20 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 		cout << "...";
 	}
 
-	vector<Item*> _Inventory = PInventory->GetInventory();
+	const vector<Item*>& _Inventory = PInventory->GetInventory();
 	if (rand() % 100 < UpgradeSuccessRate(equipment))
 	{
 		cout << "\n'*,._+-Oo 강화 성공! oO-+.,*^'\n";
 
-		
 		if (equipment->GetID() == SWORD)
 		{
-			_Inventory[index] = new SwordUpgrade(equipment);
+			equipment = new SwordUpgrade(equipment);
+			PInventory->ReplaceItem(equipment, index);
 		}
 		else if (equipment->GetID() == ARMOR)
 		{
-			_Inventory[index] = new ArmorUpgrade(equipment);
+			equipment = new ArmorUpgrade(equipment);
+			PInventory->ReplaceItem(equipment, index);
 		}
 		
 		cout << "--> 현재 장비 효과 : " << _Inventory[index]->GetTargetStatString() << " +" << _Inventory[index]->GetStatAmount() << endl;
