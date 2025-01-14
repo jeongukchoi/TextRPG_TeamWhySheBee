@@ -3,12 +3,13 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
+	Player->IncreaseStat(HP, Player->GetMaxHealth()); // 체력 회복
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	Player->DisplayStatus();
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
-	Player->IncreaseStat(HP, Player->GetMaxHealth()); // 체력 회복
+	
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
@@ -19,7 +20,6 @@ bool BattleManager::Battle()
 	int MonsterAttackDelay = Monster->GetAttackDelay();
 	int CurrentAttackDelay = PlayerAttackDelay;
 
-	// 현재 플레이어의 레벨 저장
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{
@@ -46,6 +46,7 @@ bool BattleManager::Battle()
 			GetRewards();
 			
 			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
+			//GetRandomItem();
 
 			Monster.reset();
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
@@ -57,6 +58,7 @@ bool BattleManager::Battle()
 		{
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
+			//Sleep(200);			
 		}
 
 
@@ -96,6 +98,7 @@ void BattleManager::CreateMonster()
 		cout << "보스 몬스터 " << Monster->GetName() << "이 불을 내뿜으며 등장합니다!";
 		cout << " 체력: " << to_string(Monster->GetHealth()) << ", 공격력 : " << to_string(Monster->GetDamage()) << endl;
 	}
+	cout << "전투가 시작됩니다!\n" << endl;
 }
 
 // 플레이어 공격 메서드
@@ -104,9 +107,6 @@ void BattleManager::PlayerAttack()
 	RandomUseItem();
 
 	cout << Player->GetName() << "이(가) " << Monster->GetName() << "를(을) 공격합니다! "; 
-
-	Monster->TakeDamaged(Player->GetAttack());
-	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl;
 	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
 	Monster->TakeDamaged(HitDamage);
 	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl ;
@@ -126,7 +126,6 @@ void BattleManager::MonsterAttack()
 		}
 		else
 		{
-			cout << Boss->GetName() << "이 Player에게 일반 공격을 합니다! "; // Player GetName 메서드 작성되면 변경.
 			cout << Boss->GetName() << "이 "<< Player->GetName() << " 에게 일반 공격을 합니다! ";
 			Player->TakeDamage(Monster->GetDamage());
 			
@@ -136,7 +135,6 @@ void BattleManager::MonsterAttack()
 	// 일반 몬스터 공격 로직
 	else
 	{
-		cout << Monster->GetName() << "이(가)" << " Player를 공격합니다! "; // Player GetName 메서드 작성되면 변경.
 		cout << Monster->GetName() << "이(가)" << Player->GetName() <<"를 공격합니다! "; 
 		Player->TakeDamage(Monster->GetDamage());
 		//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
