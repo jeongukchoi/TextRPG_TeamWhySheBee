@@ -11,6 +11,7 @@
 #include <memory>
 #include <unordered_map>
 #include <windows.h>
+#include <limits>
 
 using namespace std;
 
@@ -41,5 +42,6 @@ using namespace std;
 #include "EnemyFactory.h"
 #include "BattleManager.h"
 #include "Inventory.h"
+#include "Shop.h"
 
 

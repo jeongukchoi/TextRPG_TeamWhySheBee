@@ -82,6 +82,8 @@ void GameManager::VisitShop()
     cout << "상점에 방문하셨습니다!" << endl;
 
     // 상점 방문 로직 (아이템 구매 등)
+    Shop shop;
+    shop.StartShop();
 
 }
 

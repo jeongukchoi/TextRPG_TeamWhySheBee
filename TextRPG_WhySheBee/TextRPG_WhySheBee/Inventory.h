@@ -27,11 +27,13 @@ private:
 public:
 	static Inventory* GetInstance();
 	const vector<Item*>& GetInventory();
+	Item* GetEquippedWeapon() { return EquippedWeapon; }
+	Item* GetEquippedArmor() { return EquippedArmor; }
 	void AddItem(ItemID ID);
 	void RemoveItem(Item* item, int index);
 	void UseItem(Item* item);
 	void UseConsumables();
-	void Unequip(Item* item);
+	void Unequip(ItemID ID);
 	void AutoEquip(Item* item);
 };
 

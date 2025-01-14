@@ -85,10 +85,13 @@ void Inventory::AddItem(ItemID ID)
 
 void Inventory::RemoveItem(Item* item, int index)
 {	
+	if (item == nullptr)
+	{
+		throw runtime_error("\n---------인벤토리에서 아이템을 제거하는 중 인덱스 오류 발생\n");
+	}
+
 	ItemID ID = item->GetID();
 	ItemType Type = item->GetType();
-	
-	
 	
 	// 제거할 아이템이 소모품인 경우
 	if (Type == CONSUMABLES)
@@ -99,38 +102,36 @@ void Inventory::RemoveItem(Item* item, int index)
 			InventoryCount[ID]--;
 
 			cout << "\n^*._아이템 제거_.*^\n\n" << item->GetName() << " 아이템이 인벤토리에서 제거되었습니다.\n\n";
+			return;
 		}
 	}
 
-	// 제거할 아이템이 무기인 경우 (SellItem() 통해서만 제거됨 -> 인덱스 알 수 있음)
-	else if (ID == SWORD)
+	// 제거할 아이템이 장비인 경우
+	if (ID == SWORD)
 	{
-		// 인덱스로 인벤토리에서 장비를 제거
-		if (index > _Inventory.size())
-		{
-			throw out_of_range("\n-----------인벤토리에서 아이템을 제거하는 중 오류가 발생하였습니다.\n");
-		}
-		
-		// 착용 중인 경우
+		// 착용 중인 경우 장착 해제
 		if (EquippedWeapon == item)
 		{
-			Unequip(item);
-		}
-
-		if (_Inventory[index]->GetType() == EQUIPMENT)
-		{
-			delete _Inventory[index];
-			_Inventory.erase(_Inventory.begin() + index);
-			cout << "\n^*._아이템 제거_.*^\n\n" << item->GetName() << " 아이템이 인벤토리에서 제거되었습니다.\n\n";
-		}
-		else
-		{
-			cout << "\n제거할 아이템의 종류와 인벤토리 내 아이템의 종류가 일치하지 않습니다.\n";
+			Unequip(SWORD);
 		}
 	}
+	else if (ID == ARMOR)
+	{
+		// 착용 중인 경우 장착 해제
+		if (EquippedArmor == item)
+		{
+			Unequip(ARMOR);
+		}
+	}
+	
+	if (_Inventory[index]->GetID() != ID)
+	{
+		throw runtime_error("\n-------RemoveItem 인자로 받은 인덱스가 잘못된 객체를 가리키고 있음");
+	}
+	cout << "\n^*._아이템 제거_.*^\n" << item->GetName() << "아이템이 인벤토리에서 제거되었습니다.\n\n";
+	delete item;
+	_Inventory.erase(_Inventory.begin() + index);
 }
-
-
 
 void Inventory::UseItem(Item* item)
 {
@@ -160,22 +161,25 @@ void Inventory::UseItem(Item* item)
 	// 장비인 경우 착용 중인 장비 해제 후 해당 장비 착용
 	if (Type == EQUIPMENT)
 	{
+		Equipment* equipment = dynamic_cast<Equipment*>(item);
 		switch (ID)
 		{
 		case SWORD:
 			// 현재 장비 해제 후 아이템 사용
-			Unequip(EquippedWeapon);
+			Unequip(SWORD);
 			item->Use();
-			EquippedWeapon = reinterpret_cast<Equipment*>(item);
+			EquippedWeapon = equipment;
 			break;
 
 		case ARMOR:
-			Unequip(EquippedArmor);
+			Unequip(ARMOR);
 			item->Use();
-			EquippedArmor = reinterpret_cast<Equipment*>(item);
+			EquippedArmor = equipment;
 			break;
 		}
-
+		cout << "\n._*oO@-아이템 장착-@Oo*_.\n\n";
+		cout << equipment->GetName() << "(+" << equipment->GetEquipmentLevel() << ") 장비를 착용했습니다." << endl;
+		equipment->PrintItemInfo();
 	}
 }
 
@@ -190,24 +194,26 @@ void Inventory::UseConsumables()
 	}
 }
 
-
-
-void Inventory::Unequip(Item* item)
+void Inventory::Unequip(ItemID ID)
 {
-	if (item != nullptr)
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
+	switch (ID)
 	{
-		cout << "\n착용중인 장비 " << item->GetName() << " 아이템이 해제되었습니다.\n";
-		PlayerCharacter* character = PlayerCharacter::GetPlayer();
-		switch (item->GetID())
+	case SWORD:
+		if (EquippedWeapon != nullptr)
 		{
-		case SWORD:
-				// 장비 효과 해제
-				character->IncreaseStat(EquippedWeapon->GetTargetStat(), EquippedWeapon->GetTargetStat() * -1);
-				EquippedWeapon = nullptr;
-		case ARMOR:
-				// 장비 효과 해제
-				character->IncreaseStat(EquippedArmor->GetTargetStat(), EquippedArmor->GetTargetStat() * -1);
-			
+			cout << "\n착용중인 무기가 해제되었습니다.\n";
+			// 장비 효과 해제
+			character->IncreaseStat(EquippedWeapon->GetTargetStat(), EquippedWeapon->GetTargetStat() * -1);
+			EquippedWeapon = nullptr;
+		}
+	case ARMOR:
+		if (EquippedArmor != nullptr)
+		{
+			cout << "\n착용중인 갑옷이 해제되었습니다.\n";
+			// 장비 효과 해제
+			character->IncreaseStat(EquippedArmor->GetTargetStat(), EquippedArmor->GetTargetStat() * -1);
+			EquippedArmor = nullptr;
 		}
 	}
 }
@@ -221,16 +227,14 @@ void Inventory::AutoEquip(Item* item)
 	case SWORD:
 		if (EquippedWeapon == nullptr)
 		{
-			cout << endl << item->GetName() << " 아이템이 자동으로 장착되었습니다.\n";
-			item->PrintItemInfo();
+			cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 			UseItem(item);
 		}
 		else
 		{
 			if (EquippedWeapon->GetStatAmount() < item->GetStatAmount())
 			{
-				cout << endl << item->GetName() << " 아이템이 자동으로 장착되었습니다.\n";
-				item->PrintItemInfo();
+				cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 				UseItem(item);
 			}
 		}
@@ -239,16 +243,14 @@ void Inventory::AutoEquip(Item* item)
 	case ARMOR:
 		if (EquippedArmor == nullptr)
 		{
-			cout << endl << item->GetName() << " 아이템이 자동으로 장착되었습니다.\n";
-			item->PrintItemInfo();
+			cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 			UseItem(item);
 		}
 		else
 		{
 			if (EquippedArmor->GetStatAmount() < item->GetStatAmount())
 			{
-				cout << endl << item->GetName() << " 아이템이 자동으로 장착되었습니다.\n";
-				item->PrintItemInfo();
+				cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 				UseItem(item);
 			}
 		}

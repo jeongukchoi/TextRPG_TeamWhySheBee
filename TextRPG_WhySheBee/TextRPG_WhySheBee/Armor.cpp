@@ -14,7 +14,6 @@ void Armor::Use()
 {
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
-	character->IncreaseStat(HP, StatAmount);
 }
 
 

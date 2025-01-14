@@ -30,7 +30,7 @@ ItemID ItemManager::GetRandomItem() const
 {
 	// 5% 확률로 장비 드랍 (갑옷 70% / 무기 30%)
 	int Random = rand() % 100;
-	if (Random < 5)
+	if (Random < 100)
 	{
 		Random = rand() % 100;
 		return Random < 70 ? ARMOR : SWORD;

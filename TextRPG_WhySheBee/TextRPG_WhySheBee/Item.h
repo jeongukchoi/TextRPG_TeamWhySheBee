@@ -18,6 +18,8 @@ public:
 
     // 아이템이 변경할 스탯
     virtual STATUS GetTargetStat() const = 0;
+    // 아이템이 변경할 스탯 스트링
+    virtual string GetTargetStatString() const = 0;
     // 아이템이 변경할 스탯 수치
     virtual int GetStatAmount() const = 0;
     // 아이템 정보 출력
