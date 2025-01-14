@@ -52,6 +52,7 @@ using namespace std;
 #include "HealthPotion.h"
 #include "ItemManager.h"
 #include "Inventory.h"
+#include "Shop.h"
 
 
 //몬스터관련
