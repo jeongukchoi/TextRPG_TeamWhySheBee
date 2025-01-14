@@ -84,6 +84,8 @@ void Inventory::AddItem(ItemID ID)
 			break;
 		}
 	}
+
+	Sleep(1000);
 }
 
 void Inventory::RemoveItem(Item* item, int index)
@@ -138,6 +140,8 @@ void Inventory::RemoveItem(Item* item, int index)
 	cout << "\n^*._아이템 제거_.*^\n" << item->GetName() << "아이템이 인벤토리에서 제거되었습니다.\n\n";
 	delete item;
 	_Inventory.erase(_Inventory.begin() + index);
+
+	Sleep(1000);
 }
 
 void Inventory::UseItem(Item* item)
@@ -188,6 +192,8 @@ void Inventory::UseItem(Item* item)
 		cout << equipment->GetName() << "(+" << equipment->GetEquipmentLevel() << ") 장비를 착용했습니다." << endl;
 		equipment->PrintItemInfo();
 	}
+
+	Sleep(1000);
 }
 
 void Inventory::UseConsumables()
