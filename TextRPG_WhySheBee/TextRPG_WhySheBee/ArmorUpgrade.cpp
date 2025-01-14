@@ -3,11 +3,8 @@
 
 ArmorUpgrade::ArmorUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(MAXHP)
 {
-	int EquipmentLevel = equipment->GetEquipmentLevel();
-	UpgradeCost = (EquipmentLevel + 1) * 150;
-	UpgradeAmount = (EquipmentLevel + 1) * 20;
-
-	switch (EquipmentLevel)
+	// 강화 전 레벨 기준
+	switch (GetEquipmentLevel() - 1)
 	{
 	case 0:
 		UpgradeName = "무두질";
@@ -33,19 +30,15 @@ ArmorUpgrade::ArmorUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(MAX
 
 void ArmorUpgrade::PrintItemInfo()
 {
-	equipment->PrintItemInfo();
-	if (UpgradeName != "")
-	{
-		cout << "+" << UpgradeName << " (체력 +" << UpgradeAmount << ")\n";
-	}
+	cout << "\n아이템: " << GetName() << "(+" << GetEquipmentLevel() << ")"
+		<< "\n가격: " << GetPrice() << "\n효과: " << GetTargetStatString() << " +" << GetStatAmount() << endl << endl;
 }
 
 void ArmorUpgrade::Use()
 {
 	equipment->Use();
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
-	character->IncreaseStat(TargetStat, UpgradeAmount);
-	character->IncreaseStat(HP, UpgradeAmount);
+	character->IncreaseStat(TargetStat, GetUpgradeAmount());
 }
 
 

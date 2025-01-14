@@ -39,13 +39,18 @@ public:
     int GetAttack() const { return _attack; }
     int GetGold() const { return _gold; }
     int GetExperience() const { return _experience; }
+    int GetMaxExperience() const { return _level*10; }
     int GetAttackDelay() const { return _attackDelay; }
+    vector<Skill*> GetSkillSet() const { return _skills; }
+
+    int GetJob() const { return _job; }
     virtual int GetUniqueStat() const { return 0; }
 
 protected:
     static unique_ptr<PlayerCharacter> instance;  // 스마트 포인터로 변경
 
     string _name;
+    JOB _job;
     int _level;
     int _health;
     int _maxHealth;
@@ -53,5 +58,6 @@ protected:
     int _experience;
     int _gold;
     int _attackDelay;
+    vector<Skill*>_skills;
 
 };

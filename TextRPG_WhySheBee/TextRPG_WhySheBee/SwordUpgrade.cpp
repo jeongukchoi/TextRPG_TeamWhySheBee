@@ -1,13 +1,10 @@
 #include "Framework.h"
 #include "SwordUpgrade.h"
 
-SwordUpgrade::SwordUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATTACK), UpgradeAmount(5)
+SwordUpgrade::SwordUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATTACK)
 {
-	int EquipmentLevel = equipment->GetEquipmentLevel();
-	UpgradeCost = (EquipmentLevel + 1) * 200;
-	UpgradeAmount = (EquipmentLevel + 1) * 20;
-
-	switch (EquipmentLevel)
+	// 강화 전 레벨 기준
+	switch (GetEquipmentLevel() - 1)
 	{
 	case 0:
 		UpgradeName = "칼날 다듬기";
@@ -33,18 +30,15 @@ SwordUpgrade::SwordUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATT
 
 void SwordUpgrade::PrintItemInfo()
 {
-	equipment->PrintItemInfo();
-	if (UpgradeName != "")
-	{
-		cout << "+" << UpgradeName << " (공격력 +" << UpgradeAmount << ")\n";
-	}
+	cout << "\n아이템: " << GetName() << "(+" << GetEquipmentLevel() << ")"
+		<< "\n가격: " << GetPrice() << "\n효과: " << GetTargetStatString() << " +" << GetStatAmount() << endl << endl;
 }
 
 void SwordUpgrade::Use()
 {
 	equipment->Use();
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
-	character->IncreaseStat(TargetStat, UpgradeAmount);
+	character->IncreaseStat(TargetStat, GetUpgradeAmount());
 }
 
 
