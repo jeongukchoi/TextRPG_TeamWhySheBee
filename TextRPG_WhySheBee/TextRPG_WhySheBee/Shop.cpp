@@ -146,6 +146,12 @@ void Shop::UpgradeEquipment()
 		cin >> i;
 		i--;
 
+		if (i == -1)
+		{
+			cout << "\n상점 메뉴로 돌아갑니다.\n";
+			return;
+		}
+
 		if (i < 0 || i >= _Inventory.size())
 		{
 			cout << "\n잘못된 입력입니다.\n";
