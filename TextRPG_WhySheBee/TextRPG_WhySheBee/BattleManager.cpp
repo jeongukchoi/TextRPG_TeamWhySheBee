@@ -9,7 +9,9 @@ bool BattleManager::Battle()
 	Player->DisplayStatus();
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
-	
+
+	ColorPrinter printer;
+
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
@@ -38,7 +40,7 @@ bool BattleManager::Battle()
 		// 플레이어 전투 승리
 		if (IsMonsterDead())
 		{
-			cout << Player->GetName() << "이(가) " << Monster->GetName() << "를 처치했습니다!" << endl;
+			cout << printer.ColoredText(Player->GetName(), RED) << "이(가) " << printer.ColoredText(Monster->GetName(), BLUE) << "를 처치했습니다!" << endl;
 			
 			std::cout << "전투 승리!" << std::endl;
 
@@ -105,8 +107,9 @@ void BattleManager::CreateMonster()
 void BattleManager::PlayerAttack()
 {
 	RandomUseItem();
+	ColorPrinter printer;
 
-	cout << Player->GetName() << "이(가) " << Monster->GetName() << "를(을) 공격합니다! "; 
+	cout << printer.ColoredText(Player->GetName(),RED) << "이(가) " << printer.ColoredText(Monster->GetName(), BLUE) << "를(을) 공격합니다! ";
 	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
 	Monster->TakeDamaged(HitDamage);
 	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl ;
@@ -116,6 +119,8 @@ void BattleManager::PlayerAttack()
 void BattleManager::MonsterAttack()
 {
 	BossMonster* Boss = dynamic_cast<BossMonster*>(Monster.get());
+
+	ColorPrinter printer;
 	// 보스 몬스터 공격 로직
 	if (Boss != nullptr)
 	{
@@ -135,7 +140,7 @@ void BattleManager::MonsterAttack()
 	// 일반 몬스터 공격 로직
 	else
 	{
-		cout << Monster->GetName() << "이(가)" << Player->GetName() <<"를 공격합니다! "; 
+		cout << printer.ColoredText(Monster->GetName(), BLUE) << "이(가)" << printer.ColoredText(Player->GetName(), RED) <<"를 공격합니다! ";
 		Player->TakeDamage(Monster->GetDamage());
 		//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 	}
@@ -160,6 +165,7 @@ bool BattleManager::IsMonsterDead()
 // 전투 승리 보상 메서드
 void BattleManager::GetRewards()
 {
+	ColorPrinter printer;
 	if (PlayerLevel < 10)
 	{
 		int M_Exp = MonsterExp[PlayerLevel - 1];
@@ -168,8 +174,9 @@ void BattleManager::GetRewards()
 		Player->IncreaseStat(EXP, M_Exp);
 		Player->IncreaseStat(GOLD, M_Gold);
 
-		cout << Player->GetName() << "이(가) " << to_string(M_Exp) << " EXP와" << to_string(M_Gold) << " Gold를 획득했습니다." << endl;
-		cout << "현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
+		cout << printer.ColoredText(Player->GetName(), RED) << "이(가) " << printer.ColoredText(to_string(M_Exp), YELLOW)
+			<< " EXP와" << printer.ColoredText(to_string(M_Gold), YELLOW) << " Gold를 획득했습니다." << endl;
+		cout << "현재 EXP: " << printer.ColoredText(to_string(Player->GetExperience()), YELLOW) << ", Gold: " << printer.ColoredText(to_string(Player->GetGold()), YELLOW) << endl;
 	}
 }
 
