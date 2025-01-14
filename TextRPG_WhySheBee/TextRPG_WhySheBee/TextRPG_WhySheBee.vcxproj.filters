@@ -105,9 +105,6 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ColorPrinter.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="PowerStrike.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -118,6 +115,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="LastStrike.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorPrinter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
