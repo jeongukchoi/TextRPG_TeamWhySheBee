@@ -3,7 +3,7 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
-
+	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
 
 	if (Player == nullptr || Monster == nullptr)
@@ -12,12 +12,13 @@ bool BattleManager::Battle()
 		return false;
 	}
 
-	//속도 지정 ( 몬스터 스피드 추가하면 변경)
+	// 공격 딜레이 설정
 	int MonsterAttackDelay = Monster->GetAttackDelay();
 	int CurrentAttackDelay = PlayerAttackDelay;
+
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
-	// 플레이어 레벨에 기반해서 몬스터 생성
+	
 
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
@@ -154,6 +155,7 @@ bool BattleManager::IsMonsterDead()
 	return Monster->IsDead;
 }
 
+// 전투 승리 보상 메서드
 void BattleManager::GetRewards()
 {
 	if (PlayerLevel < 10)
@@ -164,8 +166,8 @@ void BattleManager::GetRewards()
 		Player->IncreaseStat(EXP, M_Exp);
 		Player->IncreaseStat(GOLD, M_Gold);
 
-		cout << Player->GetName() << "이(가) " << to_string(M_Exp) << "EXP와" << to_string(M_Gold) << "Gold를 획득했습니다.";
-		cout << " 현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
+		cout << Player->GetName() << "이(가) " << to_string(M_Exp) << " EXP와" << to_string(M_Gold) << " Gold를 획득했습니다." << endl;
+		cout << "현재 EXP: " << to_string(Player->GetExperience()) << ", Gold: " << to_string(Player->GetGold()) << endl;
 	}
 }
 

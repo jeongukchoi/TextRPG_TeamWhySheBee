@@ -46,6 +46,7 @@ void BaseMonster::TakeDamaged(const int& DamagedAmount)
 	if (CurrentHP <= MaxHP / 2 && dynamic_cast<NormalState*>(CurrentState) != nullptr	)
 	{
 		SetState(new EnragedState());
+		CurrentState->HandleState(this);
 	}
 }
 

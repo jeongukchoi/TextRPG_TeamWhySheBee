@@ -3,7 +3,7 @@
 
 using namespace std;
 
-GameManager::GameManager() : bossCleared(false) {}
+GameManager::GameManager() : over(false) {}
 
 void GameManager::StartGame()
 {
@@ -12,12 +12,13 @@ void GameManager::StartGame()
     while (true)
     {
         Battle();
-        if (bossCleared)
+        if (over)
         {
             ShowEnding();
-            break;
+            return;
         }
-        
+
+        /*
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
         cin >> choice;
@@ -31,13 +32,12 @@ void GameManager::StartGame()
             Battle();
         }
 
-        
+        */
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
             cout << "레벨 10에 도달했습니다! 보스와의 전투를 시작합니다." << endl;
             break;
         }
-
     }
 }
 
@@ -74,37 +74,47 @@ void GameManager::DisplayInventory()
 {
     cout << "인벤토리 목록" << endl;
     // 인벤토리 출력 로직
-
 }
 
 void GameManager::VisitShop()
 {
     cout << "상점에 방문하셨습니다!" << endl;
-
     // 상점 방문 로직 (아이템 구매 등)
-    Shop shop;
-    shop.StartShop();
-
 }
 
 void GameManager::ShowEnding()
 {
-    /*엔딩처리*/
+    cout << "\n";
+    cout << "==========================================" << endl;
+    cout << "                GAME CREDITS              " << endl;
+    cout << "==========================================" << endl;
+    cout << "\n";
+    cout << "                제작: 1기 12조            " << endl;
+    cout << "   강창훈, 김동현, 최정욱, 한상혁, 백인범, 김지황" << endl;
+    cout << "\n";
+    cout << "==========================================" << endl;
+    cout << "        Thank you for playing our game!   " << endl;
+    cout << "==========================================" << endl;
+    cout << "\n";
+    over = true;
 }
+
 
 void GameManager::Battle() 
 {
-   
-    BattleManager* battleManager= new BattleManager();
+    BattleManager battleManager;
 
-    bool battleResult = battleManager->Battle();
+    bool battleResult = battleManager.Battle();
 
     // 결과 처리
-    if (battleResult) {
+    if (battleResult) 
+    {
         std::cout << "전투 승리!" << std::endl;
     }
-    else {
+
+    else 
+    {
         std::cout << "전투 패배..." << std::endl;
-        ShowEnding();
+        over = true;
     }
 }
