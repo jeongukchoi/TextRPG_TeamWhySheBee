@@ -29,21 +29,32 @@
 
 using namespace std;
 
+
+//초기포함헤더
 #include "Enums.h"
-#include "GameManager.h"
-#include "Item.h"
-#include "Equipment.h"
-#include "Sword.h"
-#include "Armor.h"
-#include "EquipmentDecorator.h"
-#include "SwordUpgrade.h"
-#include "ArmorUpgrade.h"
+
+//플레이어관련
+
 #include "PlayerCharacter.h"
 #include "Warrior.h"
 #include "Mage.h"
+
+//인벤토리&상점
+
+#include "Item.h"
+#include "Equipment.h"
+#include "EquipmentDecorator.h"
+#include "SwordUpgrade.h"
+#include "ArmorUpgrade.h"
+#include "Sword.h"
+#include "Armor.h"
 #include "AttackBoost.h"
 #include "HealthPotion.h"
 #include "ItemManager.h"
+#include "Inventory.h"
+
+
+//몬스터관련
 #include "IState.h"
 #include "NormalState.h"
 #include "EnragedState.h"
@@ -55,6 +66,7 @@ using namespace std;
 #include "BossMonster.h"
 #include "EnemyFactory.h"
 #include "BattleManager.h"
-#include "Inventory.h"
+
+#include "GameManager.h"
 
 
