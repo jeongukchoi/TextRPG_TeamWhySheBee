@@ -55,6 +55,7 @@ void Inventory::AddItem(ItemID ID)
 
 			case UNIQUE_POTION:
 				_Inventory.push_back(new UniquePotion());
+				break;
 
 			default:
 				cout << "\n아이템 ID가 유효하지 않아 인벤토리에 추가하지 못했습니다.\n";
