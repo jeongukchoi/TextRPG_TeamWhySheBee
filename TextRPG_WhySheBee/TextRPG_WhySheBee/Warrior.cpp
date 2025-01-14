@@ -45,19 +45,15 @@ int Warrior::RandomAttack()
 	}
 	else if (randomWeight <= 90)
 	{
-		cout << "스킬(파워스트라이크!)을 사용합니다!" << endl;
-		Damage = _attack  + _str * 20; // 스킬은 공격력의 1.5배
 		_randomSkill = new PowerStrike();
 	}
 	else
 	{
-		cout << "궁극기를 사용합니다!" << endl;
-		Damage = _attack  + _str* 50; // 궁극기는 공격력의 3배
 		_randomSkill = new LastStrike();		
 	}
 	
 
-	//Damage = _randomSkill->Activate(_attack,_str);
+	Damage = _randomSkill->Activate(_attack,_str);
 
 	cout << "데미지: " << Damage << endl;
 

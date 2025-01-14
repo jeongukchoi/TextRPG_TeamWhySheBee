@@ -8,6 +8,6 @@ int Meteor::Activate(int attackPower, int stat)
 
 
 	int damage = 0;
-	damage = attackPower + (stat * 100);
+	damage = attackPower + (stat * 200);
 	return damage;
 }

@@ -34,18 +34,14 @@ int Mage::RandomAttack()
 	}
 	else if (randomWeight <= 80)
 	{
-		cout << _name << "이(가) 매직에로우를 시전했습니다!" << endl;
-		Damage = _attack + _int * 70; // 스킬은 공격력의 1.5배 + 알파
 		_randomSkill = new MagicArrow();
 	}
 	else
 	{
-		cout << "궁극기를 사용합니다!" << endl;
-		Damage = _attack + _int * 200; // 궁극기는 공격력의 3배 + 알파 // tnwjd 
 		_randomSkill = new Meteor();
 	}	
 
-	//Damage = _randomSkill->Activate(_attack, _int);
+	Damage = _randomSkill->Activate(_attack, _int);
 
 	cout << "데미지: " << Damage << endl;
 	delete _randomSkill;
