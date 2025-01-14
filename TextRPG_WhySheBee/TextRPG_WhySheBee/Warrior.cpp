@@ -35,6 +35,7 @@ int Warrior::RandomAttack()
 	int randomWeight = (rand() % 100) + 1;
 	int Damage = 0;
 	Skill* _randomSkill = nullptr;
+
 	if (randomWeight <= 70)
 	{
 		cout << "기본 공격!!" << endl;
@@ -60,6 +61,7 @@ int Warrior::RandomAttack()
 
 	cout << "데미지: " << Damage << endl;
 
+	delete _randomSkill;
 	return Damage;
 }
 

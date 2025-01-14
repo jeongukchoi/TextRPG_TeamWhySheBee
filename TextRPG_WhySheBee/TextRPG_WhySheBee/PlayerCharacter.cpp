@@ -23,7 +23,7 @@ unique_ptr<PlayerCharacter>& PlayerCharacter::GetInstance(const string& name, JO
 }
 
 PlayerCharacter::PlayerCharacter(const string& name)
-    : _name(name), _level(1), _health(200), _maxHealth(200), _attack(30), _experience(0), _gold(0)
+    : _name(name), _level(1), _health(200), _maxHealth(200), _attack(30), _experience(0), _gold(0),_attackDelay(0),_job(WARRIOR)
 {
 }
 
