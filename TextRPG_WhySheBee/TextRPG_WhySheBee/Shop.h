@@ -18,5 +18,7 @@ public:
 	void UpgradeEquipment();
 	void UpgradeEquipment(Equipment* e, int index);
 	int UpgradeSuccessRate(Equipment* e);
+	void BuyItems();
+	void SellItems();
 };
 
