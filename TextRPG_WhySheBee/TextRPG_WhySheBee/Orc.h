@@ -10,7 +10,7 @@ class Orc : public BaseMonster
 public:
 	Orc(const string& name, const int& PlayerLevel) : BaseMonster(name, PlayerLevel)
 	{
-		Speed = 8;
+		Speed = 4;
 		MaxHP = static_cast<int>(MaxHP * 1.5);
 		CurrentHP = MaxHP;
 	}

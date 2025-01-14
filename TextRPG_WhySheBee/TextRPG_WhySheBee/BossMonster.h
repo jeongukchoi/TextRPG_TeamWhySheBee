@@ -11,15 +11,15 @@ private:
 public:
 	BossMonster(const string& name, const int& PlayerLevel) : BaseMonster(name, PlayerLevel)
 	{
-		// 기본 몬스터의 체력 3배
-		MaxHP *= 3;
+		// 기본 몬스터의 체력 5배
+		MaxHP *= 5;
 		CurrentHP = MaxHP;
 		
 		// 기본 몬스터의 공격력 30 추가
-		Damage += 30;
+		Damage += static_cast<int>(Damage * 1.5);;
 
 		// 공격 속도
-		Speed = 10;
+		Speed = 7;
 	}
 
 	// 분노 상태 스킬 메서드

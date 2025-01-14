@@ -10,8 +10,8 @@ class Goblin : public BaseMonster
 public:
 	Goblin(const string& name, const int& PlayerLevel) : BaseMonster(name, PlayerLevel)
 	{
-		Damage /= 2;
-		Speed = 3;
+		Damage = static_cast<int>(Damage * 0.7f);
+		Speed = 2;
 	}
 	void EnragedSkill() override;
 };

@@ -3,23 +3,23 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
+	// 현재 플레이어의 레벨 저장
+	PlayerLevel = Player->GetLevel();
+	Player->DisplayStatus();
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
-
+	Player->IncreaseStat(HP, Player->GetMaxHealth()); // 체력 회복
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
 		return false;
 	}
-
+	
 	// 공격 딜레이 설정
 	int MonsterAttackDelay = Monster->GetAttackDelay();
 	int CurrentAttackDelay = PlayerAttackDelay;
 
 	// 현재 플레이어의 레벨 저장
-	PlayerLevel = Player->GetLevel();
-	
-
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{
@@ -32,7 +32,7 @@ bool BattleManager::Battle()
 		{
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
-			Sleep(1000);
+			//Sleep(200);
 		}
 
 		// 플레이어 전투 승리
@@ -40,15 +40,16 @@ bool BattleManager::Battle()
 		{
 			cout << Player->GetName() << "이(가) " << Monster->GetName() << "를 처치했습니다!" << endl;
 			
+			std::cout << "전투 승리!" << std::endl;
+
 			// 전투 보상 획득
 			GetRewards();
 			
 			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
-			GetRandomItem();
 
 			Monster.reset();
-			// 승리 반환
-			return true;
+			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
+			return PlayerLevel < 10;
 		}
 
 		// 몬스터 공격
@@ -56,7 +57,7 @@ bool BattleManager::Battle()
 		{
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
-			Sleep(1000);
+			//Sleep(200);
 		}
 
 
@@ -64,7 +65,7 @@ bool BattleManager::Battle()
 		if (IsPlayerDead())
 		{
 			cout << Player->GetName() << "이(가) 사망했습니다." << endl;
-			
+			std::cout << "전투 패배..." << std::endl;
 			Monster.reset();
 			// 패배 반환
 			return false;
@@ -127,7 +128,7 @@ void BattleManager::MonsterAttack()
 			cout << Boss->GetName() << "이 Player에게 일반 공격을 합니다! "; // Player GetName 메서드 작성되면 변경.
 			Player->TakeDamage(Monster->GetDamage());
 			
-			cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
+			//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 		}
 	}
 	// 일반 몬스터 공격 로직
@@ -135,7 +136,7 @@ void BattleManager::MonsterAttack()
 	{
 		cout << Monster->GetName() << "이(가)" << " Player를 공격합니다! "; // Player GetName 메서드 작성되면 변경.
 		Player->TakeDamage(Monster->GetDamage());
-		cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
+		//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 	}
 }
 

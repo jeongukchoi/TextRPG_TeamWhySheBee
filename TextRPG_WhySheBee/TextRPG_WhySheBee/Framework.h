@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <windows.h>
 
+#include <cstdlib> // system 함수 사용을 위해 포함
 using namespace std;
 
 #include "Enums.h"
