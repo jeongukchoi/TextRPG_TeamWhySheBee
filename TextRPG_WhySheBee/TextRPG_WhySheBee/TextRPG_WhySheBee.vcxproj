@@ -56,6 +56,7 @@
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="SwordUpgrade.cpp" />
     <ClCompile Include="Troll.cpp" />
+    <ClCompile Include="UniquePotion.cpp" />
     <ClCompile Include="Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +91,7 @@
     <ClInclude Include="Slime.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Troll.h" />
+    <ClInclude Include="UniquePotion.h" />
     <ClInclude Include="Warrior.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Shop.h" />

@@ -15,6 +15,7 @@ enum STATUS
 enum ItemID {
     HEALTH_POTION = 0,
     ATTACK_BOOST,
+    UNIQUE_POTION,
     SWORD,
     ARMOR
 };

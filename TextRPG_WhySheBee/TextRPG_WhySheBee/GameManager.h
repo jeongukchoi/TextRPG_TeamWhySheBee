@@ -9,7 +9,7 @@ public:
     void CreateCharacter();
     void Battle();
     void DisplayInventory();
-    void VisitShop();
+    void VisitShop(Shop* shop);
     void ShowEnding();
 private:
     bool over;

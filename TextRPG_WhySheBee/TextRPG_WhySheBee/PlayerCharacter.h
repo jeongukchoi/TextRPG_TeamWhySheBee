@@ -43,7 +43,7 @@ public:
     int GetAttackDelay() const { return _attackDelay; }
     vector<Skill*> GetSkillSet() const { return _skills; }
 
-    int GetJob() const { return _job; }
+    int GetPlayerJob() const { return _job; }
     virtual int GetUniqueStat() const { return 0; }
 
 protected:

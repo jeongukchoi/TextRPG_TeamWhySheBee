@@ -13,6 +13,6 @@ public:
 	Item* GetItem(ItemID ID) const;
 	ItemID GetRandomItem() const;
 	int GetItemsListSize() const;
+	const vector<Item*>& GetItemsList() const;
+	void ShowItemDB();
 };
-
-

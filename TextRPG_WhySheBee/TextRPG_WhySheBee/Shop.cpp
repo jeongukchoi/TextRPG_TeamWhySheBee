@@ -32,15 +32,7 @@ void Shop::StartShop()
 			break;
 
 		case 4:
-			cout << "\n(상점 주인이 따뜻한 녹차를 내온다. 덜덜 떨리는 손에 들린 잔이 잔받침과 부딪혀 달그락거린다.)\n";
-			cout << "상점 주인: 여행하시느라...힘드시겠어요...차가 뜨거우니...천천히...드세요...\n";
-			cout << "\n......차 마시는 중......\n";
-			for (int i = 0; i < 6; i++)
-			{
-				Sleep(1000);
-				cout << "...";
-			}
-			cout << "\n(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)\n";
+			DrinkTea();
 			break;
 		
 		case 0:
@@ -52,22 +44,108 @@ void Shop::StartShop()
 	}
 }
 
+void Shop::BuyItems()
+{
+	Inventory* inventory = Inventory::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
+	ItemManager IM;
+	const vector<Item*>& ItemDB = IM.GetItemsList();
+
+	cout << "구입할 물품을 골라보세요!" << endl;
+	while (true)
+	{
+		cout << "\n***************상점 아이템 목록***************" << endl;
+		cout << "(현재 소지한 골드: " << character->GetGold() << ")" << endl;
+
+		IM.ShowItemDB();
+		cout << "0: 상점 메뉴로 돌아가기\n\n";
+		cout << "번호를 입력하세요: ";
+		int Choice;
+		cin >> Choice;
+		Choice--;
+
+		if (Choice == -1)
+		{
+			cout << "\n상점 메뉴로 돌아갑니다.\n";
+			return;
+		}
+		else if (Choice >= 0 && Choice < ItemDB.size())
+		{
+			// 골드 차감 후 인벤토리에 추가
+			character->IncreaseStat(GOLD, ItemDB[Choice]->GetPrice() * -1);
+			inventory->AddItem(ItemDB[Choice]->GetID());
+		}
+		else
+		{
+			cout << "\n유효하지 않은 입력입니다.\n";
+		}
+	}
+}
+
+void Shop::SellItems()
+{
+	Inventory* inventory = Inventory::GetInstance();
+	PlayerCharacter* character = PlayerCharacter::GetPlayer();
+
+	cout << "판매할 물품을 골라보세요!" << endl;
+	while (true)
+	{
+		inventory->ShowInven();
+		cout << "0: 상점 메뉴로 돌아가기\n\n";
+		int choice;
+		cout << "번호를 입력하세요: ";
+		cin >> choice;
+		choice--;
+
+		if (choice == -1)
+		{
+			cout << "\n상점 메뉴로 돌아갑니다.\n";
+			return;
+		}
+		else if (choice >= 0 && choice < inventory->GetInventory().size())
+		{
+			character->IncreaseStat(GOLD, inventory->GetInventory()[choice]->GetPrice() * 0.6); // double ->int 어떻게?
+			inventory->RemoveItem(inventory->GetInventory()[choice], choice);
+			cout << "\n현재 소지한 골드: " << character->GetGold() << endl;
+		}
+		else
+		{
+			cout << "잘못 입력 하셨습니다!" << endl;
+		}
+	}
+}
+
+void Shop::DrinkTea()
+{
+	cout << "\n(상점 주인이 따뜻한 녹차를 내온다. 덜덜 떨리는 손에 들린 잔이 잔받침과 부딪혀 달그락거린다.)\n";
+	cout << "상점 주인: 여행하시느라...힘드시겠어요...차가 뜨거우니...천천히...드세요...\n";
+	cout << "\n......차 마시는 중......\n";
+	for (int i = 0; i < 6; i++)
+	{
+		Sleep(1000);
+		cout << "...";
+	}
+	cout << "\n(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)\n";
+}
+
 void Shop::UpgradeEquipment()
 {
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	vector<Item*> _Inventory = PInventory->GetInventory();
 
-	cout << "\n|++++++++++|장비 강화|++++++++++|\n\n";
+	cout << "\n|++++++++++|장비 강화|++++++++++|\n";
 
 	while(true)
 	{
 		// 인벤 출력
 		PInventory->ShowInven();
 
-		cout << "\n강화할 아이템의 번호를 입력하세요.\n입력: ";
+		cout << "0: 상점 메뉴로 돌아가기\n강화할 아이템의 번호를 입력하세요.\n입력: ";
 
-		int i = -1;
+		int i;
 		cin >> i;
+		i--;
+
 		if (i < 0 || i >= _Inventory.size())
 		{
 			cout << "\n잘못된 입력입니다.\n";
@@ -218,104 +296,4 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 int Shop::UpgradeSuccessRate(Equipment* e)
 {
 	return 90 - e->GetEquipmentLevel() * 20;
-}
-
-void Shop::BuyItems()
-{
-	cout << "어서오세요 상점입니다 구입할 물품들을 골라보세요!" << endl;
-	int Choice;
-	cout << "\n***************판매목록***************" << endl;
-	cout << "0.체력 포션\n1.힘 증가 물약\n2.무기\n3.방어구" << endl;
-	cout << "번호 선택: ";
-	cin >> Choice;
-	Inventory* inventory = Inventory::GetInstance();
-	PlayerCharacter* character = PlayerCharacter::GetPlayer();
-
-	switch (Choice)
-	{
-	case HEALTH_POTION:
-		if (character->GetGold() > _ItemManager.GetItem(HEALTH_POTION)->GetPrice())
-		{
-			character->IncreaseStat(GOLD, _ItemManager.GetItem(HEALTH_POTION)->GetPrice() * -1);
-			inventory->AddItem(HEALTH_POTION);
-			cout << "체력 포션 구입 완료!" << endl;
-		}
-		else
-		{
-			cout << "골드가 부족합니다!" << endl;
-		}
-		break;
-
-	case ATTACK_BOOST:
-		if (character->GetGold() >= _ItemManager.GetItem(ATTACK_BOOST)->GetPrice())
-		{
-			character->IncreaseStat(GOLD, _ItemManager.GetItem(ATTACK_BOOST)->GetPrice() * -1);
-			inventory->AddItem(ATTACK_BOOST);
-			cout << "힘 증가 물약 구입 완료!" << endl;
-		}
-		else
-		{
-			cout << "골드가 부족합니다!" << endl;
-		}
-		break;
-
-	case SWORD:
-		if (character->GetGold() >= _ItemManager.GetItem(SWORD)->GetPrice())
-		{
-			character->IncreaseStat(GOLD, _ItemManager.GetItem(SWORD)->GetPrice() * -1);
-			inventory->AddItem(SWORD);
-			cout << "무기 구입 완료!" << endl;
-		}
-		else
-		{
-			cout << "골드가 부족합니다!" << endl;
-		}
-		break;
-
-	case ARMOR:
-		if (character->GetGold() >= _ItemManager.GetItem(ARMOR)->GetPrice())
-		{
-			character->IncreaseStat(GOLD, _ItemManager.GetItem(ARMOR)->GetPrice() * -1);
-			inventory->AddItem(ARMOR);
-			cout << "방어구 구입 완료!" << endl;
-		}
-		else
-		{
-			cout << "골드가 부족합니다!" << endl;
-		}
-
-		break;
-	default:
-		cout << "잘못 누르셨습니다 다시 선택해주세요!" << endl;
-		break;
-	}
-
-	/*Shop shop;
-	Item* item;
-	shop.BuyItems(character,item);*/
-
-	cout << "현재 소지한 골드: " << character->GetGold() << endl;
-
-}
-
-void Shop::SellItems()
-{
-	Inventory* inventory = Inventory::GetInstance();
-	PlayerCharacter* character = PlayerCharacter::GetPlayer();
-	inventory->ShowInven();
-
-	int choice;
-	cout << "판매할 아이템의 번호 입력: ";
-	cin >> choice;
-
-	if (choice >= 0 && choice < inventory->GetInventory().size())
-	{
-		character->IncreaseStat(GOLD, inventory->GetInventory()[choice]->GetPrice() * 0.6);
-		inventory->RemoveItem(inventory->GetInventory()[choice], choice);
-		cout << "판매가 완료되었습니다!\n현재 소지한 골드: " << character->GetGold() << endl;
-	}
-	else
-	{
-		cout << "잘못 입력 하셨습니다!" << endl;
-	}
 }
