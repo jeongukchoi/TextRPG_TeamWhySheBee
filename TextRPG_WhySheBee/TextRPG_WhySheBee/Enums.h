@@ -39,7 +39,24 @@ enum JOB
     WARRIOR = 0,
     MAGE
 };
-
+enum ColorType {
+    black,  	//0
+    DarkBLUE,	//1
+    DarkGreen,	//2
+    DarkSkyBlue,//3
+    DarkRed,  	//4
+    DarkPurple,	//5
+    DarkYellow,	//6
+    GRAY,		//7
+    DarkGray,	//8
+    blue,		//9
+    gREEN,		//10
+    SkyBlue,	//11
+    red,		//12
+    PURPLE,		//13
+    yellow,		//14
+    white		//15
+} COLOR;
 class Enums
 {
 };

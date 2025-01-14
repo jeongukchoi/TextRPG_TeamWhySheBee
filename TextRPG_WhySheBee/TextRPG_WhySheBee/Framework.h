@@ -33,7 +33,18 @@ using namespace std;
 //초기포함헤더
 #include "Enums.h"
 
+#include "ColorPrinter.h"
+
+
 //플레이어관련
+
+#include "Skill.h"
+#include "PowerStrike.h"
+#include "MagicArrow.h"
+#include "Meteor.h"
+#include "LastStrike.h"
+
+
 
 #include "PlayerCharacter.h"
 #include "Warrior.h"

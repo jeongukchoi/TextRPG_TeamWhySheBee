@@ -25,6 +25,7 @@
     <ClCompile Include="BaseMonster.cpp" />
     <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="BossMonster.cpp" />
+    <ClCompile Include="ColorPrinter.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnragedState.cpp" />
     <ClCompile Include="Enums.cpp" />
@@ -41,11 +42,15 @@
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="LastStrike.cpp" />
     <ClCompile Include="Mage.cpp" />
+    <ClCompile Include="MagicArrow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="NormalState.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="PowerStrike.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="Sword.cpp" />
@@ -58,7 +63,12 @@
     <ClInclude Include="Armor.h" />
     <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="ColorPrinter.h" />
+    <ClInclude Include="LastStrike.h" />
     <ClInclude Include="Mage.h" />
+    <ClInclude Include="Meteor.h" />
+    <ClInclude Include="PowerStrike.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
     <ClInclude Include="BattleManager.h" />
@@ -85,6 +95,7 @@
     <ClInclude Include="Warrior.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Shop.h" />
+    <ClInclude Include="MagicArrow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
