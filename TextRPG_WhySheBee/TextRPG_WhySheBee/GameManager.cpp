@@ -21,7 +21,7 @@ void GameManager::StartGame()
             console->ClearScreen();
             ShowEnding();
             return;
-        }*/
+        }
 
 
        /* console->ClearScreen();
