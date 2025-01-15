@@ -222,6 +222,7 @@ string Inventory::UseConsumables()
 			return ItemString;
 		}
 	}
+	return "";
 }
 
 void Inventory::Unequip(ItemID ID)
