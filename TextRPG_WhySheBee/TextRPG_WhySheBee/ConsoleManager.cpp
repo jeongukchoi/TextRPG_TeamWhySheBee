@@ -49,7 +49,7 @@ void ConsoleManager::ClearConsoleSizeScreen()
     GetConsoleScreenBufferInfo(Console, &ConsoleBuffer);
 
     // 콘솔의 출력 영역만큼 공백으로 채움
-    FillConsoleOutputCharacter(Console, ' ', ConsoleBuffer.dwSize.X * ConsoleBuffer.dwSize.Y, coord, &count);
+    system("cls");
     // 커서 초기 위치 0,0 이동
     SetCursorPosition(0, 0);
     SetConsoleCursorPosition(Console, coord);

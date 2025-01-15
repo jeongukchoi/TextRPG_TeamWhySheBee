@@ -39,11 +39,11 @@ ItemID ItemManager::GetRandomItem() const
 	}
 	// 소모품 드랍 (체력 회복 물약 70% / 공격력 증가 물약 20% / 유니크 스탯 물약 10%)
 	Random = rand() % 100;
-	if (Random < 1)
+	if (Random < 70)
 	{
 		return HEALTH_POTION;
 	}
-	else if (Random < 2)
+	else if (Random < 90)
 	{
 		return ATTACK_BOOST;
 	}
