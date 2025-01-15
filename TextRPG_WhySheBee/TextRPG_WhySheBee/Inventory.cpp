@@ -216,8 +216,8 @@ string Inventory::UseConsumables()
 	{
 		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
 		{
-			string ItemString = "._*oO@-아이템 사용-@Oo*_.\n" + item->GetName() + " 아이템이 사용되었습니다.\n" + item->GetItemInfoString();
-			item->PrintItemInfo();
+			string ItemString = item->GetName() + " 아이템이 사용되었습니다." ;
+			//item->PrintItemInfo();
 			UseItem(_ItemManager.GetItem(item->GetID()));
 			return ItemString;
 		}

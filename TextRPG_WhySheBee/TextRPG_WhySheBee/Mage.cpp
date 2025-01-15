@@ -5,10 +5,10 @@ Mage::Mage(const string& name) :PlayerCharacter(name), _int(1)
 	_level = 1;
 	_health = 150;
 	_maxHealth = 150;
-	_attack = 15;
+	_attack = 30;
 	_experience = 0;
 	_gold = 0;
-	_attackDelay = 3;
+	_attackDelay = 2;
 	_job = MAGE;
 }
 

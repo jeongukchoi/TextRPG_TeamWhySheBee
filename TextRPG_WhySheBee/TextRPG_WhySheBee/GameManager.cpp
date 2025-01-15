@@ -24,7 +24,7 @@ void GameManager::StartGame()
         }
 
 
-       /* console->ClearScreen();
+       console->ClearScreen();
         
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
@@ -33,11 +33,7 @@ void GameManager::StartGame()
         if (choice == 'Y' || choice == 'y')
         {
             VisitShop(shop);
-        }
-        else if (choice == 'N' || choice == 'n')
-        {
-            Battle();
-        }*/
+        }       
 
         
 
