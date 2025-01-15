@@ -55,9 +55,10 @@ void Shop::StartShop()
 			// 작별인사 출력 (FAREWELL)
 			Console.DisplayDialogue(FAREWELL, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1500);
+			Console.ClearConsoleSizeScreen();
 			return;
 		}
-		Sleep(1500);
+		Sleep(1000);
 		Console.ClearConsoleSizeScreen();
 	}
 }
@@ -74,10 +75,14 @@ void Shop::BuyItems()
 
 	while (true)
 	{
+		// 구매 메뉴 상단 출력 & 아이템리스트 출력
+		const string BUY_MENU = "[아이템 구매]\n(현재 소지 골드 : " + to_string(character->GetGold()) + ")\n0 : 상점 메뉴로 돌아가기";
 		Console.ClearConsoleSizeScreen();
 		Console.DisplayDialogue(BUY_MENU, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
 		IM.ShowItemDB();
-		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y );
+
+		// 커서 이동하여 입력 받음
+		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT-1);
 		cout << "번호를 입력하세요: ";
 		int Choice;
 		cin >> Choice;
@@ -85,14 +90,17 @@ void Shop::BuyItems()
 
 		if (Choice == -1)
 		{
-			cout << "\n상점 메뉴로 돌아갑니다.\n";
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
+			Sleep(1000);
 			return;
 		}
 		else if (Choice >= 0 && Choice < ItemDB.size())
 		{
 			if (character->GetGold() < ItemDB[Choice]->GetPrice())
 			{
-				cout << "\n!----골드가 부족합니다!----!\n\n";
+				const string NOT_ENOUGH_GOLD = "상점 주인: 미안하지만...골드가...모자란 것...같군...\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")";
+				Console.DisplayDialogue(NOT_ENOUGH_GOLD, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 				Sleep(1000);
 				continue;
 			}
@@ -103,7 +111,7 @@ void Shop::BuyItems()
 		}
 		else
 		{
-			cout << "\n유효하지 않은 입력입니다.\n";
+			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1000);
 		}
 	}
@@ -116,31 +124,42 @@ void Shop::SellItems()
 
 	while (true)
 	{
+		// 판매 메뉴 상단 출력 & 인벤토리 출력
+		const string SELL_MENU = "[아이템 판매]\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")\n0 : 상점 메뉴로 돌아가기";
 		Console.ClearConsoleSizeScreen();
-		cout << "\n판매할 물품을 골라보세요!\n";
+		Console.DisplayDialogue(SELL_MENU, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
 		inventory->ShowInven();
-		cout << "0: 상점 메뉴로 돌아가기\n";
-		int choice;
+
+		// 커서 이동하여 입력 받음
+		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT-1);
 		cout << "번호를 입력하세요: ";
+		int choice;
 		cin >> choice;
 		choice--;
 
 		if (choice == -1)
 		{
-			cout << "\n상점 메뉴로 돌아갑니다.\n";
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
+			Sleep(1000);
 			return;
 		}
 		else if (choice >= 0 && choice < inventory->GetInventory().size())
 		{
+			Item* item = inventory->GetInventory()[choice];
+			string ItemName = item->GetName();
 			
-			character->IncreaseStat(GOLD, inventory->GetInventory()[choice]->GetPrice() * 0.6); // double ->int 어떻게?
-			inventory->RemoveItem(inventory->GetInventory()[choice], choice);
-			cout << "\n현재 소지한 골드: " << character->GetGold() << endl;
+			character->IncreaseStat(GOLD, (int) item->GetPrice() * 0.6);
+			inventory->RemoveItem(item, choice);
+
+			string SELL_ITEM = ItemName + " 아이템을 판매하였습니다!\n...\n상점 주인: 고맙군요...어딘가에 잘...써보도록...하지요...";
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(SELL_ITEM, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1000);
 		}
 		else
 		{
-			cout << "\n유효하지 않은 입력입니다.\n";
+			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1000);
 		}
 	}
@@ -148,15 +167,18 @@ void Shop::SellItems()
 
 void Shop::DrinkTea()
 {
-	cout << "\n(상점 주인이 따뜻한 녹차를 내온다. 덜덜 떨리는 손에 들린 잔이 잔받침과 부딪혀 달그락거린다.)\n";
-	cout << "상점 주인: 여행하시느라...힘드시겠어요...차가 뜨거우니...천천히...드세요...\n";
-	cout << "\n......차 마시는 중......\n";
+	Console.ClearConsoleSizeScreen();
+	Console.DisplayDialogue("......차 마시는 중......", WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 - 1, CHOICE_WIDTH, CHOICE_HEIGHT, OFFSET, OFFSET);
+	int CurrX = WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 + OFFSET;
 	for (int i = 0; i < 6; i++)
 	{
+		Console.SetCursorPosition(CurrX, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 3);
+		cout << "...홀짝";
+		CurrX += 7;
 		Sleep(1000);
-		cout << "...";
 	}
-	cout << "\n(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)\n";
+	Console.SetCursorPosition(CurrX - 7, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 4);
+	cout << "(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)";
 }
 
 void Shop::UpgradeEquipment()
@@ -164,56 +186,57 @@ void Shop::UpgradeEquipment()
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	const vector<Item*>& _Inventory = PInventory->GetInventory();
 
-	cout << "\n|++++++++++|장비 강화|++++++++++|\n";
-
 	while(true)
 	{
+		// 판매 메뉴 상단 출력 & 인벤토리 출력
+		const string UPGRADE_MENU = "[아이템 강화]\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")\n0 : 상점 메뉴로 돌아가기";
 		Console.ClearConsoleSizeScreen();
-		// 인벤 출력
+		Console.DisplayDialogue(UPGRADE_MENU, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
 		PInventory->ShowInven();
 
-		cout << "0: 상점 메뉴로 돌아가기\n강화할 아이템의 번호를 입력하세요.\n입력: ";
-
+		// 커서 이동하여 입력 받음
+		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT - 1);
+		cout << "번호를 입력하세요: ";
 		int i;
 		cin >> i;
 		i--;
 
 		if (i == -1)
 		{
-			cout << "\n상점 메뉴로 돌아갑니다.\n";
-			break;
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
+			Sleep(1000);
+			return;
 		}
 
 		if (i < 0 || i >= _Inventory.size())
 		{
-			cout << "\n잘못된 입력입니다.\n";
-			Sleep(500);
+			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+			Sleep(1000);
 			continue;
 		}
 
-		// 장비 아닌 아이템은 패스
+		// 장비 아닌 아이템
 		if (_Inventory[i]->GetType() != EQUIPMENT)
 		{
-			cout << "\n선택한 아이템이 장비 아이템이 아닙니다.\n";
-			Sleep(500);
+			Console.DisplayDialogue(NOT_EQUIPMENT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+			Sleep(1000);
 			continue;
 		}
 
 		// 강화 정보를 반환하기 위한 임시 값들
-		//string UpgradeName;
 		int UpgradeAmount;
 		int UpgradeCost;
 		ItemID ID = _Inventory[i]->GetID();
 
+		string UpgradeName = GetUpgradeName(ID, dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel());
 		if (ID == ARMOR)
 		{
-			//UpgradeName = ArmorUpgrade(ItemToUpgrade).GetUpgradeName();
 			UpgradeAmount = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeAmount() + ARMOR_UPGRADE_AMOUNT;
 			UpgradeCost = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeCost() + ARMOR_UPGRADE_COST;
 		}
 		else if (ID == SWORD)
 		{
-			//UpgradeName = SwordUpgrade(ItemToUpgrade).GetUpgradeName();
 			UpgradeAmount = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeAmount() + SWORD_UPGRADE_AMOUNT;
 			UpgradeCost = dynamic_cast<Equipment*>(_Inventory[i])->GetUpgradeCost() + SWORD_UPGRADE_COST;
 		}
@@ -223,32 +246,41 @@ void Shop::UpgradeEquipment()
 		}
 
 		// 강화 정보 출력 및 사용자 확인
-		cout << "아래의 장비를 강화할까요?:\n";
-		_Inventory[i]->PrintItemInfo();
-		//cout << "[강화: " << UpgradeName << "]\n";
-		cout << "--> 현재 강화 레벨 : " << dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() << " / 최대 강화 레벨 : " << UPGRADE_MAX_LEVEL << endl;
-		cout << "--> 강화 효과 : " << _Inventory[i]->GetTargetStatString() << " +" << UpgradeAmount << " 추가로 증가\n";
-		cout << "--> 강화 성공 확률 : " << UpgradeSuccessRate(dynamic_cast<Equipment*>(_Inventory[i])) << "%\n";
-		cout << "--> 강화 비용 : " << UpgradeCost << " 골드 (현재 소지 골드: " << character->GetGold() << ")\n" << endl;
-		cout << "1: 강화하기 / 0: 상점 메뉴로 돌아가기\n선택: ";
+		const string UPGRADE_CONFIRM = "아래의 장비를 강화할까요?:\n" + _Inventory[i]->GetItemInfoString()
+			+ "\n \n[강화: " + UpgradeName + "]\n"
+			+ "\n--> 현재 강화 레벨 : " + to_string(dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel()) + " / 최대 강화 레벨 : " + to_string(UPGRADE_MAX_LEVEL)
+			+ "\n--> 강화 효과 : " + _Inventory[i]->GetTargetStatString() + " +" + to_string(UpgradeAmount) + " 추가로 증가"
+			+ "\n--> 강화 성공 확률 : " + to_string(UpgradeSuccessRate(dynamic_cast<Equipment*>(_Inventory[i]))) + "%"
+			+ "\n--> 강화 비용 : " + to_string(UpgradeCost) + " 골드 (현재 소지 골드: " + to_string(character->GetGold()) + ")"
+			+ "\n1: 강화하기 / 0: 상점 메뉴로 돌아가기";
+		Console.ClearConsoleSizeScreen();
+		Console.DisplayDialogue(UPGRADE_CONFIRM, WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - (CHOICE_HEIGHT + 2) / 2 - 1, CHOICE_WIDTH, CHOICE_HEIGHT + 2, OFFSET, 0);
 
+		// 커서 이동하여 입력 받기
+		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y - 1);
+		cout << "번호를 입력하세요: ";
 		int Choice;
 		cin >> Choice;
+
+		// 강화 진행
 		if (Choice == 1)
 		{
 			// 골드 부족하면 패스
 			if (character->GetGold() < UpgradeCost)
 			{
-				cout << "\n골드가 부족합니다!\n";
-				Sleep(500);
+				Console.ClearConsoleSizeScreen();
+				const string NOT_ENOUGH_GOLD = "상점 주인: 미안하지만...골드가...모자란 것...같군...\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")";
+				Console.DisplayDialogue(NOT_ENOUGH_GOLD, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+				Sleep(1000);
 				continue;
 			}
 
 			// 최대 레벨 도달했으면 패스
 			if (dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() >= UPGRADE_MAX_LEVEL)
 			{
-				cout << "\n장비가 최대 레벨에 도달했습니다!\n";
-				Sleep(500);
+				Console.ClearConsoleSizeScreen();
+				Console.DisplayDialogue(EQUIPMENT_MAX_LEVEL, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+				Sleep(1000);
 				continue;
 			}
 
@@ -259,31 +291,36 @@ void Shop::UpgradeEquipment()
 				// 강화 비용 지출
 				character->IncreaseStat(GOLD, UpgradeCost * -1);
 				UpgradeEquipment(dynamic_cast<Equipment*>(_Inventory[i]), i);
-				cout << "\n상점 메뉴로 돌아갑니다.\n";
-				Sleep(500);
 				return;
 
 			case ARMOR:
 				// 강화 비용 지출
 				character->IncreaseStat(GOLD, UpgradeCost * -1);
 				UpgradeEquipment(dynamic_cast<Equipment*>(_Inventory[i]), i);
-				cout << "\n상점 메뉴로 돌아갑니다.\n";
-				Sleep(500);
 				return;
 			default:
+				Console.ClearConsoleSizeScreen();
 				cout << "\n(로직 오류) 강화 중 강화할 수 없는 아이템을 맞닥뜨렸습니다.\n";
+				Sleep(1000);
 				return;
 			}
 		}
+
+		// 상점 돌아가기
 		else if (Choice == 0)
 		{
-			cout << "\n상점 메뉴로 돌아갑니다.\n";
-			break;
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
+			Sleep(1000);
+			return;
 		}
+
+		// 유효하지 않은 입력
 		else
 		{
-			cout << "\n잘못된 입력입니다.\n";
-			Sleep(500);
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+			Sleep(1000);
 			continue;
 		}
 	}
@@ -295,27 +332,29 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 	// 강화할 갑옷을 착용 중인 경우 장착해제
 	if (equipment == PInventory->GetEquippedWeapon())
 	{
-		cout << "\n강화를 위해 장비를 해제합니다.\n";
 		PInventory->Unequip(SWORD);
 	}
 	else if (equipment == PInventory->GetEquippedArmor())
 	{
-		cout << "\n강화를 위해 장비를 해제합니다.\n";
 		PInventory->Unequip(ARMOR);
 	}
 	
-	cout << "\n'*_.,._*^*_.,강화 중,._*^*_.,._*'\n";
-	for (int i = 0; i < 8; i++)
+	Console.ClearConsoleSizeScreen();
+	Console.DisplayDialogue("\n'*_.,._*^*_.,강화 중,._*^*_.,._*'\n", WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 - 1, CHOICE_WIDTH, CHOICE_HEIGHT, OFFSET, OFFSET);
+	int CurrX = WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 + OFFSET;
+	
+	for (int i = 0; i < 6; i++)
 	{
+		Console.SetCursorPosition(CurrX, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 3);
+		cout << "...깡";
+		CurrX += 5;
 		Sleep(1000);
-		cout << "...";
 	}
 
 	const vector<Item*>& _Inventory = PInventory->GetInventory();
+	string UPGRADE_RESULT;
 	if (rand() % 100 < UpgradeSuccessRate(equipment))
 	{
-		cout << "\n'*,._+-Oo 강화 성공! oO-+.,*^'\n";
-
 		if (equipment->GetID() == SWORD)
 		{
 			equipment = new SwordUpgrade(equipment);
@@ -326,15 +365,15 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 			equipment = new ArmorUpgrade(equipment);
 			PInventory->ReplaceItem(equipment, index);
 		}
-		
-		cout << "--> 현재 장비 효과 : " << _Inventory[index]->GetTargetStatString() << " +" << _Inventory[index]->GetStatAmount() << endl;
-		cout << "--> 현재 장비 강화 레벨 : " << dynamic_cast<Equipment*>(_Inventory[index])->GetEquipmentLevel() << " / 최대 레벨 : " << UPGRADE_MAX_LEVEL;
+		UPGRADE_RESULT = "'*,._+-Oo 강화 성공! oO-+.,*^'\n--> 현재 장비 효과 : " + _Inventory[index]->GetTargetStatString() + " +" + to_string(_Inventory[index]->GetStatAmount())
+			+ "\n--> 현재 장비 강화 레벨 : " + to_string(dynamic_cast<Equipment*>(_Inventory[index])->GetEquipmentLevel()) + " / 최대 레벨 : " + to_string(UPGRADE_MAX_LEVEL);
 	}
 	else
 	{
-		cout << "...강화에 실패하였습니다...다음에는 꼭 성공할테니 너무 상심치 마세요!\n";
+		UPGRADE_RESULT = "상점 주인: 어이쿠...손이...미끄러져서...다음에는 꼭...성공할게요...죄송해요...\n(강화에 실패했습니다...)";
 	}
-	
+	Console.DisplayDialogue(UPGRADE_RESULT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+	Sleep(1000);
 	PInventory->AutoEquip(_Inventory[index]);
 }
 
@@ -342,4 +381,43 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 int Shop::UpgradeSuccessRate(Equipment* e)
 {
 	return 90 - e->GetEquipmentLevel() * 20;
+}
+
+string Shop::GetUpgradeName(ItemID ID, int Level)
+{
+	if (ID == ARMOR)
+	{
+		switch (Level)
+		{
+		case 0:
+			return "무두질";
+
+		case 1:
+			return "이음새 강화";
+
+		case 2:
+			return "안감 덧대기";
+
+		case 3:
+			return "표면 금속 코팅";
+		}
+	}
+	else if (ID == SWORD)
+	{
+		switch (Level)
+		{
+		case 0:
+			return "칼날 다듬기";
+
+		case 1:
+			return "손잡이 경량화";
+
+		case 2:
+			return "장인의 특별 개조";
+
+		case 3:
+			return "아다만티움 코팅";
+		}
+	}
+	return "";
 }

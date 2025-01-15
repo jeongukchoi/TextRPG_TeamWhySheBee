@@ -34,9 +34,10 @@ void Inventory::AddItem(ItemID ID)
 {
 	Item* ItemFromDB = _ItemManager.GetItem(ID);
 	ItemType Type = ItemFromDB->GetType();
-
-	cout << "\n._*^아이템 획득^*_.\n";
-	ItemFromDB->PrintItemInfo();
+	
+	string AddItemString = "._*^아이템 획득^*_.\n" + ItemFromDB->GetItemInfoString();
+	Console.ClearConsoleSizeScreen();
+	Console.DisplayDialogue(AddItemString, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
 
 	// 추가할 아이템이 소모품인 경우
 	if (Type == CONSUMABLES)
@@ -58,7 +59,7 @@ void Inventory::AddItem(ItemID ID)
 				break;
 
 			default:
-				cout << "\n아이템 ID가 유효하지 않아 인벤토리에 추가하지 못했습니다.\n";
+				cout << "\n(오류) 아이템 ID가 유효하지 않아 인벤토리에 추가하지 못했습니다.\n";
 				break;
 			}
 		}
@@ -69,6 +70,7 @@ void Inventory::AddItem(ItemID ID)
 	// 추가할 아이템이 장비인 경우
 	else if (Type == EQUIPMENT)
 	{
+		Sleep(1000);
 		switch (ID)
 		{
 		case SWORD:
@@ -82,6 +84,7 @@ void Inventory::AddItem(ItemID ID)
 			break;
 
 		default:
+			cout << "\n(오류) 아이템 ID가 유효하지 않아 인벤토리에 추가하지 못했습니다.\n";
 			break;
 		}
 	}
@@ -115,8 +118,6 @@ void Inventory::RemoveItem(Item* item, int index)
 				_Inventory.erase(InventoryPos);
 				InventoryCount.erase(CountPos);
 			}
-
-			cout << "\n^*._아이템 제거_.*^\n\n" << item->GetName() << " 아이템이 인벤토리에서 제거되었습니다.\n\n";
 		}
 		return;
 	}
@@ -143,11 +144,10 @@ void Inventory::RemoveItem(Item* item, int index)
 	{
 		throw runtime_error("\n-------RemoveItem 인자로 받은 인덱스가 잘못된 객체를 가리키고 있음");
 	}
-	cout << "\n^*._아이템 제거_.*^\n" << item->GetName() << "아이템이 인벤토리에서 제거되었습니다.\n\n";
 	delete item;
 	_Inventory.erase(_Inventory.begin() + index);
 
-	Sleep(1000);
+	//Sleep(1000);
 }
 
 void Inventory::UseItem(Item* item)
@@ -162,15 +162,8 @@ void Inventory::UseItem(Item* item)
 		auto InventoryIt = InventoryCount.find(ID);
 		if (InventoryIt != InventoryCount.end() && InventoryIt->second > 0)
 		{
-			//cout << "\n._*oO@-아이템 사용-@Oo*_.\n\n" << item->GetName() << " 아이템이 사용되었습니다.\n";
-			//item->PrintItemInfo();
-
 			item->Use();
 			RemoveItem(item, 0);
-		}
-		else
-		{
-			cout << endl << Name << " 아이템을 보유하고 있지 않아 사용하지 못했습니다.\n";
 		}
 		return;
 	}
@@ -194,9 +187,10 @@ void Inventory::UseItem(Item* item)
 			EquippedArmor = equipment;
 			break;
 		}
-		cout << "\n._*oO@-아이템 장착-@Oo*_.\n\n";
-		cout << equipment->GetName() << "(+" << equipment->GetEquipmentLevel() << ") 장비를 착용했습니다." << endl;
-		equipment->PrintItemInfo();
+
+		Console.ClearConsoleSizeScreen();
+		string EquipItemString = "._*oO@-아이템 장착-@Oo*_.\n" + equipment->GetItemInfoString();
+		Console.DisplayDialogue(EquipItemString, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
 	}
 
 	Sleep(1000);
@@ -216,8 +210,8 @@ string Inventory::UseConsumables()
 	{
 		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
 		{
-			string ItemString = "._*oO@-아이템 사용-@Oo*_.\n" + item->GetName() + " 아이템이 사용되었습니다.\n" + item->GetItemInfoString();
-			item->PrintItemInfo();
+			string ItemString = item->GetName() + " 아이템을 사용하였습니다.";
+			// string ItemString = item->GetName() + " 아이템을 사용하였습니다. " + item->GetTargetStatString() + " +" + to_string(item->GetStatAmount());
 			UseItem(_ItemManager.GetItem(item->GetID()));
 			return ItemString;
 		}
@@ -233,19 +227,25 @@ void Inventory::Unequip(ItemID ID)
 	case SWORD:
 		if (EquippedWeapon != nullptr)
 		{
-			cout << "\n착용중인 무기가 해제되었습니다.\n";
+			string UnequipItemString = "착용중인 무기가 해제되었습니다.";
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(UnequipItemString, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
 			// 장비 효과 해제
 			character->IncreaseStat(EquippedWeapon->GetTargetStat(), EquippedWeapon->GetTargetStat() * -1);
 			EquippedWeapon = nullptr;
+			Sleep(1000);
 		}
 		break;
 	case ARMOR:
 		if (EquippedArmor != nullptr)
 		{
-			cout << "\n착용중인 갑옷이 해제되었습니다.\n";
+			string UnequipItemString = "착용중인 갑옷이 해제되었습니다.";
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(UnequipItemString, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
 			// 장비 효과 해제
 			character->IncreaseStat(EquippedArmor->GetTargetStat(), EquippedArmor->GetTargetStat() * -1);
 			EquippedArmor = nullptr;
+			Sleep(1000);
 		}
 		break;
 	}
@@ -257,17 +257,18 @@ void Inventory::AutoEquip(Item* item)
 	// 있으면 증가 스탯 비교하여 높으면 새로운 장비 착용
 	switch (item->GetID())
 	{
+		Console.ClearConsoleSizeScreen();
+
 	case SWORD:
 		if (EquippedWeapon == nullptr)
 		{
-			cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 			UseItem(item);
 		}
 		else
 		{
 			if (EquippedWeapon->GetStatAmount() < item->GetStatAmount())
 			{
-				cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
+				//cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 				UseItem(item);
 			}
 		}
@@ -276,14 +277,14 @@ void Inventory::AutoEquip(Item* item)
 	case ARMOR:
 		if (EquippedArmor == nullptr)
 		{
-			cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
+			//cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 			UseItem(item);
 		}
 		else
 		{
 			if (EquippedArmor->GetStatAmount() < item->GetStatAmount())
 			{
-				cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
+				//cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 				UseItem(item);
 			}
 		}
@@ -295,28 +296,31 @@ void Inventory::ShowInven()
 {
 	if (_Inventory.empty())
 	{
-		cout << "*************인벤토리가 비어 있습니다.*************\n";
+		string InventoryEmpty = "*************인벤토리가 비어 있습니다.*************\n이전 메뉴로 돌아갑니다.";
+		Console.DisplayDialogue(InventoryEmpty, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
+		Sleep(1000);
 		return;
 	}
 
-	cout << "*************인벤토리 목록*************" << endl;
 	for (int i = 0; i < _Inventory.size(); i++)
 	{
-		cout << "[아이템 번호 " << i + 1 << "]" << endl;
+		string ItemString = "[아이템 번호 " + to_string(i + 1) + "]\n이름: " + _Inventory[i]->GetName();
+		// 소모품의 경우 갯수 / 장비의 경우 강화 레벨
 		if (_Inventory[i]->GetType() == CONSUMABLES)
 		{
-			cout << "이름: " << _Inventory[i]->GetName() << endl;
-			cout << "개수: " << InventoryCount[_Inventory[i]->GetID()] << endl;
-			cout << "판매가: " << _Inventory[i]->GetPrice() * 0.6 << endl;
+			ItemString += "\n개수: " + to_string(InventoryCount[_Inventory[i]->GetID()]);
 		}
 		else if (_Inventory[i]->GetType() == EQUIPMENT)
 		{
-			cout << "이름: " << _Inventory[i]->GetName() << endl;
-			cout << "강화 레벨: " << dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel() << endl;
-			cout << "판매가: " << _Inventory[i]->GetPrice() * 0.6 << endl;
-
+			if (EquippedArmor == _Inventory[i] || EquippedWeapon == _Inventory[i])
+			{
+				ItemString += "\n**장착중**";
+			}
+			ItemString += "\n강화 레벨: " + to_string(dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel());
 		}
+		ItemString += "\n판매가: " + to_string((int)_Inventory[i]->GetPrice() * 0.6);
+
+		Console.DisplayDialogue(ItemString, (i % 5) * ItemManager::ITEM_WIDTH, Shop::MENU_NAME_HEIGHT + ItemManager::ITEM_HEIGHT * (i / 5), ItemManager::ITEM_WIDTH, ItemManager::ITEM_HEIGHT, 0, 0);
 	}
-	cout << endl << endl;
 }
 

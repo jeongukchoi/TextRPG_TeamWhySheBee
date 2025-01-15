@@ -24,6 +24,9 @@ private:
 	Inventory(const Inventory&) = delete;
 	Inventory& operator=(const Inventory&) = delete;
 
+	// 콘솔 출력
+	ConsoleManager Console;
+
 public:
 	static Inventory* GetInstance();
 	const vector<Item*>& GetInventory();
