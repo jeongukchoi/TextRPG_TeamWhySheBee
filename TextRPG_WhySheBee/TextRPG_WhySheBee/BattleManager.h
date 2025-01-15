@@ -47,6 +47,7 @@ private:
 	void RandomUseItem();
 	// 공격 최소 데미지 최고 데미지 변경
 	float AttackMinaMax(float min, float max);
+
 };
 
 

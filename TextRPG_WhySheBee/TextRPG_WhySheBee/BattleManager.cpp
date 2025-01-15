@@ -11,6 +11,7 @@ bool BattleManager::Battle()
 	CreateMonster();
 
 	ColorPrinter printer;
+	ConsoleManager console;
 
 	if (Player == nullptr || Monster == nullptr)
 	{
@@ -25,6 +26,7 @@ bool BattleManager::Battle()
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{
+		Player->DisplayStatus();
 		//턴 진행 
 		MonsterAttackDelay--;
 		CurrentAttackDelay--;
@@ -34,7 +36,7 @@ bool BattleManager::Battle()
 		{
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
-			Sleep(200);
+			Sleep(1000);
 		}
 
 		// 플레이어 전투 승리
@@ -50,7 +52,10 @@ bool BattleManager::Battle()
 			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
 			GetRandomItem();
 
+
+			Player->DisplayStatus();
 			Monster.reset();
+
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
 			return PlayerLevel < 10;
 		}
@@ -60,9 +65,8 @@ bool BattleManager::Battle()
 		{
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
-			Sleep(200);			
-		}
-
+			Sleep(1000);			
+		} 
 
 		// 플레이어 전투 패배
 		if (IsPlayerDead())
@@ -73,6 +77,8 @@ bool BattleManager::Battle()
 			// 패배 반환
 			return false;
 		}
+
+		console.ClearScreen();
 	}
 	throw runtime_error("== 비정상 전투 종료: BattleManager::Battle 메서드 오류 ==");
 }

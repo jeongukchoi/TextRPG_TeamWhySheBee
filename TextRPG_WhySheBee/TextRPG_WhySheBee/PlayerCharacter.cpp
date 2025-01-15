@@ -36,11 +36,29 @@ void PlayerCharacter::TakeDamage(int amount)
 
 void PlayerCharacter::DisplayStatus() const
 {
-    cout << "===== " << _name << "의 상태 =====" << endl;
+    ColorPrinter color;
+    ConsoleManager printer;
+    printer.SetCursorPosition(70, 5);
+    
+    cout << "===== " << color.ColoredText(_name, CYAN) << "의 상태 =====" << endl;
+    printer.SetCursorPosition(70, 6);
     cout << "레벨: " << _level << ", 경험치: " << _experience << "/ " << _level * 10 << endl;
-    cout << "체력: " << _health << "/" << _maxHealth << ", 공격력: " << _attack << endl;
-    cout << "골드: " << _gold << endl;
-    cout << "======================" << endl;
+    printer.SetCursorPosition(70, 7);
+    if (_health < _maxHealth*0.5f)
+    {
+        cout << "체력: " << color.ColoredText(to_string(_health), RED) << "/" << color.ColoredText(to_string(_maxHealth), BLUE)
+            << ", 공격력: " << _attack << endl;
+    }
+    else
+    {
+        cout << "체력: " << color.ColoredText(to_string(_health), BLUE) << "/" << color.ColoredText(to_string(_maxHealth), BLUE) 
+            << ", 공격력: " << _attack << endl;
+    }
+    printer.SetCursorPosition(70, 8);
+    cout << "골드: " << color.ColoredText(to_string(_health), YELLOW) << endl;
+    printer.DrawRectangle(69, 4, 30, 8);
+    printer.SetCursorPosition(0, 0);
+    //system("cls");
 }
 
 void PlayerCharacter::IncreaseStat(STATUS stat, int amount)

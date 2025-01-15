@@ -14,6 +14,7 @@ void GameManager::StartGame()
     {
 
 
+        system("cls");
         Battle();
         if (over)
         {
@@ -87,8 +88,9 @@ void GameManager::DisplayInventory()
 
 void GameManager::VisitShop(Shop* shop)
 {
+    system("cls");
     cout << "상점에 방문하셨습니다!" << endl;
-    
+
     shop->StartShop();
 }
 
