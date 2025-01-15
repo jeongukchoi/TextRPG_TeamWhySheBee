@@ -37,6 +37,7 @@ bool BattleManager::Battle()
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{		
+		
 		PrintBattle();
 
 		//현재 턴 
@@ -52,7 +53,7 @@ bool BattleManager::Battle()
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
 		}
-
+	
 		// 플레이어 전투 승리
 		if (IsMonsterDead())
 		{
@@ -83,7 +84,6 @@ bool BattleManager::Battle()
 			MonsterAttackDelay = Monster->GetAttackDelay();		
 
 		}
-
 
 		// 플레이어 전투 패배
 		if (IsPlayerDead())
@@ -149,6 +149,8 @@ void BattleManager::PlayerAttack()
 	}
 
 	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
+	
+	Console.ClearMonsterStatus();
 	DisplayMonsterStats();	
 }
 
@@ -180,6 +182,8 @@ void BattleManager::MonsterAttack()
 		Player->TakeDamage(Monster->GetDamage());
 		Texts.push_back("[" + Player->GetName() + "]의 체력이 [" + to_string(Monster->GetDamage()) + "] 감소했습니다.");
 	}
+	Console.ClearPlayerStatus();
+	Player->DisplayStatus();;
 }
 
 // 플레이어 사망 확인 메서드
@@ -270,16 +274,15 @@ void BattleManager::PrintBattle()
 
 void BattleManager::DisplayMonsterStats()
 {
-	Console.SetSettingPosition(2,0,0);
-	Console.DrawRectangle(60, 20, 20, 8);
+	Console.DrawRectangle(49, 19, 20, 8);
 
-	Console.SetSettingPosition(2, 1, 1);
+	Console.SetCursorPosition(50, 20);
 	cout << "     [" + Monster->GetName() + "]  ";
 
-	Console.SetSettingPosition(2, 3, 1);
+	Console.SetCursorPosition(50, 22);
 	cout << "  체력:    " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetHealth());
 
-	Console.SetSettingPosition(2, 5, 1);
+	Console.SetCursorPosition(50, 23);
 	cout << "  공격력:  " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetDamage());
 
 	Console.SetCursorPosition(0, 0);
