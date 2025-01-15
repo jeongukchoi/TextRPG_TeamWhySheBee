@@ -27,9 +27,7 @@ int Mage::RandomAttack()
 	Skill* _randomSkill = nullptr;
 	if (randomWeight <= 40)
 	{
-		//cout << "기본 공격!!" << endl;
 		Damage = _attack; 
-		//cout << "데미지: " << Damage << endl;
 		return Damage;
 	}
 	else if (randomWeight <= 80)
@@ -44,7 +42,6 @@ int Mage::RandomAttack()
 	Damage = _randomSkill->Activate(_attack, _int);
 	_skillName = _randomSkill->GetName();
 
-	//cout << "데미지: " << Damage << endl;
 	delete _randomSkill;
 	return Damage;
 }

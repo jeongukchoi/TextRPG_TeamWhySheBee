@@ -10,11 +10,12 @@ Shop::Shop()
 // 상점 메뉴 인터페이스
 void Shop::StartShop()
 {
-	Console.ClearScreen();
+	Console.ClearConsoleSizeScreen();
+	
 	// 인삿말 출력 (GREETINGS)
 	Console.DisplayDialogue(GREETINGS, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 	Sleep(1500);
-	Console.ClearScreen();
+	Console.ClearConsoleSizeScreen();
 	while (true)
 	{
 		// 상점 기본 메뉴 출력 (SHOP_MENU)
@@ -26,38 +27,38 @@ void Shop::StartShop()
 		switch (Choice)
 		{
 		case 1:
-			Console.ClearScreen();
+			Console.ClearConsoleSizeScreen();
 			// 아이템 구매
 			BuyItems();
 			break;
 
 		case 2:
-			Console.ClearScreen();
+			Console.ClearConsoleSizeScreen();
 			// 아이템 판매
 			SellItems();
 			break;
 
 		case 3:
-			Console.ClearScreen();
+			Console.ClearConsoleSizeScreen();
 			// 아이템 강화
 			UpgradeEquipment(); 
 			break;
 
 		case 4:
-			Console.ClearScreen();
+			Console.ClearConsoleSizeScreen();
 			// 상점 주인과 차 마시기
 			DrinkTea();
 			break;
 		
 		case 0:
-			Console.ClearScreen();
+			Console.ClearConsoleSizeScreen();
 			// 작별인사 출력 (FAREWELL)
 			Console.DisplayDialogue(FAREWELL, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1500);
 			return;
 		}
 		Sleep(1500);
-		Console.ClearScreen();
+		Console.ClearConsoleSizeScreen();
 	}
 }
 
@@ -73,6 +74,7 @@ void Shop::BuyItems()
 
 	while (true)
 	{
+		Console.ClearConsoleSizeScreen();
 		Console.DisplayDialogue(BUY_MENU, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
 		IM.ShowItemDB();
 		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y );
@@ -114,6 +116,7 @@ void Shop::SellItems()
 
 	while (true)
 	{
+		Console.ClearConsoleSizeScreen();
 		cout << "\n판매할 물품을 골라보세요!\n";
 		inventory->ShowInven();
 		cout << "0: 상점 메뉴로 돌아가기\n";
@@ -165,6 +168,7 @@ void Shop::UpgradeEquipment()
 
 	while(true)
 	{
+		Console.ClearConsoleSizeScreen();
 		// 인벤 출력
 		PInventory->ShowInven();
 

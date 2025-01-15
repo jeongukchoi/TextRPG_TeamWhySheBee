@@ -7,10 +7,14 @@ GameManager::GameManager() : over(false) {}
 
 void GameManager::StartGame()
 {
-    cout << "게임을 시작합니다. " << endl;
-    CreateCharacter();
-    Shop* shop = new Shop();
+
     ConsoleManager* console = new ConsoleManager();
+    console->ClearConsoleSizeScreen();
+
+    CreateCharacter();
+
+    Shop* shop = new Shop();
+
     while (true)
     {
 
@@ -24,7 +28,7 @@ void GameManager::StartGame()
         }
 
 
-       console->ClearScreen();
+        console->ClearScreen();
         
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
@@ -34,6 +38,13 @@ void GameManager::StartGame()
         {
             VisitShop(shop);
         }
+        else if (choice == 'N' || choice == 'n')
+        {
+            Battle();
+        }
+
+        
+
 
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
@@ -49,7 +60,8 @@ void GameManager::CreateCharacter()
     int playerJobNum;
 
     cout << "플레이어 캐릭터의 이름을 입력하세요: ";
-    getline(cin, playerName); // 캐릭터 이름 입력 받기
+    cin >> playerName;
+    //getline(cin, playerName); // 캐릭터 이름 입력 받기
 
     cout << "직업을 선택하세요: " << endl;
     cout << "1.전사 2.마법사 " << endl;

@@ -12,17 +12,18 @@ ConsoleManager::ConsoleManager()
     SMALL_RECT WindowSize = { 0, 0, static_cast<SHORT>(119), static_cast<SHORT>(49) };
     SetConsoleWindowInfo(Console, TRUE, &WindowSize);
 
-
+    // 전투 로직에서 스텟창 위치 설정
     cursorPositions["PlayerStatus"] = { 2, 20 };
     cursorPositions["VS"] = { 35, 20 };
-    cursorPositions["MonsterStatus"] = { 60, 20 };
+    cursorPositions["MonsterStatus"] = { 50, 20 };
 }
 
 void ConsoleManager::ClearScreen()
 {
-	SetCursorPosition(0, 0);
+    SetCursorPosition(0, 0);
 
     DWORD count;
+    COORD coord = { 0, 0 };
 
     // 현재 콘솔 버퍼 정보 저장
     CONSOLE_SCREEN_BUFFER_INFO ConsoleBuffer;
@@ -35,6 +36,48 @@ void ConsoleManager::ClearScreen()
     SetConsoleCursorPosition(Console, coord);
 
     Sleep(500);
+}
+
+void ConsoleManager::ClearConsoleSizeScreen()
+{
+    SetCursorPosition(0, 0);
+
+    DWORD count;
+
+    // 현재 콘솔 버퍼 정보 저장
+    CONSOLE_SCREEN_BUFFER_INFO ConsoleBuffer;
+    GetConsoleScreenBufferInfo(Console, &ConsoleBuffer);
+
+    // 콘솔의 출력 영역만큼 공백으로 채움
+    FillConsoleOutputCharacter(Console, ' ', ConsoleBuffer.dwSize.X * ConsoleBuffer.dwSize.Y, coord, &count);
+    // 커서 초기 위치 0,0 이동
+    SetCursorPosition(0, 0);
+    SetConsoleCursorPosition(Console, coord);
+
+    Sleep(500);
+}
+
+void ConsoleManager::ClearPlayerStatus()
+{
+    // 플레이어 스텟창 초기화_x축은  2~28 초기화, y축은 21~23 초기화
+    COORD coord = { 2, 21 };
+    DWORD count;
+    for (int i = 0; i < 3; i++)
+    {
+        FillConsoleOutputCharacter(Console, ' ', 26, coord, &count);
+        coord.Y++;
+    }
+}
+
+void ConsoleManager::ClearMonsterStatus()
+{
+    // 몬스터 스텟창 초기화_x축은 50~67 초기화, y축은 22~23 초기화
+    coord = { 50, 22 };
+    for (int i = 0; i < 2; i++)
+    {
+        FillConsoleOutputCharacter(Console, ' ', 19, coord, &count);
+        coord.Y++;
+    }
 }
 
 void ConsoleManager::DisplayMainMenu()
@@ -63,7 +106,14 @@ void ConsoleManager::DisplayMainMenu()
 		cout << Printer.ColoredText(Title[i], to_string(Idx + 1)) << endl;
         coord.Y++;
 	}
+
     cout << endl << endl;
+
+    SetCursorPosition(50, 20);
+    cout << "> 게임 시작 : 1";
+    SetCursorPosition(50, 22);
+    cout << "> 게임 종료 : 2";
+	SetCursorPosition(50, 24);
 }
 
 void ConsoleManager::SetCursorPosition(int x, int y)
@@ -78,8 +128,6 @@ void ConsoleManager::DrawRectangle(int x, int y, int width, int height)
     SetCursorPosition(x, y);
     cout << string(width, '-');
 
-    
-
     // 좌측 및 우측
     for (int i = y + 1; i < y + height - 1; ++i) {
         SetCursorPosition(x, i);
@@ -87,6 +135,7 @@ void ConsoleManager::DrawRectangle(int x, int y, int width, int height)
         SetCursorPosition(x + width - 1, i);
         cout << "|";
     }
+
     // 하단
     SetCursorPosition(x, y + height - 1);
     cout << string(width, '-');
@@ -111,47 +160,43 @@ void ConsoleManager::DrawVs()
 
 }
 
-void ConsoleManager::SetSettingPosition(int num,int y,int x)
+void ConsoleManager::SetSettingPosition(int num, int y, int x)
 {
     switch (num)
     {
-        case 0: 
-        {
-            CursorPosition position = cursorPositions["PlayerStatus"];
-            SetCursorPosition(position.first+x, position.second+y);
-        }
-        break;
-        case 1:
-        {
-            CursorPosition position = cursorPositions["VS"];
-            SetCursorPosition(position.first + x, position.second + y);
-        }
-        break;
-        case 2:
-        {
-            CursorPosition position = cursorPositions["MonsterStatus"];
-            SetCursorPosition(position.first + x, position.second + y);
-        }
-        break;
-        default:
-            return;
+    case 0:
+    {
+        CursorPosition position = cursorPositions["PlayerStatus"];
+        SetCursorPosition(position.first + x, position.second + y);
+    }
+    break;
+    case 1:
+    {
+        CursorPosition position = cursorPositions["VS"];
+        SetCursorPosition(position.first + x, position.second + y);
+    }
+    break;
+    case 2:
+    {
+        CursorPosition position = cursorPositions["MonsterStatus"];
+        SetCursorPosition(position.first + x, position.second + y);
+    }
+    break;
+    default:
+        return;
 
     }
 }
-
 
 void ConsoleManager::DisplayDialogue(const string& dialogue, int startX, int startY, int width, int height, int offsetX, int offsetY)
 {
     // 커서 위치에 오프셋 반영
     int CurrX = startX + 1 + offsetX; // 변하지 않음
     int CurrY = startY + 1 + offsetY;
-
-
     /*** 커서를 옮겨가며 "\n"으로 구분된 스트링을 한 줄씩 출력 ***/
     size_t CurrPos = 0;
     size_t NextPos = 0;
     string Delimiter = "\n"; // parse 기준이 되는 스트링
-
     // NextPos : CurrPos 이후 처음으로 등장하는 Delimiter 의 위치
     while ((NextPos = dialogue.find(Delimiter, CurrPos)) != string::npos)
     {
@@ -164,7 +209,6 @@ void ConsoleManager::DisplayDialogue(const string& dialogue, int startX, int sta
     // 마지막으로 찾은 Delimiter 이후의 스트링 출력
     SetCursorPosition(CurrX, CurrY++);
     cout << dialogue.substr(CurrPos);
-
     // 대화 창의 테두리 그리기
     DrawRectangle(startX, startY, width, height + 2 * offsetY);
     SetCursorPosition(0, 0);

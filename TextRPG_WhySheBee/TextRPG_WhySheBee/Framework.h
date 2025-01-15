@@ -37,6 +37,7 @@ using namespace std;
 #include "ColorPrinter.h"
 #include "ConsoleManager.h"
 
+#include "ConsoleManager.h"
 
 //플레이어관련
 
@@ -73,6 +74,7 @@ using namespace std;
 #include "IState.h"
 #include "NormalState.h"
 #include "EnragedState.h"
+
 #include "BaseMonster.h"
 #include "Goblin.h"
 #include "Orc.h"
@@ -80,6 +82,7 @@ using namespace std;
 #include "Slime.h"
 #include "BossMonster.h"
 #include "EnemyFactory.h"
+
 #include "BattleManager.h"
 
 #include "GameManager.h"
