@@ -90,6 +90,7 @@ void Inventory::AddItem(ItemID ID)
 	}
 
 	Sleep(1000);
+	Console.ClearConsoleSizeScreen();
 }
 
 void Inventory::RemoveItem(Item* item, int index)

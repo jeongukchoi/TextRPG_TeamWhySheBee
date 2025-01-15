@@ -177,7 +177,7 @@ void Shop::DrinkTea()
 		CurrX += 7;
 		Sleep(1000);
 	}
-	Console.SetCursorPosition(CurrX - 7, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 4);
+	Console.SetCursorPosition(WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 + OFFSET, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 4);
 	cout << "(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)";
 }
 
