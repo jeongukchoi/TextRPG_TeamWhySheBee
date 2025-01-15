@@ -38,13 +38,6 @@ void GameManager::StartGame()
         {
             VisitShop(shop);
         }
-        else if (choice == 'N' || choice == 'n')
-        {
-            Battle();
-        }
-
-        
-
 
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {
