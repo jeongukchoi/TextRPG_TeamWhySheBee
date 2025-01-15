@@ -6,12 +6,18 @@ bool BattleManager::Battle()
 	Player->IncreaseStat(HP, Player->GetMaxHealth());
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
-	Player->DisplayStatus();
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
-
 	ColorPrinter printer;
 	ConsoleManager console;
+	console.ClearScreen();
+
+
+	Player->DisplayStatus();
+	Sleep(250);
+	console.DrawVs();
+	Sleep(250);
+	DisplayMonsterStats();
 
 	if (Player == nullptr || Monster == nullptr)
 	{
@@ -34,9 +40,11 @@ bool BattleManager::Battle()
 		// 플레이어 공격
 		if(CurrentAttackDelay <= 0)
 		{
+			console.ClearScreen();
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
-			Sleep(1000);
+			DisplayMonsterStats();
+			Sleep(3000);
 		}
 
 		// 플레이어 전투 승리
@@ -63,9 +71,11 @@ bool BattleManager::Battle()
 		// 몬스터 공격
 		if (MonsterAttackDelay <= 0)
 		{
+			console.ClearScreen();
 			MonsterAttack();
 			MonsterAttackDelay = Monster->GetAttackDelay();
-			Sleep(1000);			
+			Sleep(2000);
+
 		} 
 
 		// 플레이어 전투 패배
@@ -78,7 +88,6 @@ bool BattleManager::Battle()
 			return false;
 		}
 
-		console.ClearScreen();
 	}
 	throw runtime_error("== 비정상 전투 종료: BattleManager::Battle 메서드 오류 ==");
 }
@@ -148,6 +157,7 @@ void BattleManager::MonsterAttack()
 	{
 		cout << printer.ColoredText(Monster->GetName(), BLUE) << "이(가)" << printer.ColoredText(Player->GetName(), RED) <<"를 공격합니다! ";
 		Player->TakeDamage(Monster->GetDamage());
+
 		//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
 	}
 }
@@ -214,5 +224,18 @@ float BattleManager::AttackMinaMax(float min , float max)
 	uniform_real_distribution<float> Dis(0.7f, 1.0); //0.7부터 1.0까지 균일 하게
 	float randomValue = Dis(Gen);
 	return randomValue;
+}
+
+void BattleManager::DisplayMonsterStats()
+{
+	ConsoleManager Console;
+	Console.DrawRectangle(59, 19, 20, 8);
+	Console.SetSettingPosition(2, 0);
+	cout << "     [" + Monster->GetName() + "]  ";
+	Console.SetSettingPosition(2, 1);
+	cout << "  체력:    " << Monster->GetHealth();
+	Console.SetSettingPosition(2, 2);
+	cout << "  공격력:  " << Monster->GetDamage();
+	Console.SetCursorPosition(0, 0);
 }
 
