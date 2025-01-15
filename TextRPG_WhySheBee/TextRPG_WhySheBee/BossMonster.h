@@ -23,9 +23,9 @@ public:
 	}
 
 	// 분노 상태 스킬 메서드
-	void EnragedSkill() override;
+	string EnragedSkill() override;
 	// Boss 전용 스킬 랜덤 선택 메서드
-	void UseRandomSkill();
+	string UseRandomSkill();
 
 private:
 	// Boss 전용 스킬 메서드

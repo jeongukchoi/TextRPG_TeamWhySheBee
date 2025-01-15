@@ -3,6 +3,7 @@
 #include "PlayerCharacter.h"
 #include "ItemManager.h"
 #include "Inventory.h"
+#include "ConsoleManager.h"
 #include <memory>
 #include "ConsoleManager.h"
 
@@ -55,6 +56,8 @@ private:
 	float AttackMinaMax(float min, float max);
 	// 전투 출력
 	void PrintBattle();
+	// 몬스터 스텟 출력 메서드
+	void DisplayMonsterStats();
 };
 
 

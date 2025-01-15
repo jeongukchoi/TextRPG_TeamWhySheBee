@@ -13,6 +13,6 @@ public:
 		Speed = 6;
 		Damage = static_cast<int>(Damage * 1.5f);
 	}
-	void EnragedSkill() override;
+	string EnragedSkill() override;
 };
 
