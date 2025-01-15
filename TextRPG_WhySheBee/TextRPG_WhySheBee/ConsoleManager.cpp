@@ -15,12 +15,32 @@ ConsoleManager::ConsoleManager()
     // 전투 로직에서 스텟창 위치 설정
     cursorPositions["PlayerStatus"] = { 2, 20 };
     cursorPositions["VS"] = { 35, 20 };
-    cursorPositions["MonsterStatus"] = { 60, 20 };
+    cursorPositions["MonsterStatus"] = { 50, 20 };
 }
 
 void ConsoleManager::ClearScreen()
 {
-	SetCursorPosition(0, 0);
+    SetCursorPosition(0, 0);
+
+    DWORD count;
+    COORD coord = { 0, 0 };
+
+    // 현재 콘솔 버퍼 정보 저장
+    CONSOLE_SCREEN_BUFFER_INFO ConsoleBuffer;
+    GetConsoleScreenBufferInfo(Console, &ConsoleBuffer);
+
+    // 콘솔의 출력 영역만큼 공백으로 채움
+    FillConsoleOutputCharacter(Console, ' ', 60 * 16, coord, &count);
+    // 커서 초기 위치 0,0 이동
+    SetCursorPosition(0, 0);
+    SetConsoleCursorPosition(Console, coord);
+
+    Sleep(500);
+}
+
+void ConsoleManager::ClearConsoleSizeScreen()
+{
+    SetCursorPosition(0, 0);
 
     DWORD count;
 
@@ -32,8 +52,32 @@ void ConsoleManager::ClearScreen()
     FillConsoleOutputCharacter(Console, ' ', ConsoleBuffer.dwSize.X * ConsoleBuffer.dwSize.Y, coord, &count);
     // 커서 초기 위치 0,0 이동
     SetCursorPosition(0, 0);
+    SetConsoleCursorPosition(Console, coord);
 
     Sleep(500);
+}
+
+void ConsoleManager::ClearPlayerStatus()
+{
+    // 플레이어 스텟창 초기화_x축은  2~28 초기화, y축은 21~23 초기화
+    COORD coord = { 2, 21 };
+    DWORD count;
+    for (int i = 0; i < 3; i++)
+    {
+        FillConsoleOutputCharacter(Console, ' ', 26, coord, &count);
+        coord.Y++;
+    }
+}
+
+void ConsoleManager::ClearMonsterStatus()
+{
+    // 몬스터 스텟창 초기화_x축은 50~67 초기화, y축은 22~23 초기화
+    coord = { 50, 22 };
+    for (int i = 0; i < 2; i++)
+    {
+        FillConsoleOutputCharacter(Console, ' ', 19, coord, &count);
+        coord.Y++;
+    }
 }
 
 void ConsoleManager::DisplayMainMenu()
