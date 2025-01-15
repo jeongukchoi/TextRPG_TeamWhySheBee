@@ -1,5 +1,6 @@
 #pragma once
 
+using CursorPosition = pair<int, int>;
 
 class ConsoleManager
 {
@@ -18,12 +19,13 @@ public:
 	// 사각형 그리기
 	void DrawRectangle(int x, int y, int width, int height);
 
-	// 위치, 크기, 오프셋 반영하여 스트링 출력 (네모칸 포함)
-	void DisplayDialogue(const string& dialogue, int startX, int startY, int width, int height, int offsetX, int offsetY);
+	void DrawVs();
 
+	void SetSettingPosition(int num, int y, int x=0);
 private:
 	HANDLE Console;
 	COORD coord;
 	DWORD count;
 	ColorPrinter Printer;
+	unordered_map<string, CursorPosition> cursorPositions;
 };

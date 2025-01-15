@@ -11,6 +11,11 @@ ConsoleManager::ConsoleManager()
 
     SMALL_RECT WindowSize = { 0, 0, static_cast<SHORT>(119), static_cast<SHORT>(49) };
     SetConsoleWindowInfo(Console, TRUE, &WindowSize);
+
+
+    cursorPositions["PlayerStatus"] = { 2, 20 };
+    cursorPositions["VS"] = { 35, 20 };
+    cursorPositions["MonsterStatus"] = { 60, 20 };
 }
 
 void ConsoleManager::ClearScreen()
@@ -24,8 +29,9 @@ void ConsoleManager::ClearScreen()
     GetConsoleScreenBufferInfo(Console, &ConsoleBuffer);
 
     // 콘솔의 출력 영역만큼 공백으로 채움
-    FillConsoleOutputCharacter(Console, ' ', ConsoleBuffer.dwSize.X * ConsoleBuffer.dwSize.Y, coord, &count);
+    FillConsoleOutputCharacter(Console, ' ', 60 * 16, coord, &count);
     // 커서 초기 위치 0,0 이동
+    SetCursorPosition(0, 0);
     SetConsoleCursorPosition(Console, coord);
 
     Sleep(500);
@@ -84,6 +90,53 @@ void ConsoleManager::DrawRectangle(int x, int y, int width, int height)
     // 하단
     SetCursorPosition(x, y + height - 1);
     cout << string(width, '-');
+}
+
+void ConsoleManager::DrawVs()
+{
+
+    SetSettingPosition(1, 0);
+    cout << "#   #   ### ";
+    SetSettingPosition(1, 1);
+    cout << "#   #  #    ";
+    SetSettingPosition(1, 2);
+    cout << "#  #   #    ";
+    SetSettingPosition(1, 3);
+    cout << "#  #    #   ";
+    SetSettingPosition(1, 4);
+    cout << "# #      #  ";
+    SetSettingPosition(1, 5);
+    cout << "#     ###   ";
+
+
+}
+
+void ConsoleManager::SetSettingPosition(int num,int y,int x)
+{
+    switch (num)
+    {
+        case 0: 
+        {
+            CursorPosition position = cursorPositions["PlayerStatus"];
+            SetCursorPosition(position.first+x, position.second+y);
+        }
+        break;
+        case 1:
+        {
+            CursorPosition position = cursorPositions["VS"];
+            SetCursorPosition(position.first + x, position.second + y);
+        }
+        break;
+        case 2:
+        {
+            CursorPosition position = cursorPositions["MonsterStatus"];
+            SetCursorPosition(position.first + x, position.second + y);
+        }
+        break;
+        default:
+            return;
+
+    }
 }
 
 

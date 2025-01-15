@@ -11,40 +11,45 @@ bool BattleManager::Battle()
 	CreateMonster();
 
 	ColorPrinter printer;
-	ConsoleManager console;
 
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
 		return false;
 	}
-	
+
+	//전투 턴
+	int Battle_Turn = 1;	
 	// 공격 딜레이 설정
 	int MonsterAttackDelay = Monster->GetAttackDelay();
 	int CurrentAttackDelay = PlayerAttackDelay;
 
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
-	{
-		Player->DisplayStatus();
+	{		
+		PrintBattle();
+
+		//현재 턴 
+		Texts.push_back(printer.ColoredText("현재 턴 : ", WHITE) + printer.ColoredText(to_string(Battle_Turn++), GREEN));
+
 		//턴 진행 
 		MonsterAttackDelay--;
-		CurrentAttackDelay--;
+		CurrentAttackDelay--;		
 
 		// 플레이어 공격
 		if(CurrentAttackDelay <= 0)
-		{
+		{		
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
-			Sleep(1000);
 		}
 
 		// 플레이어 전투 승리
 		if (IsMonsterDead())
 		{
-			cout << printer.ColoredText(Player->GetName(), RED) << "이(가) " << printer.ColoredText(Monster->GetName(), BLUE) << "를 처치했습니다!" << endl;
-			
-			std::cout << "전투 승리!" << std::endl;
+			Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) " + printer.ColoredText(Monster->GetName(), BLUE) + "를 처치했습니다!");		
+			Texts.push_back("전투 승리!");
+
+			PrintBattle();
 
 			// 전투 보상 획득
 			GetRewards();
@@ -52,10 +57,9 @@ bool BattleManager::Battle()
 			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
 			GetRandomItem();
 
-
-			Player->DisplayStatus();
 			Monster.reset();
-
+			Battle_Turn = 1;
+			CurrentTextYposition = 0;
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
 			return PlayerLevel < 10;
 		}
@@ -64,21 +68,20 @@ bool BattleManager::Battle()
 		if (MonsterAttackDelay <= 0)
 		{
 			MonsterAttack();
-			MonsterAttackDelay = Monster->GetAttackDelay();
-			Sleep(1000);			
-		} 
+			MonsterAttackDelay = Monster->GetAttackDelay();					
+		}
+
 
 		// 플레이어 전투 패배
 		if (IsPlayerDead())
 		{
-			cout << Player->GetName() << "이(가) 사망했습니다." << endl;
-			std::cout << "전투 패배..." << std::endl;
+			Texts.push_back(Player->GetName() + "이(가) 사망했습니다." );
+			Texts.push_back("전투 패배...");
+			PrintBattle();
 			Monster.reset();
 			// 패배 반환
 			return false;
 		}
-
-		console.ClearScreen();
 	}
 	throw runtime_error("== 비정상 전투 종료: BattleManager::Battle 메서드 오류 ==");
 }
@@ -95,18 +98,16 @@ void BattleManager::CreateMonster()
 	if (PlayerLevel < 10)
 	{
 		Monster = EnemyFactory::CreateBasicMonster(PlayerLevel);
-		cout << "몬스터 " << Monster->GetName() << "등장합니다!";
-		cout << " 체력: " << to_string(Monster->GetHealth()) << ", 공격력 : " << to_string(Monster->GetDamage()) << endl;
+		Texts.push_back("몬스터 " + Monster->GetName() + "등장!");		
 	}
 	// 보스 몬스터 생성
 	else
 	{
 		Monster = EnemyFactory::CreateBossMonster(PlayerLevel);
-		cout << "두두두둥~ 쾅!" << endl;
-		cout << "보스 몬스터 " << Monster->GetName() << "이 불을 내뿜으며 등장합니다!";
-		cout << " 체력: " << to_string(Monster->GetHealth()) << ", 공격력 : " << to_string(Monster->GetDamage()) << endl;
+		Texts.push_back("두두두둥~ 쾅!" );
+		Texts.push_back("보스 몬스터 " + Monster->GetName() + "이 불을 내뿜으며 등장합니다!");		
 	}
-	cout << "전투가 시작됩니다!\n" << endl;
+	Texts.push_back("전투가 시작됩니다!");
 }
 
 // 플레이어 공격 메서드
@@ -114,11 +115,16 @@ void BattleManager::PlayerAttack()
 {
 	RandomUseItem();
 	ColorPrinter printer;
-
-	cout << printer.ColoredText(Player->GetName(),RED) << "이(가) " << printer.ColoredText(Monster->GetName(), BLUE) << "를(을) 공격합니다! ";
+	Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) 공격!! ");
+	
 	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
+	if(Player->GetSkillName() != "")
+	{
+		Texts.push_back(Player->GetSkillName());
+	}
 	Monster->TakeDamaged(HitDamage);
-	cout << Monster->GetName() << " 체력: " << to_string(Monster->GetHealth()) << endl ;
+	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
+
 }
 
 // 몬스터 공격 메서드
@@ -137,18 +143,17 @@ void BattleManager::MonsterAttack()
 		}
 		else
 		{
-			cout << Boss->GetName() << "이 "<< Player->GetName() << " 에게 일반 공격을 합니다! ";
+			Texts.push_back(Boss->GetName() + "이 일반 공격을 합니다! ");
 			Player->TakeDamage(Monster->GetDamage());
-			
-			//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
+			Texts.push_back("[" + Player->GetName() + "]의 체력이 [" + to_string(Monster->GetDamage()) + "] 감소했습니다.");
 		}
 	}
 	// 일반 몬스터 공격 로직
 	else
 	{
-		cout << printer.ColoredText(Monster->GetName(), BLUE) << "이(가)" << printer.ColoredText(Player->GetName(), RED) <<"를 공격합니다! ";
+		Texts.push_back(printer.ColoredText(Monster->GetName(), BLUE) + "이(가) 공격!! ");
 		Player->TakeDamage(Monster->GetDamage());
-		//cout << "Player 체력: " << to_string(Player->GetHealth()) << endl;
+		Texts.push_back("[" + Player->GetName() + "]의 체력이 [" + to_string(Monster->GetDamage()) + "] 감소했습니다.");
 	}
 }
 
@@ -180,9 +185,8 @@ void BattleManager::GetRewards()
 		Player->IncreaseStat(EXP, M_Exp);
 		Player->IncreaseStat(GOLD, M_Gold);
 
-		cout << printer.ColoredText(Player->GetName(), RED) << "이(가) " << printer.ColoredText(to_string(M_Exp), YELLOW)
-			<< " EXP와" << printer.ColoredText(to_string(M_Gold), YELLOW) << " Gold를 획득했습니다." << endl;
-		cout << "현재 EXP: " << printer.ColoredText(to_string(Player->GetExperience()), YELLOW) << ", Gold: " << printer.ColoredText(to_string(Player->GetGold()), YELLOW) << endl;
+		Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) " + printer.ColoredText(to_string(M_Exp), YELLOW)
+			+ " EXP와" + printer.ColoredText(to_string(M_Gold), YELLOW) + " Gold 획득 !" );
 	}
 }
 
@@ -214,5 +218,24 @@ float BattleManager::AttackMinaMax(float min , float max)
 	uniform_real_distribution<float> Dis(0.7f, 1.0); //0.7부터 1.0까지 균일 하게
 	float randomValue = Dis(Gen);
 	return randomValue;
+}
+
+void BattleManager::PrintBattle()
+{
+	Console.ClearScreen();
+
+	int TextIndex = CurrentTextYposition;
+	int TextSize = Texts.size() - TextIndex;
+	//현재 텍스트인덱스와 마지막 텍스트현재 있는 마지막 인덱스 0 -> 
+	for (int i = 0; i < TextSize; i++)
+	{
+		Console.SetCursorPosition(10, i);
+		cout << Texts[TextIndex++] << endl;
+	}
+	Sleep(1000);
+
+	//마지막 인덱스 설정
+	CurrentTextYposition = Texts.size() ;
+
 }
 

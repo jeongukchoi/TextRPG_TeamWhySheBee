@@ -41,7 +41,7 @@ void BaseMonster::TakeDamaged(const int& DamagedAmount)
 		return;
 	}
 
-	cout << Name << " 의 체력이 : " << DamagedAmount << "만큼 감소했습니다." << endl;
+	//cout << Name << " 의 체력이 : " << DamagedAmount << "만큼 감소했습니다." << endl;
 
 	if (CurrentHP <= MaxHP / 2 && dynamic_cast<NormalState*>(CurrentState) != nullptr	)
 	{

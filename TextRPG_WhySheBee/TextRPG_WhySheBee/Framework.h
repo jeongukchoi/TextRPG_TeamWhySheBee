@@ -84,4 +84,5 @@ using namespace std;
 
 #include "GameManager.h"
 
+#include "ConsoleManager.h"
 
