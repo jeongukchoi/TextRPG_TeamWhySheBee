@@ -28,6 +28,7 @@ int Mage::RandomAttack()
 	if (randomWeight <= 40)
 	{
 		Damage = _attack; 
+		_skillName = "일반공격";
 		return Damage;
 	}
 	else if (randomWeight <= 80)

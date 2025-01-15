@@ -42,17 +42,17 @@ void PlayerCharacter::DisplayStatus() const
     
     cout << "===== " << color.ColoredText(_name, CYAN) << "의 상태 =====" << endl;
     printer.SetCursorPosition(2, 21);
-    cout << "레벨: " << _level << ", 경험치: " << _experience << "/ " << _level * 10 << endl;
+    cout << "레벨: " << _level << ", 경험치: " << _experience << "/ " << _level * 10 << "  " << endl;
     printer.SetCursorPosition(2, 22);
     if (_health < _maxHealth*0.5f)
     {
         cout << "체력: " << color.ColoredText(to_string(_health), RED) << "/" << color.ColoredText(to_string(_maxHealth), BLUE)
-            << ", 공격력: " << _attack << endl;
+            << ", 공격력: " << _attack << "  " << endl;
     }
     else
     {
         cout << "체력: " << color.ColoredText(to_string(_health), BLUE) << "/" << color.ColoredText(to_string(_maxHealth), BLUE) 
-            << ", 공격력: " << _attack << endl;
+            << ", 공격력: " << _attack << "  " << endl;
     }
     printer.SetCursorPosition(2, 23);
     cout << "골드: " << color.ColoredText(to_string(_gold), YELLOW) << endl;

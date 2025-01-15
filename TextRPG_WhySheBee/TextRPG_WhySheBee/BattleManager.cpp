@@ -150,7 +150,6 @@ void BattleManager::PlayerAttack()
 
 	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
 	
-	Console.ClearMonsterStatus();
 	DisplayMonsterStats();	
 }
 
@@ -182,7 +181,6 @@ void BattleManager::MonsterAttack()
 		Player->TakeDamage(Monster->GetDamage());
 		Texts.push_back("[" + Player->GetName() + "]의 체력이 [" + to_string(Monster->GetDamage()) + "] 감소했습니다.");
 	}
-	Console.ClearPlayerStatus();
 	Player->DisplayStatus();;
 }
 
@@ -280,10 +278,10 @@ void BattleManager::DisplayMonsterStats()
 	cout << "     [" + Monster->GetName() + "]  ";
 
 	Console.SetCursorPosition(50, 22);
-	cout << "  체력:    " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetHealth());
+	cout << "  체력:    " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetHealth())<< "  ";
 
 	Console.SetCursorPosition(50, 23);
-	cout << "  공격력:  " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetDamage());
+	cout << "  공격력:  " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetDamage()) << "  " ;
 
 	Console.SetCursorPosition(0, 0);
 }

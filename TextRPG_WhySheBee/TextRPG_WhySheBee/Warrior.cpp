@@ -39,6 +39,7 @@ int Warrior::RandomAttack()
 	if (randomWeight <= 70)
 	{
 		Damage = _attack; // 기본 공격은 _attack 값
+		_skillName = "일반공격";
 		return Damage;
 	}
 	else if (randomWeight <= 90)
