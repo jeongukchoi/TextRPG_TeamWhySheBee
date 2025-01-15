@@ -20,7 +20,26 @@ ConsoleManager::ConsoleManager()
 
 void ConsoleManager::ClearScreen()
 {
-	SetCursorPosition(0, 0);
+    SetCursorPosition(0, 0);
+
+    DWORD count;
+
+    // 현재 콘솔 버퍼 정보 저장
+    CONSOLE_SCREEN_BUFFER_INFO ConsoleBuffer;
+    GetConsoleScreenBufferInfo(Console, &ConsoleBuffer);
+
+    // 콘솔의 출력 영역만큼 공백으로 채움
+    FillConsoleOutputCharacter(Console, ' ', 60 * 16, coord, &count);
+    // 커서 초기 위치 0,0 이동
+    SetCursorPosition(0, 0);
+    SetConsoleCursorPosition(Console, coord);
+
+    Sleep(500);
+}
+
+void ConsoleManager::ClearConsoleSizeScreen()
+{
+    SetCursorPosition(0, 0);
 
     DWORD count;
 
@@ -32,6 +51,7 @@ void ConsoleManager::ClearScreen()
     FillConsoleOutputCharacter(Console, ' ', ConsoleBuffer.dwSize.X * ConsoleBuffer.dwSize.Y, coord, &count);
     // 커서 초기 위치 0,0 이동
     SetCursorPosition(0, 0);
+    SetConsoleCursorPosition(Console, coord);
 
     Sleep(500);
 }

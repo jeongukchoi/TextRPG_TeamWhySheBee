@@ -9,6 +9,7 @@ public:
 
 	// 콘솔 화면 클리어
 	void ClearScreen();
+	void ClearConsoleSizeScreen();
 
 	// 메인 메뉴 출력
 	void DisplayMainMenu();
