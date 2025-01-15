@@ -42,8 +42,9 @@ public:
     int GetMaxExperience() const { return _level*10; }
     int GetAttackDelay() const { return _attackDelay; }
     vector<Skill*> GetSkillSet() const { return _skills; }
-
     int GetPlayerJob() const { return _job; }
+    string GetSkillName() const { return _skillName; }
+
     virtual int GetUniqueStat() const { return 0; }
     string GetSkillName() const { return _skillName; }
 
