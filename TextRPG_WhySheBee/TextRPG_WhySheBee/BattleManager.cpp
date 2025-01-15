@@ -207,7 +207,11 @@ void BattleManager::RandomUseItem()
 	int RandomNumber = rand() % 100;
 	if (RandomNumber < 30)
 	{
-		PlayerInventory->UseConsumables();
+		string text = PlayerInventory->UseConsumables();
+		if (text != "")
+		{
+			Texts.push_back(text);
+		}
 	}
 }
 
