@@ -99,6 +99,7 @@ void Shop::BuyItems()
 		{
 			if (character->GetGold() < ItemDB[Choice]->GetPrice())
 			{
+				Console.ClearConsoleSizeScreen();
 				const string NOT_ENOUGH_GOLD = "상점 주인: 미안하지만...골드가...모자란 것...같군...\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")";
 				Console.DisplayDialogue(NOT_ENOUGH_GOLD, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 				Sleep(1500);
