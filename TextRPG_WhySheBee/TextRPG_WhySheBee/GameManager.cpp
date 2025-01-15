@@ -10,6 +10,7 @@ void GameManager::StartGame()
     cout << "게임을 시작합니다. " << endl;
     CreateCharacter();
     Shop* shop = new Shop();
+    ConsoleManager* console = new ConsoleManager();
     while (true)
     {
 
@@ -17,12 +18,13 @@ void GameManager::StartGame()
         Battle();
         if (over)
         {
+            console->ClearScreen();
             ShowEnding();
             return;
         }
 
 
-
+        console->ClearScreen();
         
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
@@ -87,8 +89,9 @@ void GameManager::DisplayInventory()
 
 void GameManager::VisitShop(Shop* shop)
 {
+    system("cls");
     cout << "상점에 방문하셨습니다!" << endl;
-    
+
     shop->StartShop();
 }
 

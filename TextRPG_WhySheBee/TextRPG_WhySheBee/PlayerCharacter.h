@@ -45,6 +45,7 @@ public:
 
     int GetPlayerJob() const { return _job; }
     virtual int GetUniqueStat() const { return 0; }
+    string GetSkillName() const { return _skillName; }
 
 protected:
     static unique_ptr<PlayerCharacter> instance;  // 스마트 포인터로 변경
@@ -59,5 +60,6 @@ protected:
     int _gold;
     int _attackDelay;
     vector<Skill*>_skills;
+    string _skillName;
 
 };

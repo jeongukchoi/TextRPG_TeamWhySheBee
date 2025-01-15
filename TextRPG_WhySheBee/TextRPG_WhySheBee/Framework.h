@@ -35,6 +35,7 @@ using namespace std;
 #include "Enums.h"
 
 #include "ColorPrinter.h"
+#include "ConsoleManager.h"
 
 
 //플레이어관련
