@@ -31,14 +31,14 @@ void BaseMonster::Calculate_HPandDamage(const int& PlayerLevel)
 }
 
 // 데미지 적용 메서드
-void BaseMonster::TakeDamaged(const int& DamagedAmount)
+string BaseMonster::TakeDamaged(const int& DamagedAmount)
 {
 	CurrentHP -= DamagedAmount;
 	if (CurrentHP <= 0)
 	{
 		CurrentHP = 0;
 		IsDead = true;
-		return;
+		return "";
 	}
 
 	//cout << Name << " 의 체력이 : " << DamagedAmount << "만큼 감소했습니다." << endl;
@@ -46,8 +46,10 @@ void BaseMonster::TakeDamaged(const int& DamagedAmount)
 	if (CurrentHP <= MaxHP / 2 && dynamic_cast<NormalState*>(CurrentState) != nullptr	)
 	{
 		SetState(new EnragedState());
-		CurrentState->HandleState(this);
+
+		return CurrentState->HandleState(this);
 	}
+	return "";
 }
 
 // 몬스터 상태 변경 메서드

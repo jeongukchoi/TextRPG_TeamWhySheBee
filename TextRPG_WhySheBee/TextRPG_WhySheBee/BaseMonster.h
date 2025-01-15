@@ -18,13 +18,13 @@ public:
 	void Calculate_HPandDamage(const int& PlayerLevel);
 
 	// 플레이어에게 공격 당했을 때, 데미지 적용 메서드
-	void TakeDamaged(const int& DamagedAmount);
+	string TakeDamaged(const int& DamagedAmount);
 
 	// 몬스터 상태 변경 메서드
 	void SetState(IState* NewState);
 
 	// 분노 상태 스킬 메서드 
-	virtual void EnragedSkill() = 0;
+	virtual string EnragedSkill() = 0;
 
 	bool IsDead;
 	string GetName() { return Name; }

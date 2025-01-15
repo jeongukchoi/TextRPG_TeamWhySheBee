@@ -3,15 +3,19 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
+	ColorPrinter printer;
+	ConsoleManager Console;
+
+	Console.ClearScreen();
+
 	Player->IncreaseStat(HP, Player->GetMaxHealth());
 	// 현재 플레이어의 레벨 저장
 	PlayerLevel = Player->GetLevel();
 	Player->DisplayStatus();
+
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
-
-	ColorPrinter printer;
-
+	
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
@@ -24,6 +28,12 @@ bool BattleManager::Battle()
 	int MonsterAttackDelay = Monster->GetAttackDelay();
 	int CurrentAttackDelay = PlayerAttackDelay;
 
+	cout << "전투를 시작합니다!\n\n";
+	
+	// 스텟 출력
+	Console.DrawVs();
+	DisplayMonsterStats();
+
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{		
@@ -34,7 +44,7 @@ bool BattleManager::Battle()
 
 		//턴 진행 
 		MonsterAttackDelay--;
-		CurrentAttackDelay--;		
+		CurrentAttackDelay--;
 
 		// 플레이어 공격
 		if(CurrentAttackDelay <= 0)
@@ -58,8 +68,10 @@ bool BattleManager::Battle()
 			GetRandomItem();
 
 			Monster.reset();
+
 			Battle_Turn = 1;
 			CurrentTextYposition = 0;
+			Console.ClearScreen();
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
 			return PlayerLevel < 10;
 		}
@@ -68,7 +80,8 @@ bool BattleManager::Battle()
 		if (MonsterAttackDelay <= 0)
 		{
 			MonsterAttack();
-			MonsterAttackDelay = Monster->GetAttackDelay();					
+			MonsterAttackDelay = Monster->GetAttackDelay();		
+
 		}
 
 
@@ -108,6 +121,8 @@ void BattleManager::CreateMonster()
 		Texts.push_back("보스 몬스터 " + Monster->GetName() + "이 불을 내뿜으며 등장합니다!");		
 	}
 	Texts.push_back("전투가 시작됩니다!");
+
+	
 }
 
 // 플레이어 공격 메서드
@@ -118,13 +133,23 @@ void BattleManager::PlayerAttack()
 	Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) 공격!! ");
 	
 	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
-	if(Player->GetSkillName() != "")
-	{
-		Texts.push_back(Player->GetSkillName());
-	}
-	Monster->TakeDamaged(HitDamage);
-	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
 
+	string NextText = Player->GetSkillName();		
+	//함수화를 해야할지 생각중 람다도 가능
+	if(NextText != "")
+	{
+		Texts.push_back(NextText);
+	}
+	
+	NextText = Monster->TakeDamaged(HitDamage);
+
+	if (NextText != "")
+	{
+		Texts.push_back(NextText);
+	}
+
+	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
+	DisplayMonsterStats();	
 }
 
 // 몬스터 공격 메서드
@@ -207,7 +232,11 @@ void BattleManager::RandomUseItem()
 	int RandomNumber = rand() % 100;
 	if (RandomNumber < 30)
 	{
-		PlayerInventory->UseConsumables();
+		string text = PlayerInventory->UseConsumables();
+		if (text != "")
+		{
+			Texts.push_back(text);
+		}
 	}
 }
 
@@ -219,6 +248,7 @@ float BattleManager::AttackMinaMax(float min , float max)
 	float randomValue = Dis(Gen);
 	return randomValue;
 }
+
 
 void BattleManager::PrintBattle()
 {
@@ -235,7 +265,34 @@ void BattleManager::PrintBattle()
 	Sleep(1000);
 
 	//마지막 인덱스 설정
-	CurrentTextYposition = Texts.size() ;
-
+	CurrentTextYposition = Texts.size();
 }
+
+void BattleManager::DisplayMonsterStats()
+{
+	Console.SetSettingPosition(2,0,0);
+	Console.DrawRectangle(60, 20, 20, 8);
+
+	Console.SetSettingPosition(2, 1, 1);
+	cout << "     [" + Monster->GetName() + "]  ";
+
+	Console.SetSettingPosition(2, 3, 1);
+	cout << "  체력:    " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetHealth());
+
+	Console.SetSettingPosition(2, 5, 1);
+	cout << "  공격력:  " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetDamage());
+
+	Console.SetCursorPosition(0, 0);
+}
+
+void BattleManager::CheckAndGetString(string txt)
+{
+		if (txt != "")
+		{
+			Texts.push_back(txt);
+		}
+		
+}
+
+
 

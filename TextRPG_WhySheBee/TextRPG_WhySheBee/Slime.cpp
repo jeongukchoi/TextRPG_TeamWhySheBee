@@ -1,9 +1,8 @@
 #include "Framework.h"
 
-void Slime::EnragedSkill()
+string Slime::EnragedSkill()
 {
-	cout << Name << "이 플레이어의 방금 공격을 무효화 했습니다!" << endl;
-	
 	CurrentHP += Player->GetAttack();
+	return Name + "이 플레이어의 방금 공격을 무효화 했습니다!";
 }
 

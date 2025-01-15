@@ -13,7 +13,7 @@ public:
 	{
 		Speed = 3;
 	}
-	void EnragedSkill() override;
+	string EnragedSkill() override;
 private:
 	PlayerCharacter* Player = PlayerCharacter::GetPlayer();
 };
