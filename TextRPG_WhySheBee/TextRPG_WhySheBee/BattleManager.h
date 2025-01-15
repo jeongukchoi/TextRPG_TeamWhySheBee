@@ -4,6 +4,7 @@
 #include "ItemManager.h"
 #include "Inventory.h"
 #include <memory>
+#include "ConsoleManager.h"
 
 class BattleManager
 {
@@ -12,10 +13,15 @@ private:
 	Inventory* PlayerInventory;
 	ItemManager Item_Manager;
 	unique_ptr<BaseMonster> Monster;
+	ConsoleManager Console;
 	int PlayerLevel;
 	int PlayerAttackDelay;
 	int CurrentAttackDelay;
+	int CurrentTextYposition = 0;
+	int NextTextYPosition = 0;
 	vector<int> MonsterExp{ 5,10,15,15,15,20,20,20,20 };
+	vector<string> Texts;
+
 public:
 	BattleManager() : Player(PlayerCharacter::GetPlayer()), PlayerInventory(Inventory::GetInstance()), PlayerLevel(1), PlayerAttackDelay(Player->GetAttackDelay()) {}
 
@@ -47,6 +53,8 @@ private:
 	void RandomUseItem();
 	// 공격 최소 데미지 최고 데미지 변경
 	float AttackMinaMax(float min, float max);
+	// 전투 출력
+	void PrintBattle();
 };
 
 

@@ -30,8 +30,7 @@ PlayerCharacter::PlayerCharacter(const string& name)
 void PlayerCharacter::TakeDamage(int amount)
 {
     _health -= amount;
-    cout << "플레이어의 체력이 : " << amount << "만큼 감소했습니다." << endl;
-    cout << "현재 체력 : " << _health << endl;
+    
 }
 
 void PlayerCharacter::DisplayStatus() const
