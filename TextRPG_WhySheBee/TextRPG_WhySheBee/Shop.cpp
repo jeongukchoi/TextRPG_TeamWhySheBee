@@ -111,6 +111,7 @@ void Shop::SellItems()
 		}
 		else if (choice >= 0 && choice < inventory->GetInventory().size())
 		{
+			
 			character->IncreaseStat(GOLD, inventory->GetInventory()[choice]->GetPrice() * 0.6); // double ->int 어떻게?
 			inventory->RemoveItem(inventory->GetInventory()[choice], choice);
 			cout << "\n현재 소지한 골드: " << character->GetGold() << endl;

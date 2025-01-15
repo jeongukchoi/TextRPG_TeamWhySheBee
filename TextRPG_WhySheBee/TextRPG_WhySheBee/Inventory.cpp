@@ -108,7 +108,12 @@ void Inventory::RemoveItem(Item* item, int index)
 			InventoryCount[ID]--;
 			if (InventoryCount[ID] == 0)
 			{
-				_Inventory.erase(_Inventory.begin() + index);
+				auto InventoryPos = find_if(_Inventory.begin(), _Inventory.end(), [ID](Item* i) {
+					return i->GetID() == ID;
+				});
+				auto CountPos = InventoryCount.find(ID);
+				_Inventory.erase(InventoryPos);
+				InventoryCount.erase(CountPos);
 			}
 
 			cout << "\n^*._아이템 제거_.*^\n\n" << item->GetName() << " 아이템이 인벤토리에서 제거되었습니다.\n\n";
@@ -212,6 +217,7 @@ void Inventory::UseConsumables()
 		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
 		{
 			UseItem(_ItemManager.GetItem(item->GetID()));
+			return;
 		}
 	}
 }
