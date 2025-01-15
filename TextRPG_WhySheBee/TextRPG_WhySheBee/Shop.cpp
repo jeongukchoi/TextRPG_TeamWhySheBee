@@ -58,7 +58,7 @@ void Shop::StartShop()
 			Console.ClearConsoleSizeScreen();
 			return;
 		}
-		Sleep(1000);
+		Sleep(1500);
 		Console.ClearConsoleSizeScreen();
 	}
 }
@@ -92,7 +92,7 @@ void Shop::BuyItems()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1000);
+			Sleep(1500);
 			return;
 		}
 		else if (Choice >= 0 && Choice < ItemDB.size())
@@ -101,7 +101,7 @@ void Shop::BuyItems()
 			{
 				const string NOT_ENOUGH_GOLD = "상점 주인: 미안하지만...골드가...모자란 것...같군...\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")";
 				Console.DisplayDialogue(NOT_ENOUGH_GOLD, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-				Sleep(1000);
+				Sleep(1500);
 				continue;
 			}
 			cout << endl;
@@ -112,7 +112,7 @@ void Shop::BuyItems()
 		else
 		{
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-			Sleep(1000);
+			Sleep(1500);
 		}
 	}
 }
@@ -141,7 +141,7 @@ void Shop::SellItems()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1000);
+			Sleep(1500);
 			return;
 		}
 		else if (choice >= 0 && choice < inventory->GetInventory().size())
@@ -155,12 +155,12 @@ void Shop::SellItems()
 			string SELL_ITEM = ItemName + " 아이템을 판매하였습니다!\n...\n상점 주인: 고맙군요...어딘가에 잘...써보도록...하지요...";
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(SELL_ITEM, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-			Sleep(1000);
+			Sleep(1500);
 		}
 		else
 		{
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-			Sleep(1000);
+			Sleep(1500);
 		}
 	}
 }
@@ -175,7 +175,7 @@ void Shop::DrinkTea()
 		Console.SetCursorPosition(CurrX, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 3);
 		cout << "...홀짝";
 		CurrX += 7;
-		Sleep(1000);
+		Sleep(1500);
 	}
 	Console.SetCursorPosition(WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 + OFFSET, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 4);
 	cout << "(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)";
@@ -205,14 +205,14 @@ void Shop::UpgradeEquipment()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1000);
+			Sleep(1500);
 			return;
 		}
 
 		if (i < 0 || i >= _Inventory.size())
 		{
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-			Sleep(1000);
+			Sleep(1500);
 			continue;
 		}
 
@@ -220,7 +220,7 @@ void Shop::UpgradeEquipment()
 		if (_Inventory[i]->GetType() != EQUIPMENT)
 		{
 			Console.DisplayDialogue(NOT_EQUIPMENT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-			Sleep(1000);
+			Sleep(1500);
 			continue;
 		}
 
@@ -271,7 +271,7 @@ void Shop::UpgradeEquipment()
 				Console.ClearConsoleSizeScreen();
 				const string NOT_ENOUGH_GOLD = "상점 주인: 미안하지만...골드가...모자란 것...같군...\n(현재 소지 골드 : " + to_string(PlayerCharacter::GetPlayer()->GetGold()) + ")";
 				Console.DisplayDialogue(NOT_ENOUGH_GOLD, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-				Sleep(1000);
+				Sleep(1500);
 				continue;
 			}
 
@@ -280,7 +280,7 @@ void Shop::UpgradeEquipment()
 			{
 				Console.ClearConsoleSizeScreen();
 				Console.DisplayDialogue(EQUIPMENT_MAX_LEVEL, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-				Sleep(1000);
+				Sleep(1500);
 				continue;
 			}
 
@@ -301,7 +301,7 @@ void Shop::UpgradeEquipment()
 			default:
 				Console.ClearConsoleSizeScreen();
 				cout << "\n(로직 오류) 강화 중 강화할 수 없는 아이템을 맞닥뜨렸습니다.\n";
-				Sleep(1000);
+				Sleep(1500);
 				return;
 			}
 		}
@@ -311,7 +311,7 @@ void Shop::UpgradeEquipment()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1000);
+			Sleep(1500);
 			return;
 		}
 
@@ -320,11 +320,11 @@ void Shop::UpgradeEquipment()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-			Sleep(1000);
+			Sleep(1500);
 			continue;
 		}
 	}
-	Sleep(1000);
+	Sleep(1500);
 }
 
 void Shop::UpgradeEquipment(Equipment* equipment, int index)
@@ -348,7 +348,7 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 		Console.SetCursorPosition(CurrX, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 3);
 		cout << "...깡";
 		CurrX += 5;
-		Sleep(1000);
+		Sleep(1500);
 	}
 
 	const vector<Item*>& _Inventory = PInventory->GetInventory();
@@ -373,7 +373,7 @@ void Shop::UpgradeEquipment(Equipment* equipment, int index)
 		UPGRADE_RESULT = "상점 주인: 어이쿠...손이...미끄러져서...다음에는 꼭...성공할게요...죄송해요...\n(강화에 실패했습니다...)";
 	}
 	Console.DisplayDialogue(UPGRADE_RESULT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
-	Sleep(1000);
+	Sleep(1500);
 	PInventory->AutoEquip(_Inventory[index]);
 }
 

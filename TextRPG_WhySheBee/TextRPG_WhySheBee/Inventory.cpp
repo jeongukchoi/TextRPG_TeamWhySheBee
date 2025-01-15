@@ -319,7 +319,7 @@ void Inventory::ShowInven()
 			}
 			ItemString += "\n강화 레벨: " + to_string(dynamic_cast<Equipment*>(_Inventory[i])->GetEquipmentLevel());
 		}
-		ItemString += "\n판매가: " + to_string((int)_Inventory[i]->GetPrice() * 0.6);
+		ItemString += "\n판매가: " + to_string(static_cast<int>(_Inventory[i]->GetPrice() * 0.6));
 
 		Console.DisplayDialogue(ItemString, (i % 5) * ItemManager::ITEM_WIDTH, Shop::MENU_NAME_HEIGHT + ItemManager::ITEM_HEIGHT * (i / 5), ItemManager::ITEM_WIDTH, ItemManager::ITEM_HEIGHT, 0, 0);
 	}
