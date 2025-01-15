@@ -82,7 +82,7 @@ void Shop::BuyItems()
 		IM.ShowItemDB();
 
 		// 커서 이동하여 입력 받음
-		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT-1);
+		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y-1);
 		cout << "번호를 입력하세요: ";
 		int Choice;
 		cin >> Choice;
@@ -131,7 +131,7 @@ void Shop::SellItems()
 		inventory->ShowInven();
 
 		// 커서 이동하여 입력 받음
-		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT-1);
+		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT + ItemManager::ITEM_HEIGHT * (inventory->GetInventory().size() / 5 + 1) + 1);
 		cout << "번호를 입력하세요: ";
 		int choice;
 		cin >> choice;
@@ -195,7 +195,7 @@ void Shop::UpgradeEquipment()
 		PInventory->ShowInven();
 
 		// 커서 이동하여 입력 받음
-		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT - 1);
+		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT + ItemManager::ITEM_HEIGHT * (_Inventory.size() / 5 + 1) + 1);
 		cout << "번호를 입력하세요: ";
 		int i;
 		cin >> i;
