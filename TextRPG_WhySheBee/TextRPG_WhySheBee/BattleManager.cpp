@@ -51,7 +51,6 @@ bool BattleManager::Battle()
 		{		
 			PlayerAttack();
 			CurrentAttackDelay = PlayerAttackDelay;
-			Sleep(2000);
 		}
 
 		// 플레이어 전투 승리
@@ -81,10 +80,8 @@ bool BattleManager::Battle()
 		if (MonsterAttackDelay <= 0)
 		{
 			MonsterAttack();
-			MonsterAttackDelay = Monster->GetAttackDelay();
-			Sleep(4000);			
+			MonsterAttackDelay = Monster->GetAttackDelay();		
 
-			Console.ClearScreen();;
 		}
 
 
@@ -95,7 +92,6 @@ bool BattleManager::Battle()
 			Texts.push_back("전투 패배...");
 			PrintBattle();
 			Monster.reset();
-			Console.ClearScreen();
 			// 패배 반환
 			return false;
 		}
@@ -126,7 +122,7 @@ void BattleManager::CreateMonster()
 	}
 	Texts.push_back("전투가 시작됩니다!");
 
-	}
+	
 }
 
 // 플레이어 공격 메서드
@@ -137,11 +133,20 @@ void BattleManager::PlayerAttack()
 	Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) 공격!! ");
 	
 	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
-	if(Player->GetSkillName() != "")
+
+	string NextText = Player->GetSkillName();		
+	//함수화를 해야할지 생각중 람다도 가능
+	if(NextText != "")
 	{
-		Texts.push_back(Player->GetSkillName());
+		Texts.push_back(NextText);
 	}
-	Monster->TakeDamaged(HitDamage);
+	
+	NextText = Monster->TakeDamaged(HitDamage);
+
+	if (NextText != "")
+	{
+		Texts.push_back(NextText);
+	}
 
 	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
 	DisplayMonsterStats();	
@@ -279,4 +284,15 @@ void BattleManager::DisplayMonsterStats()
 
 	Console.SetCursorPosition(0, 0);
 }
+
+void BattleManager::CheckAndGetString(string txt)
+{
+		if (txt != "")
+		{
+			Texts.push_back(txt);
+		}
+		
+}
+
+
 

@@ -58,6 +58,8 @@ private:
 	void PrintBattle();
 	// 몬스터 스텟 출력 메서드
 	void DisplayMonsterStats();
+	//텍스트저장
+	void CheckAndGetString(string txt);
 };
 
 

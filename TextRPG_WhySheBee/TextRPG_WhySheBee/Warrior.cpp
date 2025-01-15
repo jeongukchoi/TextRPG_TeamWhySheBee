@@ -38,9 +38,7 @@ int Warrior::RandomAttack()
 
 	if (randomWeight <= 70)
 	{
-		//cout << "기본 공격!!" << endl;
 		Damage = _attack; // 기본 공격은 _attack 값
-		//cout << "데미지: " << Damage << endl;
 		return Damage;
 	}
 	else if (randomWeight <= 90)
@@ -55,8 +53,6 @@ int Warrior::RandomAttack()
 
 	Damage = _randomSkill->Activate(_attack,_str);
 	_skillName = _randomSkill->GetName();
-
-	//cout << "데미지: " << Damage << endl;
 
 	delete _randomSkill;
 	return Damage;

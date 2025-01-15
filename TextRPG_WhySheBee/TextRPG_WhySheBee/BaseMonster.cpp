@@ -38,7 +38,7 @@ string BaseMonster::TakeDamaged(const int& DamagedAmount)
 	{
 		CurrentHP = 0;
 		IsDead = true;
-		return;
+		return "";
 	}
 
 	//cout << Name << " 의 체력이 : " << DamagedAmount << "만큼 감소했습니다." << endl;
