@@ -118,6 +118,10 @@ void BattleManager::PlayerAttack()
 	Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) 공격!! ");
 	
 	int HitDamage = static_cast<int>(Player->Attack() * AttackMinaMax(0.7f, 1.0f));
+	if(Player->GetSkillName() != "")
+	{
+		Texts.push_back(Player->GetSkillName());
+	}
 	Monster->TakeDamaged(HitDamage);
 	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
 
