@@ -21,6 +21,7 @@ public:
 	int GetStatAmount() const override { return StatAmount; }
 
 	void Use() override;
+	string GetItemInfoString();
 	void PrintItemInfo();
 };
 

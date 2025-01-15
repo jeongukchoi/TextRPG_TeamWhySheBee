@@ -28,6 +28,12 @@ SwordUpgrade::SwordUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(ATT
 	}
 }
 
+string SwordUpgrade::GetItemInfoString()
+{
+	return "아이템: " + GetName() + "(+" + to_string(GetEquipmentLevel()) + ")"
+		+ "\n가격: " + to_string(GetPrice()) + "\n효과: " + GetTargetStatString() + " +" + to_string(GetStatAmount());
+}
+
 void SwordUpgrade::PrintItemInfo()
 {
 	cout << "\n아이템: " << GetName() << "(+" << GetEquipmentLevel() << ")"

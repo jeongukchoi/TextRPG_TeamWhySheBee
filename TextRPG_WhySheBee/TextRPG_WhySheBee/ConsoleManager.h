@@ -17,6 +17,10 @@ public:
 
 	// 사각형 그리기
 	void DrawRectangle(int x, int y, int width, int height);
+
+	// 위치, 크기, 오프셋 반영하여 스트링 출력 (네모칸 포함)
+	void DisplayDialogue(const string& dialogue, int startX, int startY, int width, int height, int offsetX, int offsetY);
+
 private:
 	HANDLE Console;
 	COORD coord;

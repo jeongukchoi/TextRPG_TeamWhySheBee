@@ -33,7 +33,7 @@ public:
 	void RemoveItem(Item* item, int index);
 	void UseItem(Item* item);
 	void ReplaceItem(Item* item, int index);
-	void UseConsumables();
+	string UseConsumables();
 	void Unequip(ItemID ID);
 	void AutoEquip(Item* item);
 	void ShowInven();

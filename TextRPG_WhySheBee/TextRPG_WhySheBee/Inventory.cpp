@@ -162,8 +162,8 @@ void Inventory::UseItem(Item* item)
 		auto InventoryIt = InventoryCount.find(ID);
 		if (InventoryIt != InventoryCount.end() && InventoryIt->second > 0)
 		{
-			cout << "\n._*oO@-아이템 사용-@Oo*_.\n\n" << item->GetName() << " 아이템이 사용되었습니다.\n";
-			item->PrintItemInfo();
+			//cout << "\n._*oO@-아이템 사용-@Oo*_.\n\n" << item->GetName() << " 아이템이 사용되었습니다.\n";
+			//item->PrintItemInfo();
 
 			item->Use();
 			RemoveItem(item, 0);
@@ -210,14 +210,16 @@ void Inventory::ReplaceItem(Item* item, int index)
 	}
 }
 
-void Inventory::UseConsumables()
+string Inventory::UseConsumables()
 {
 	for (Item* item : _Inventory)
 	{
 		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
 		{
+			string ItemString = "._*oO@-아이템 사용-@Oo*_.\n" + item->GetName() + " 아이템이 사용되었습니다.\n" + item->GetItemInfoString();
+			item->PrintItemInfo();
 			UseItem(_ItemManager.GetItem(item->GetID()));
-			return;
+			return ItemString;
 		}
 	}
 }

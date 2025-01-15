@@ -87,3 +87,32 @@ void ConsoleManager::DrawRectangle(int x, int y, int width, int height)
 }
 
 
+void ConsoleManager::DisplayDialogue(const string& dialogue, int startX, int startY, int width, int height, int offsetX, int offsetY)
+{
+    // 커서 위치에 오프셋 반영
+    int CurrX = startX + 1 + offsetX; // 변하지 않음
+    int CurrY = startY + 1 + offsetY;
+
+
+    /*** 커서를 옮겨가며 "\n"으로 구분된 스트링을 한 줄씩 출력 ***/
+    size_t CurrPos = 0;
+    size_t NextPos = 0;
+    string Delimiter = "\n"; // parse 기준이 되는 스트링
+
+    // NextPos : CurrPos 이후 처음으로 등장하는 Delimiter 의 위치
+    while ((NextPos = dialogue.find(Delimiter, CurrPos)) != string::npos)
+    {
+        // 커서 위치 조정 후, CurrPos 부터 NextPos 까지의 string 출력
+        SetCursorPosition(CurrX, CurrY++);
+        cout << dialogue.substr(CurrPos, NextPos - CurrPos);
+        // CurrPos 위치를 Delimiter 이후로 업데이트
+        CurrPos = NextPos + Delimiter.length();
+    }
+    // 마지막으로 찾은 Delimiter 이후의 스트링 출력
+    SetCursorPosition(CurrX, CurrY++);
+    cout << dialogue.substr(CurrPos);
+
+    // 대화 창의 테두리 그리기
+    DrawRectangle(startX, startY, width, height + 2 * offsetY);
+    SetCursorPosition(0, 0);
+}

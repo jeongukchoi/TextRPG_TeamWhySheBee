@@ -24,6 +24,8 @@ public:
     virtual int GetStatAmount() const = 0;
     // 아이템 정보 출력
     virtual void PrintItemInfo() = 0;
+    // 아이템 정보 스트링
+    virtual string GetItemInfoString() = 0;
     // 아이템 사용
     virtual void Use() = 0;
 };

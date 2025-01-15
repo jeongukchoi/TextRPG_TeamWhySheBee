@@ -20,7 +20,9 @@ public:
 	int GetStatAmount() const override { return StatAmount; }
 
 	void Use() override;
-	void PrintItemInfo();
+	// 아이템 정보
+	string GetItemInfoString() override;
+	void PrintItemInfo() override;
 };
 
 

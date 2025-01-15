@@ -65,16 +65,21 @@ const vector<Item*>& ItemManager::GetItemsList() const
 
 void ItemManager::ShowItemDB()
 {
+	ConsoleManager Console;
 	if (ItemsList.empty())
 	{
+		Console.ClearScreen();
 		cout << "*************(오류) 아이템 DB가 비어 있습니다.*************\n";
 		return;
 	}
 
 	for (int i = 0; i < ItemsList.size(); i++)
 	{
-		cout << "[아이템 번호 " << i + 1 << "]" << endl;
-		ItemsList[i]->PrintItemInfo();
+		string ItemString = "[아이템 번호 " + to_string(i + 1) + "]\n" + ItemsList[i]->GetItemInfoString();
+		
+		Console.DisplayDialogue(ItemString, i * ITEM_WIDTH, Shop::MENU_NAME_HEIGHT, ITEM_WIDTH, ITEM_HEIGHT, 0, 0);
+		//cout << "[아이템 번호 " << i + 1 << "]" << endl;
+		//ItemsList[i]->PrintItemInfo();
 	}
 }
 

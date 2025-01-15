@@ -31,6 +31,8 @@ public:
 	// 초기 강화 수치 = 0
 	int GetUpgradeAmount() const override { return 0; }
 
+	// 아이템 정보 스트링
+	string GetItemInfoString();
 	// 아이템 정보 출력
 	void PrintItemInfo() override;
 	// 아이템 사용(장비 착용)

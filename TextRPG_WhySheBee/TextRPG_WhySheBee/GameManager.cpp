@@ -15,12 +15,12 @@ void GameManager::StartGame()
 
 
         system("cls");
-        Battle();
+        /*Battle();
         if (over)
         {
             ShowEnding();
             return;
-        }
+        }*/
 
 
 

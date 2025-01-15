@@ -29,6 +29,8 @@ public:
 	// 업그레이드 수치
 	int GetUpgradeAmount() const { return equipment->GetUpgradeAmount() + 15; }
 
+	// 아이템 정보 스트링
+	string GetItemInfoString() override;
 	// 아이템 정보 출력
 	void PrintItemInfo() override;
 	// 아이템 사용(장비 착용)

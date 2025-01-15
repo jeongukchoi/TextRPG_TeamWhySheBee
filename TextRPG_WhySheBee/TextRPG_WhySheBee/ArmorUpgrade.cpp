@@ -28,6 +28,12 @@ ArmorUpgrade::ArmorUpgrade(Equipment* e) : EquipmentDecorator(e), TargetStat(MAX
 	}
 }
 
+string ArmorUpgrade::GetItemInfoString()
+{
+	return "아이템: " + GetName() + "(+" + to_string(GetEquipmentLevel()) + ")"
+		+ "\n가격: " + to_string(GetPrice()) + "\n효과: " + GetTargetStatString() + " +" + to_string(GetStatAmount());
+}
+
 void ArmorUpgrade::PrintItemInfo()
 {
 	cout << "\n아이템: " << GetName() << "(+" << GetEquipmentLevel() << ")"

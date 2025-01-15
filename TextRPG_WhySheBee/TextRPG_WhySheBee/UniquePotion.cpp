@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "UniquePotion.h"
 
-UniquePotion::UniquePotion() : ItemName("유니크 스탯 증가 비약"), Type(CONSUMABLES), Price(300)
+UniquePotion::UniquePotion() : ItemName("유니크 비약"), Type(CONSUMABLES), Price(300)
 {
 	
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
@@ -50,6 +50,11 @@ void UniquePotion::Use()
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
 	cout << GetTargetStatString() << "이 " << StatAmount << " 증가하였습니다.\n";
+}
+
+string UniquePotion::GetItemInfoString()
+{
+	return "아이템: " + ItemName + "\n가격: " + to_string(Price) + "\n효과: " + GetTargetStatString() + " +" + to_string(StatAmount);
 }
 
 void UniquePotion::PrintItemInfo()

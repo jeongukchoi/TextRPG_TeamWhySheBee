@@ -7,57 +7,75 @@ Shop::Shop()
 	PInventory = Inventory::GetInstance();
 }
 
+// 상점 메뉴 인터페이스
 void Shop::StartShop()
 {
-	cout << "\n(수염이 덥수룩하고 허리가 살짝 굽어 애처로운 모습의 상점 주인이 힙겹게 인사를 건넨다.)\n";
-	cout << "상점 주인: 어서...오세요...콜록...오늘은...무슨 일로...?\n";
+	Console.ClearScreen();
+	// 인삿말 출력 (GREETINGS)
+	Console.DisplayDialogue(GREETINGS, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+	Sleep(1500);
+	Console.ClearScreen();
 	while (true)
 	{
-		cout << "\n(아래 번호를 입력해 원하는 메뉴로 진입하세요.)\n1: 아이템 구매\n2: 아이템 판매\n3: 장비 강화\n4: 상점 주인과 차 마시기\n0: 상점 나가기\n번호를 입력하세요: ";
-
+		// 상점 기본 메뉴 출력 (SHOP_MENU)
+		Console.DisplayDialogue(SHOP_MENU, WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 - 1, CHOICE_WIDTH, CHOICE_HEIGHT, OFFSET, OFFSET);
+		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y - 1);
+		cout << "번호를 입력하세요: ";
 		int Choice;
 		cin >> Choice;
 		switch (Choice)
 		{
 		case 1:
+			Console.ClearScreen();
+			// 아이템 구매
 			BuyItems();
 			break;
 
 		case 2:
+			Console.ClearScreen();
+			// 아이템 판매
 			SellItems();
 			break;
 
 		case 3:
-			UpgradeEquipment();
+			Console.ClearScreen();
+			// 아이템 강화
+			UpgradeEquipment(); 
 			break;
 
 		case 4:
+			Console.ClearScreen();
+			// 상점 주인과 차 마시기
 			DrinkTea();
 			break;
 		
 		case 0:
-			cout << "\n(상점 주인이 아쉬운 듯 내 얼굴을 흘끔 바라본다.)\n";
-			cout << "그렇군요...갈 길이 바쁘시겠지요...그럼...행운을 빕니다...\n(상점 주인의 응원에 힘입어 가벼운 마음으로 상점을 나섰다.)\n\n";
-			Sleep(1000);
+			Console.ClearScreen();
+			// 작별인사 출력 (FAREWELL)
+			Console.DisplayDialogue(FAREWELL, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+			Sleep(1500);
 			return;
 		}
+		Sleep(1500);
+		Console.ClearScreen();
 	}
 }
 
 void Shop::BuyItems()
 {
+	// 인벤토리와 캐릭터 싱글톤 인스턴스 가져오기
 	Inventory* inventory = Inventory::GetInstance();
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
+	
+	// 게임 내 존재하는 아이템 리스트
 	ItemManager IM;
 	const vector<Item*>& ItemDB = IM.GetItemsList();
 
 	while (true)
 	{
-		cout << "\n구입할 물품을 골라보세요!\n";
-		cout << "\n***************상점 아이템 목록***************" << endl;
+		Console.DisplayDialogue(BUY_MENU, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
 		IM.ShowItemDB();
-		cout << "0: 상점 메뉴로 돌아가기\n\n";
-		cout << "(현재 소지한 골드: " << character->GetGold() << ")\n\n" << endl;
+		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y );
 		cout << "번호를 입력하세요: ";
 		int Choice;
 		cin >> Choice;

@@ -20,7 +20,8 @@ public:
 	int GetStatAmount() const override { return StatAmount; }
 
 	void Use() override;
-	void PrintItemInfo();
+	string GetItemInfoString() override;
+	void PrintItemInfo() override;
 };
 
 
