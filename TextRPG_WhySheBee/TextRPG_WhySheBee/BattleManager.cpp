@@ -40,9 +40,6 @@ bool BattleManager::Battle()
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{		
-		
-		PrintBattle();
-
 		//현재 턴 
 		Texts.push_back(printer.ColoredText("현재 턴 : ", WHITE) + printer.ColoredText(to_string(Battle_Turn++), GREEN));
 
@@ -98,6 +95,7 @@ bool BattleManager::Battle()
 			// 패배 반환
 			return false;
 		}
+		PrintBattle();
 	}
 	throw runtime_error("== 비정상 전투 종료: BattleManager::Battle 메서드 오류 ==");
 }
@@ -267,7 +265,7 @@ void BattleManager::PrintBattle()
 		Console.SetCursorPosition(10, i);
 		cout << Texts[TextIndex++] << endl;
 	}
-	Sleep(200);
+	Sleep(2000);
 
 	//마지막 인덱스 설정
 	CurrentTextYposition = Texts.size();
