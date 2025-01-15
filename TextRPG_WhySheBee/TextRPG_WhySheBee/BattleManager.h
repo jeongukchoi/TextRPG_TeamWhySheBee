@@ -3,6 +3,7 @@
 #include "PlayerCharacter.h"
 #include "ItemManager.h"
 #include "Inventory.h"
+#include "ConsoleManager.h"
 #include <memory>
 
 class BattleManager
@@ -12,6 +13,8 @@ private:
 	Inventory* PlayerInventory;
 	ItemManager Item_Manager;
 	unique_ptr<BaseMonster> Monster;
+	ConsoleManager Console;
+	
 	int PlayerLevel;
 	int PlayerAttackDelay;
 	int CurrentAttackDelay;
@@ -47,6 +50,9 @@ private:
 	void RandomUseItem();
 	// 공격 최소 데미지 최고 데미지 변경
 	float AttackMinaMax(float min, float max);
+
+	// 몬스터 스텟 출력 메서드
+	void DisplayMonsterStats();
 };
 
 

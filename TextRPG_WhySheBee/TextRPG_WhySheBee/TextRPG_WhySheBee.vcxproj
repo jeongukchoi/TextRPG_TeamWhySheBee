@@ -26,6 +26,7 @@
     <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="BossMonster.cpp" />
     <ClCompile Include="ColorPrinter.cpp" />
+    <ClCompile Include="ConsoleManager.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnragedState.cpp" />
     <ClCompile Include="Enums.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
     <ClInclude Include="ColorPrinter.h" />
+    <ClInclude Include="ConsoleManager.h" />
     <ClInclude Include="LastStrike.h" />
     <ClInclude Include="Mage.h" />
     <ClInclude Include="Meteor.h" />

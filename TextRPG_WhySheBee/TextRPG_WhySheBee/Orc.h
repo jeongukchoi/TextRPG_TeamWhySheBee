@@ -14,7 +14,7 @@ public:
 		MaxHP = static_cast<int>(MaxHP * 1.5);
 		CurrentHP = MaxHP;
 	}
-	void EnragedSkill() override;
+	string EnragedSkill() override;
 };
 
 
