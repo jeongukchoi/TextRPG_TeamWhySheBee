@@ -19,7 +19,7 @@ public:
 		Damage += static_cast<int>(Damage * 1.5);;
 
 		// 공격 속도
-		Speed = 7;
+		Speed = 6;
 	}
 
 	// 분노 상태 스킬 메서드

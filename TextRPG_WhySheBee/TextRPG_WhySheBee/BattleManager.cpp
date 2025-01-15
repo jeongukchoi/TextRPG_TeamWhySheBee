@@ -30,6 +30,9 @@ bool BattleManager::Battle()
 
 	cout << "전투를 시작합니다!\n\n";
 	
+	Sleep(1000);
+	Console.ClearScreen();
+
 	// 스텟 출력
 	Console.DrawVs();
 	DisplayMonsterStats();
@@ -37,9 +40,6 @@ bool BattleManager::Battle()
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
 	{		
-		
-		PrintBattle();
-
 		//현재 턴 
 		Texts.push_back(printer.ColoredText("현재 턴 : ", WHITE) + printer.ColoredText(to_string(Battle_Turn++), GREEN));
 
@@ -60,11 +60,11 @@ bool BattleManager::Battle()
 			Texts.push_back(printer.ColoredText(Player->GetName(), RED) + "이(가) " + printer.ColoredText(Monster->GetName(), BLUE) + "를 처치했습니다!");		
 			Texts.push_back("전투 승리!");
 
+			GetRewards();
 			PrintBattle();
 
 			// 전투 보상 획득
-			GetRewards();
-			
+			Console.ClearScreen();
 			//30 퍼센트 확률로 아이템 드랍 후 플레이어에게 전달
 			GetRandomItem();
 
@@ -72,7 +72,7 @@ bool BattleManager::Battle()
 
 			Battle_Turn = 1;
 			CurrentTextYposition = 0;
-			Console.ClearScreen();
+			
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
 			return PlayerLevel < 10;
 		}
@@ -95,6 +95,7 @@ bool BattleManager::Battle()
 			// 패배 반환
 			return false;
 		}
+		PrintBattle();
 	}
 	throw runtime_error("== 비정상 전투 종료: BattleManager::Battle 메서드 오류 ==");
 }
@@ -120,9 +121,6 @@ void BattleManager::CreateMonster()
 		Texts.push_back("두두두둥~ 쾅!" );
 		Texts.push_back("보스 몬스터 " + Monster->GetName() + "이 불을 내뿜으며 등장합니다!");		
 	}
-	Texts.push_back("전투가 시작됩니다!");
-
-	
 }
 
 // 플레이어 공격 메서드
@@ -150,7 +148,6 @@ void BattleManager::PlayerAttack()
 
 	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
 	
-	Console.ClearMonsterStatus();
 	DisplayMonsterStats();	
 }
 
@@ -182,7 +179,6 @@ void BattleManager::MonsterAttack()
 		Player->TakeDamage(Monster->GetDamage());
 		Texts.push_back("[" + Player->GetName() + "]의 체력이 [" + to_string(Monster->GetDamage()) + "] 감소했습니다.");
 	}
-	Console.ClearPlayerStatus();
 	Player->DisplayStatus();;
 }
 
@@ -223,10 +219,11 @@ void BattleManager::GetRewards()
 void BattleManager::GetRandomItem()
 {
 	int RandomNumber = rand() % 100;
-	if (RandomNumber < 30)
+	if (RandomNumber < 100)
 	{
 		ItemID DropItem = Item_Manager.GetRandomItem();
 		PlayerInventory->AddItem(DropItem);
+		Sleep(1000);
 	}
 }
 
@@ -234,7 +231,7 @@ void BattleManager::GetRandomItem()
 void BattleManager::RandomUseItem()
 {
 	int RandomNumber = rand() % 100;
-	if (RandomNumber < 30)
+	if (RandomNumber < 100)
 	{
 		string text = PlayerInventory->UseConsumables();
 		if (text != "")
@@ -266,7 +263,7 @@ void BattleManager::PrintBattle()
 		Console.SetCursorPosition(10, i);
 		cout << Texts[TextIndex++] << endl;
 	}
-	Sleep(1000);
+	Sleep(2000);
 
 	//마지막 인덱스 설정
 	CurrentTextYposition = Texts.size();
@@ -280,10 +277,10 @@ void BattleManager::DisplayMonsterStats()
 	cout << "     [" + Monster->GetName() + "]  ";
 
 	Console.SetCursorPosition(50, 22);
-	cout << "  체력:    " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetHealth());
+	cout << "  체력:    " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetHealth())<< "  ";
 
 	Console.SetCursorPosition(50, 23);
-	cout << "  공격력:  " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetDamage());
+	cout << "  공격력:  " << resetiosflags(ios::showbase | ios::internal | ios::showpos) << setfill(' ') << setw(0) << to_string(Monster->GetDamage()) << "  " ;
 
 	Console.SetCursorPosition(0, 0);
 }

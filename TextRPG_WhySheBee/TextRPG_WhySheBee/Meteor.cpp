@@ -9,6 +9,6 @@ int Meteor::Activate(int attackPower, int stat)
 
 	_skillName = "메테오!!!!!";
 	int damage = 0;
-	damage = attackPower + (stat * 200);
+	damage = stat * 70;
 	return damage;
 }

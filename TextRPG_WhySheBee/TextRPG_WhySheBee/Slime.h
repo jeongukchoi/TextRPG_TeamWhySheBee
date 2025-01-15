@@ -11,7 +11,7 @@ class Slime : public BaseMonster
 public:
 	Slime(const string& name, const int& PlayerLevel) : BaseMonster(name, PlayerLevel) 
 	{
-		Speed = 3;
+		Speed = 2;
 	}
 	string EnragedSkill() override;
 private:

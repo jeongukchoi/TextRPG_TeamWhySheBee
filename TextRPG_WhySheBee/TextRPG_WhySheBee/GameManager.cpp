@@ -27,9 +27,8 @@ void GameManager::StartGame()
             return;
         }
 
-
         console->ClearScreen();
-        
+
         cout << "상점을 방문하시겠습니까? (Y/N): ";
         char choice;
         cin >> choice;
@@ -38,12 +37,6 @@ void GameManager::StartGame()
         {
             VisitShop(shop);
         }
-        else if (choice == 'N' || choice == 'n')
-        {
-            Battle();
-        }
-
-        
 
 
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
