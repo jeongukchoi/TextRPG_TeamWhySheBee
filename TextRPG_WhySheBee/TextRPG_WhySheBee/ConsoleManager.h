@@ -23,7 +23,9 @@ public:
 	void DrawRectangle(int x, int y, int width, int height);
 
 	// VS 표시
+
 	void DrawVs();
+	void DrawSparta();
 
 	// Stats 창 위치 설정
 	void SetSettingPosition(int num, int y, int x = 0);

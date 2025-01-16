@@ -16,6 +16,7 @@ ConsoleManager::ConsoleManager()
     cursorPositions["PlayerStatus"] = { 2, 20 };
     cursorPositions["VS"] = { 35, 20 };
     cursorPositions["MonsterStatus"] = { 50, 20 };
+    cursorPositions["Sparta"] = { 80, 18 };
 }
 
 void ConsoleManager::ClearScreen()
@@ -160,6 +161,33 @@ void ConsoleManager::DrawVs()
 
 }
 
+void ConsoleManager::DrawSparta()
+{
+
+    SetSettingPosition(3, 0);
+    cout << "⠀⠀⠀⠀⠀⠀⠀⠀⣶⢲⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+    SetSettingPosition(3, 1);
+    cout << "⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⣻⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+    SetSettingPosition(3, 2);
+    cout << "⠀⡀⠄⠀⠠⠐⣠⡷⣾⢾⣷⡶⣦⡀⠂⠀⠂⠀⠐⠀";
+    SetSettingPosition(3, 3);
+    cout << "⠀⠀⠀⣔⠙⢺⣽⡽⣽⢯⣷⣻⡷⣷⡆⠀⠀⠀⢀⠀";
+    SetSettingPosition(3, 4);
+    cout << "⠀⠠⢸⣄⢀⣑⣿⢙⠯⣟⡾⠳⡛⣿⡆⠀⠀⠈⠀⠀";
+    SetSettingPosition(3, 5);
+    cout << "⢀⠀⠀⢩⠪⣿⣽⣦⡃⢛⠃⣫⣺⣽⡆⠀⠀⢀⠀⠀";
+    SetSettingPosition(3, 6);
+    cout << "⠀⠀⠀⣖⠛⢫⢿⢾⢇⢄⢢⢽⢟⠓⡲⠒⣄⠀⠀⠀";
+    SetSettingPosition(3, 7);
+    cout << "⠂⠀⠀⣗⡈⢔⢐⠅⠃⡃⡋⡯⡀⠂⠄⡑⡐⡇⠀⠀";
+    SetSettingPosition(3, 8);
+    cout << "⡀⠄⠀⢩⢫⡿⣿⡨⣊⣐⢄⣯⠂⢅⠪⠐⢌⠇⠀⠀";
+    SetSettingPosition(3, 9);
+    cout << "⠀⠀⠀⢨⢢⡿⡿⠊⡓⣿⡟⡚⠻⣶⢷⡗⠁⠀⠀⠀";
+
+
+}
+
 void ConsoleManager::SetSettingPosition(int num, int y, int x)
 {
     switch (num)
@@ -182,6 +210,12 @@ void ConsoleManager::SetSettingPosition(int num, int y, int x)
         SetCursorPosition(position.first + x, position.second + y);
     }
     break;
+    case 3:
+    {
+        CursorPosition position = cursorPositions["Sparta"];
+        SetCursorPosition(position.first + x, position.second + y);
+        
+    }
     default:
         return;
 
