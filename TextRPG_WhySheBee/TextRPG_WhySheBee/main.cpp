@@ -18,7 +18,7 @@ int main()
     if (num == 1)
     {
         cout << "게임을 시작합니다. " << endl;
-        gameManager.StartGame(); // 게임 시작 - 현재 무한 루프
+        gameManager.StartGame();
     }
     else
     {
