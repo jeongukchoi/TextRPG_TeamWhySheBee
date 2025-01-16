@@ -10,13 +10,13 @@ UniquePotion::UniquePotion() : ItemName("유니크 비약"), Type(CONSUMABLES), 
 		// 워리어의 경우
 	case WARRIOR:
 		TargetStat = STR;
-		StatAmount = 15;
+		StatAmount = 1;
 		break;
 
 		// 메이지의 경우
 	case MAGE:
 		TargetStat = INTELLGENCE;
-		StatAmount = 10;
+		StatAmount = 2;
 		break;
 
 

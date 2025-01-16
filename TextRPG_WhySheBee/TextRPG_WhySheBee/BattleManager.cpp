@@ -148,7 +148,6 @@ void BattleManager::PlayerAttack()
 
 	Texts.push_back("[" + Monster->GetName() + "]의 체력이 [" + to_string(HitDamage) + "] 감소했습니다.");
 	
-	DisplayMonsterStats();	
 }
 
 // 몬스터 공격 메서드
@@ -179,7 +178,6 @@ void BattleManager::MonsterAttack()
 		Player->TakeDamage(Monster->GetDamage());
 		Texts.push_back("[" + Player->GetName() + "]의 체력이 [" + to_string(Monster->GetDamage()) + "] 감소했습니다.");
 	}
-	Player->DisplayStatus();;
 }
 
 // 플레이어 사망 확인 메서드
@@ -263,8 +261,10 @@ void BattleManager::PrintBattle()
 		Console.SetCursorPosition(10, i);
 		cout << Texts[TextIndex++] << endl;
 	}
-	Sleep(2000);
 
+	Sleep(2000);
+	Player->DisplayStatus();;
+	DisplayMonsterStats();
 	//마지막 인덱스 설정
 	CurrentTextYposition = Texts.size();
 }
