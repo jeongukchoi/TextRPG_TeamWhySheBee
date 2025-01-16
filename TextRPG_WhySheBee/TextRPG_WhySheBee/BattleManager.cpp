@@ -35,6 +35,7 @@ bool BattleManager::Battle()
 
 	// 스텟 출력
 	Console.DrawVs();
+	Console.DrawSparta();
 	DisplayMonsterStats();
 
 	// 전투 시작
