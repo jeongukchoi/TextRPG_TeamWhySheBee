@@ -18,7 +18,6 @@ private:
 	int PlayerLevel;
 	int PlayerAttackDelay;
 	int CurrentAttackDelay;
-	int CurrentTextYposition = 0;
 	int NextTextYPosition = 0;
 	vector<int> MonsterExp{ 5,10,15,15,15,20,20,20,20 };
 	vector<string> Texts;

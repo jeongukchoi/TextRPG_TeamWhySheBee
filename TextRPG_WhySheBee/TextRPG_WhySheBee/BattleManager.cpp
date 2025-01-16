@@ -15,7 +15,9 @@ bool BattleManager::Battle()
 
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
-	
+	// 스텟 출력
+	Console.DrawVs();
+	DisplayMonsterStats();
 	if (Player == nullptr || Monster == nullptr)
 	{
 		cout << "전투 준비 오류 발생";
@@ -33,9 +35,7 @@ bool BattleManager::Battle()
 	Sleep(1000);
 	Console.ClearScreen();
 
-	// 스텟 출력
-	Console.DrawVs();
-	DisplayMonsterStats();
+	
 
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
@@ -71,7 +71,6 @@ bool BattleManager::Battle()
 			Monster.reset();
 
 			Battle_Turn = 1;
-			CurrentTextYposition = 0;
 			
 			// 승리 반환 레벨10 이상인 경우는 엔딩 조건 맞게 변경
 			return PlayerLevel < 10;
@@ -253,20 +252,16 @@ void BattleManager::PrintBattle()
 {
 	Console.ClearScreen();
 
-	int TextIndex = CurrentTextYposition;
-	int TextSize = Texts.size() - TextIndex;
 	//현재 텍스트인덱스와 마지막 텍스트현재 있는 마지막 인덱스 0 -> 
-	for (int i = 0; i < TextSize; i++)
+	for (int i = 0; i < Texts.size(); i++)
 	{
-		Console.SetCursorPosition(10, i);
-		cout << Texts[TextIndex++] << endl;
+		Console.SetCursorPosition(0, i);
+		cout << Texts[i] << endl;
 	}
-
+	Texts.clear(); // 굳이 인덱스 위치 변경보다 삭제하는것도 괜찮아보임.
 	Sleep(2000);
 	Player->DisplayStatus();;
 	DisplayMonsterStats();
-	//마지막 인덱스 설정
-	CurrentTextYposition = Texts.size();
 }
 
 void BattleManager::DisplayMonsterStats()
