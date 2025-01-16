@@ -207,7 +207,6 @@ string Inventory::UseConsumables()
 		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
 		{
 			string ItemString = item->GetName() + " 아이템을 사용하였습니다.";
-			// string ItemString = item->GetName() + " 아이템을 사용하였습니다. " + item->GetTargetStatString() + " +" + to_string(item->GetStatAmount());
 			UseItem(_ItemManager.GetItem(item->GetID()));
 			return ItemString;
 		}
@@ -264,7 +263,6 @@ void Inventory::AutoEquip(Item* item)
 		{
 			if (EquippedWeapon->GetStatAmount() < item->GetStatAmount())
 			{
-				//cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 				UseItem(item);
 			}
 		}
@@ -273,14 +271,12 @@ void Inventory::AutoEquip(Item* item)
 	case ARMOR:
 		if (EquippedArmor == nullptr)
 		{
-			//cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 			UseItem(item);
 		}
 		else
 		{
 			if (EquippedArmor->GetStatAmount() < item->GetStatAmount())
 			{
-				//cout << endl << item->GetName() << " 아이템을 자동으로 장착합니다.\n";
 				UseItem(item);
 			}
 		}

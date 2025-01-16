@@ -17,7 +17,7 @@ private:
 
 	// 인벤토리의 싱글톤 인스턴스
 	static Inventory* Instance;
-	// 프라이빗 생성자 & 소멸자
+	// 프라이빗 생성자
 	Inventory();
 	
 	// 복사 및 대입 생성자 삭제
