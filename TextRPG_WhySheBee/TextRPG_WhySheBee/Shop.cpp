@@ -92,7 +92,6 @@ void Shop::BuyItems()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1500);
 			return;
 		}
 		else if (Choice >= 0 && Choice < ItemDB.size())
@@ -108,10 +107,11 @@ void Shop::BuyItems()
 			cout << endl;
 			// 골드 차감 후 인벤토리에 추가
 			character->IncreaseStat(GOLD, ItemDB[Choice]->GetPrice() * -1);
-			inventory->AddItem(ItemDB[Choice]->GetID());
+			inventory->AddItem(ItemDB[Choice]->GetID()); // AddItem 에서 Sleep(1000) 호출
 		}
 		else
 		{
+			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1500);
 		}
@@ -142,7 +142,6 @@ void Shop::SellItems()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1500);
 			return;
 		}
 		else if (choice >= 0 && choice < inventory->GetInventory().size())
@@ -160,6 +159,7 @@ void Shop::SellItems()
 		}
 		else
 		{
+			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1500);
 		}
@@ -179,7 +179,8 @@ void Shop::DrinkTea()
 		Sleep(1500);
 	}
 	Console.SetCursorPosition(WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 + OFFSET, WINDOW_HEIGHT / 2 - CHOICE_HEIGHT / 2 + OFFSET + 4);
-	cout << "(몸에 따뜻한 기운이 퍼진다. 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)";
+	string AFTER_TEA = "(몸에 따뜻한 기운이 퍼진다. \n 주인과 이런저런 이야기를 나누며 마음이 편안해졌다.)";
+	Console.DisplayDialogue(AFTER_TEA, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 }
 
 void Shop::UpgradeEquipment()
@@ -206,12 +207,12 @@ void Shop::UpgradeEquipment()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1500);
 			return;
 		}
 
 		if (i < 0 || i >= _Inventory.size())
 		{
+			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1500);
 			continue;
@@ -220,6 +221,7 @@ void Shop::UpgradeEquipment()
 		// 장비 아닌 아이템
 		if (_Inventory[i]->GetType() != EQUIPMENT)
 		{
+			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(NOT_EQUIPMENT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
 			Sleep(1500);
 			continue;
@@ -312,7 +314,6 @@ void Shop::UpgradeEquipment()
 		{
 			Console.ClearConsoleSizeScreen();
 			Console.DisplayDialogue(RETURN_TO_SHOP, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-			Sleep(1500);
 			return;
 		}
 
