@@ -49,7 +49,6 @@ void UniquePotion::Use()
 {
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	character->IncreaseStat(TargetStat, StatAmount);
-	cout << GetTargetStatString() << "이 " << StatAmount << " 증가하였습니다.\n";
 }
 
 string UniquePotion::GetItemInfoString()
