@@ -79,8 +79,7 @@ void Shop::BuyItems()
 	PlayerCharacter* character = PlayerCharacter::GetPlayer();
 	
 	// 게임 내 존재하는 아이템 리스트
-	ItemManager IM;
-	const vector<Item*>& ItemDB = IM.GetItemsList();
+	const vector<Item*>& ItemDB = _ItemManager.GetItemsList();
 
 	while (true)
 	{
@@ -88,7 +87,7 @@ void Shop::BuyItems()
 		const string BUY_MENU = "[아이템 구매]\n(현재 소지 골드 : " + to_string(character->GetGold()) + ")\n0 : 상점 메뉴로 돌아가기";
 		Console.ClearConsoleSizeScreen();
 		Console.DisplayDialogue(BUY_MENU, 0, 0, WINDOW_WIDTH, MENU_NAME_HEIGHT, OFFSET, 0);
-		IM.ShowItemDB();
+		_ItemManager.ShowItemDB();
 
 		// 커서 이동하여 입력 받음
 		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y-1);
