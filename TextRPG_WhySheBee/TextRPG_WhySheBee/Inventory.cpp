@@ -94,7 +94,7 @@ void Inventory::RemoveItem(Item* item, int index)
 {	
 	if (item == nullptr)
 	{
-		throw runtime_error("\n---------인벤토리에서 아이템을 제거하는 중 인덱스 오류 발생\n");
+		throw runtime_error("\n---------인벤토리에서 아이템을 제거하는 중 item nullptr 발생\n");
 	}
 
 	ItemID ID = item->GetID();
@@ -113,6 +113,7 @@ void Inventory::RemoveItem(Item* item, int index)
 					return i->GetID() == ID;
 				});
 				auto CountPos = InventoryCount.find(ID);
+				delete item;
 				_Inventory.erase(InventoryPos);
 				InventoryCount.erase(CountPos);
 			}
@@ -148,6 +149,10 @@ void Inventory::RemoveItem(Item* item, int index)
 
 void Inventory::UseItem(Item* item)
 {
+	if (item == nullptr)
+	{
+		throw runtime_error("\n---------인벤토리에서 아이템을 사용하는 중 item 이 nullptr\n");
+	}
 	ItemID ID = item->GetID();
 	ItemType Type = item->GetType();
 	string Name = item->GetName();
@@ -206,7 +211,7 @@ string Inventory::UseConsumables()
 		if (item->GetType() == CONSUMABLES && InventoryCount[item->GetID()] > 0)
 		{
 			string ItemString = item->GetName() + " 아이템을 사용하였습니다.";
-			UseItem(_ItemManager.GetItem(item->GetID()));
+			UseItem(item);
 			return ItemString;
 		}
 	}
