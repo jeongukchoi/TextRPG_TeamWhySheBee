@@ -156,6 +156,16 @@ void BattleManager::PlayerAttack()
 	
 }
 
+// 플레이어 데미지 배율 적용 메서드
+float BattleManager::AttackMinaMax(float min, float max)
+{
+	random_device Rd; // 시드용 랜덤 장치
+	mt19937 Gen(Rd()); //  Mersenne Twister dpswls
+	uniform_real_distribution<float> Dis(0.7f, 1.0); //0.7부터 1.0까지 균일 하게
+	float randomValue = Dis(Gen);
+	return randomValue;
+}
+
 // 몬스터 공격 메서드
 void BattleManager::MonsterAttack()
 {
@@ -245,16 +255,7 @@ void BattleManager::RandomUseItem()
 	}
 }
 
-float BattleManager::AttackMinaMax(float min , float max)
-{
-	random_device Rd; // 시드용 랜덤 장치
-	mt19937 Gen(Rd()); //  Mersenne Twister dpswls
-	uniform_real_distribution<float> Dis(0.7f, 1.0); //0.7부터 1.0까지 균일 하게
-	float randomValue = Dis(Gen);
-	return randomValue;
-}
-
-
+// 전투 로그 출력 메서드
 void BattleManager::PrintBattle()
 {
 	Console.ClearScreen();
@@ -271,6 +272,7 @@ void BattleManager::PrintBattle()
 	DisplayMonsterStats();
 }
 
+// 몬스터 스텟 출력 메서드
 void BattleManager::DisplayMonsterStats()
 {
 	Console.DrawRectangle(49, 19, 20, 8);
@@ -287,13 +289,13 @@ void BattleManager::DisplayMonsterStats()
 	Console.SetCursorPosition(0, 0);
 }
 
+// 텍스트 체크 메서드
 void BattleManager::CheckAndGetString(string txt)
 {
 		if (txt != "")
 		{
 			Texts.push_back(txt);
 		}
-		
 }
 
 

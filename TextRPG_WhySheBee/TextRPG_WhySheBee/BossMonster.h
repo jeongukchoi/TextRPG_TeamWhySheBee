@@ -15,8 +15,8 @@ public:
 		MaxHP *= 5;
 		CurrentHP = MaxHP;
 		
-		// 기본 몬스터의 공격력 30 추가
-		Damage += static_cast<int>(Damage * 1.5);;
+		// 기본 몬스터의 공격력의 1.5배 데미지 적용
+		Damage += static_cast<int>(Damage * 1.5);
 
 		// 공격 속도
 		Speed = 6;

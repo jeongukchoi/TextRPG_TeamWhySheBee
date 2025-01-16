@@ -38,6 +38,8 @@ private:
 
 	// 플레이어 공격 메서드
 	void PlayerAttack();
+	// 공격 최소 데미지 최고 데미지 변경
+	float AttackMinaMax(float min, float max);
 	// 몬스터 공격 메서드
 	void MonsterAttack();
 
@@ -52,8 +54,8 @@ private:
 	void GetRandomItem();
 	// 확률적으로 아이템 사용 메서드
 	void RandomUseItem();
-	// 공격 최소 데미지 최고 데미지 변경
-	float AttackMinaMax(float min, float max);
+
+
 	// 전투 출력
 	void PrintBattle();
 	// 몬스터 스텟 출력 메서드
