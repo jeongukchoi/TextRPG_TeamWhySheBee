@@ -29,15 +29,41 @@ void GameManager::StartGame()
 
         console->ClearScreen();
 
-        cout << "상점을 방문하시겠습니까? (Y/N): ";
-        char choice;
+        cout << "상점을 방문하시겠습니까? (Y 입력...): ";
+        string choice;
         cin >> choice;
 
-        if (choice == 'Y' || choice == 'y')
+        /*
+        if (choice == "NBC")
+        {
+            PlayerCharacter* player = PlayerCharacter::GetInstance().get();
+
+            for (int i = player->GetLevel(); i < 10; ++i)
+            {
+                int experienceToNextLevel = i * 10 - player->GetExperience(); // 다음 레벨까지 필요한 경험치
+                player->IncreaseStat(EXP, experienceToNextLevel); // 필요한 경험치를 추가
+            }
+
+            player->IncreaseStat(MAXHP, 999 - player->GetMaxHealth()); // 최대 체력을 999로 설정
+            player->IncreaseStat(HP, 999 - player->GetHealth()); // 현재 체력을 999로 설정
+            player->IncreaseStat(ATTACK, 999 - player->GetAttack()); // 공격력을 999로 설정
+
+            /*
+            cout << "==========================================" << endl;
+            cout << "Enable CHEAT" << endl;
+            cout << "==========================================" << endl;
+        }
+        */
+
+        if (choice[0] == 'Y' || choice[0] == 'y')
         {
             VisitShop(shop);
         }
 
+        else
+        {
+            continue;
+        }
 
         if (PlayerCharacter::GetInstance()->GetLevel() >= 10)
         {

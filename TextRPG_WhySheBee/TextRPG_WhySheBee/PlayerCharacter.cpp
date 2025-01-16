@@ -63,6 +63,8 @@ void PlayerCharacter::DisplayStatus() const
 
 void PlayerCharacter::IncreaseStat(STATUS stat, int amount)
 {
+
+
     switch (stat)
     {
     case HP:

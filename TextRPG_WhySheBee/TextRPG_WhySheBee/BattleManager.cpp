@@ -17,6 +17,7 @@ bool BattleManager::Battle()
 	CreateMonster();
 	// 스텟 출력
 	Console.DrawVs();
+	Console.DrawSparta();
 	DisplayMonsterStats();
 	if (Player == nullptr || Monster == nullptr)
 	{
@@ -34,8 +35,6 @@ bool BattleManager::Battle()
 	
 	Sleep(1000);
 	Console.ClearScreen();
-
-	
 
 	// 전투 시작
 	while (!IsPlayerDead() && !IsMonsterDead())
