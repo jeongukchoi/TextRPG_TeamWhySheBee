@@ -38,7 +38,7 @@ void Inventory::AddItem(ItemID ID)
 	string AddItemString = "._*^아이템 획득^*_.\n" + ItemFromDB->GetItemInfoString();
 	Console.ClearConsoleSizeScreen();
 	Console.DisplayDialogue(AddItemString, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
-
+	Sleep(1000);
 	// 추가할 아이템이 소모품인 경우
 	if (Type == CONSUMABLES)
 	{
@@ -70,7 +70,6 @@ void Inventory::AddItem(ItemID ID)
 	// 추가할 아이템이 장비인 경우
 	else if (Type == EQUIPMENT)
 	{
-		Sleep(1000);
 		switch (ID)
 		{
 		case SWORD:
@@ -88,8 +87,6 @@ void Inventory::AddItem(ItemID ID)
 			break;
 		}
 	}
-
-	Sleep(1000);
 	Console.ClearConsoleSizeScreen();
 }
 
@@ -147,8 +144,6 @@ void Inventory::RemoveItem(Item* item, int index)
 	}
 	delete item;
 	_Inventory.erase(_Inventory.begin() + index);
-
-	//Sleep(1000);
 }
 
 void Inventory::UseItem(Item* item)
@@ -193,7 +188,6 @@ void Inventory::UseItem(Item* item)
 		string EquipItemString = "._*oO@-아이템 장착-@Oo*_.\n" + equipment->GetItemInfoString();
 		Console.DisplayDialogue(EquipItemString, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
 	}
-
 	Sleep(1000);
 }
 
@@ -297,7 +291,7 @@ void Inventory::ShowInven()
 {
 	if (_Inventory.empty())
 	{
-		string InventoryEmpty = "*************인벤토리가 비어 있습니다.*************\n이전 메뉴로 돌아갑니다.";
+		string InventoryEmpty = "*************인벤토리가 비어 있습니다.*************";
 		Console.DisplayDialogue(InventoryEmpty, 0, Shop::WINDOW_HEIGHT - Shop::DIALOG_HEIGHT, Shop::WINDOW_WIDTH, Shop::DIALOG_HEIGHT, Shop::OFFSET, Shop::OFFSET);
 		Sleep(1000);
 		return;

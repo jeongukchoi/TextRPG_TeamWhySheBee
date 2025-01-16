@@ -9,7 +9,7 @@ int MagicArrow::Activate(int attackPower, int stat)
 
 	int damage = 0;
 
-	damage = stat * 30;
+	damage = stat * 20;
 	return damage;
 }
 

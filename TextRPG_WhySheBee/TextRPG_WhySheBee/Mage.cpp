@@ -3,8 +3,8 @@
 Mage::Mage(const string& name) :PlayerCharacter(name), _int(1)
 {
 	_level = 1;
-	_health = 150;
-	_maxHealth = 150;
+	_health = 170;
+	_maxHealth = 170;
 	_attack = 30;
 	_experience = 0;
 	_gold = 0;
