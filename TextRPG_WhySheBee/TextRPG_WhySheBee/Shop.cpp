@@ -218,6 +218,7 @@ void Shop::UpgradeEquipment()
 		cout << "번호를 입력하세요: ";
 		int i;
 		if (!(cin >> i)) {
+			i = -1;
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
