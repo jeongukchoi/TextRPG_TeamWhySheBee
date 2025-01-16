@@ -3,6 +3,11 @@
 // 턴제 전투 메서드
 bool BattleManager::Battle() 
 {
+	if (Player == nullptr)
+	{
+		cout << "전투 준비 오류 발생";
+		return false;
+	}
 	ColorPrinter printer;
 	ConsoleManager Console;
 
@@ -15,15 +20,18 @@ bool BattleManager::Battle()
 
 	// 플레이어 레벨에 기반해서 몬스터 생성
 	CreateMonster();
+
+	if (Monster == nullptr)
+	{
+		cout << "몬스터 생성 오류 발생";
+		return false;
+	}
+
 	// 스텟 출력
 	Console.DrawVs();
 	Console.DrawSparta();
 	DisplayMonsterStats();
-	if (Player == nullptr || Monster == nullptr)
-	{
-		cout << "전투 준비 오류 발생";
-		return false;
-	}
+	
 
 	//전투 턴
 	int Battle_Turn = 1;	
