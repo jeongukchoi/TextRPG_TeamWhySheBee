@@ -113,6 +113,7 @@ void Inventory::RemoveItem(Item* item, int index)
 					return i->GetID() == ID;
 				});
 				auto CountPos = InventoryCount.find(ID);
+				delete item;
 				_Inventory.erase(InventoryPos);
 				InventoryCount.erase(CountPos);
 			}
