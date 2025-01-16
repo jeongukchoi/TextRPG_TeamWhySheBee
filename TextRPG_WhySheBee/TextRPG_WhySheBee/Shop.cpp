@@ -23,7 +23,11 @@ void Shop::StartShop()
 		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y - 1);
 		cout << "번호를 입력하세요: ";
 		int Choice;
-		cin >> Choice;
+		if (!(cin >> Choice)) {
+			Choice = -1;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 		switch (Choice)
 		{
 		case 1:
@@ -57,6 +61,11 @@ void Shop::StartShop()
 			Sleep(1500);
 			Console.ClearConsoleSizeScreen();
 			return;
+
+		default:
+			Console.ClearConsoleSizeScreen();
+			Console.DisplayDialogue(NOT_VALID_INPUT, 0, WINDOW_HEIGHT - DIALOG_HEIGHT, WINDOW_WIDTH, DIALOG_HEIGHT, OFFSET, OFFSET);
+			break;
 		}
 		Sleep(1500);
 		Console.ClearConsoleSizeScreen();
@@ -85,7 +94,11 @@ void Shop::BuyItems()
 		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y-1);
 		cout << "번호를 입력하세요: ";
 		int Choice;
-		cin >> Choice;
+		if (!(cin >> Choice)) {
+			Choice = -1;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 		Choice--;
 
 		if (Choice == -1)
@@ -135,7 +148,11 @@ void Shop::SellItems()
 		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT + ItemManager::ITEM_HEIGHT * (inventory->GetInventory().size() / 5 + 1) + 1);
 		cout << "번호를 입력하세요: ";
 		int choice;
-		cin >> choice;
+		if (!(cin >> choice)) {
+			choice = -1;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 		choice--;
 
 		if (choice == -1)
@@ -200,7 +217,10 @@ void Shop::UpgradeEquipment()
 		Console.SetCursorPosition(INPUT_CURSOR_X, MENU_NAME_HEIGHT + ItemManager::ITEM_HEIGHT * (_Inventory.size() / 5 + 1) + 1);
 		cout << "번호를 입력하세요: ";
 		int i;
-		cin >> i;
+		if (!(cin >> i)) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 		i--;
 
 		if (i == -1)
@@ -263,7 +283,11 @@ void Shop::UpgradeEquipment()
 		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y - 1);
 		cout << "번호를 입력하세요: ";
 		int Choice;
-		cin >> Choice;
+		if (!(cin >> Choice)) {
+			Choice = -1;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 
 		// 강화 진행
 		if (Choice == 1)
