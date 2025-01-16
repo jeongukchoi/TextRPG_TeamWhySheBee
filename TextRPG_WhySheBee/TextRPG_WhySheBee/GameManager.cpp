@@ -107,27 +107,36 @@ void GameManager::CreateCharacter()
             cout << "이름을 다시 작성해주세요." << endl;
         }
     }*/
-   
 
+    _isfirst = true;
     cout << "직업을 선택하세요: " << endl;
-    cout << "1.전사 2.마법사 " << endl;
-    cin >> playerJobNum;
+   
+    while (true)
+    {
+        cout << "1.전사 2.마법사 " << endl;
+        cin >> playerJobNum;
 
-    switch (playerJobNum)
-    {
-    case 1:
-    {
-        unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, WARRIOR);
+        switch (playerJobNum)
+        {
+            case 1:
+            {
+                unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, WARRIOR);
+            }
+            break;
+            case 2:
+            {
+                unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, MAGE);
+            }
+            break;
+            default:
+            {
+                cout << "선택하신직업이 없습니다. 다시 선택해주세요 " << endl;
+            }
+            continue;
+        }
+        return ; 
     }
-    break;
-    case 2:
-    {
-        unique_ptr<PlayerCharacter>& player = PlayerCharacter::GetInstance(playerName, MAGE);
-    }
-    break;
-    default:
-        cout << "선택하신직업이 없습니다. 다시 선택해주세요 " << endl;
-    }
+   
 }
 
 void GameManager::DisplayInventory()
