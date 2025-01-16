@@ -25,6 +25,8 @@ int main()
         return 0;
     }
     
+    delete Inventory::GetInstance();
+
     return 0; // 프로그램 종료
 }
 

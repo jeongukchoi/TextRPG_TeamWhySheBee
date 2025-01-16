@@ -19,7 +19,7 @@ private:
 	static Inventory* Instance;
 	// 프라이빗 생성자 & 소멸자
 	Inventory();
-	~Inventory();
+	
 	// 복사 및 대입 생성자 삭제
 	Inventory(const Inventory&) = delete;
 	Inventory& operator=(const Inventory&) = delete;
@@ -28,6 +28,7 @@ private:
 	ConsoleManager Console;
 
 public:
+	~Inventory();
 	static Inventory* GetInstance();
 	const vector<Item*>& GetInventory();
 	Item* GetEquippedWeapon() { return EquippedWeapon; }

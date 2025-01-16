@@ -12,6 +12,7 @@ Inventory::~Inventory()
 {
 	for (Item* item : _Inventory)
 	{
+		cout << "\n인벤토리 delete\n";
 		delete item;
 	}
 }
