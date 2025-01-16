@@ -18,6 +18,7 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include <algorithm>>
 #include <iomanip>
 #include <random>
 #include <cstdlib>
@@ -26,7 +27,7 @@
 #include <unordered_map>
 #include <windows.h>
 #include <sstream>
-
+#include <limits>
 
 using namespace std;
 

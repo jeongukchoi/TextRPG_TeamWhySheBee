@@ -1,5 +1,4 @@
 #include "Framework.h"
-#include "GameManager.h"
 
 using namespace std;
 
@@ -33,8 +32,8 @@ void GameManager::StartGame()
         string choice;
         cin >> choice;
 
-        /*
-        if (choice == "NBC")
+        
+        if (choice == "NBC" || choice == "nbc")
         {
             PlayerCharacter* player = PlayerCharacter::GetInstance().get();
 
@@ -48,12 +47,12 @@ void GameManager::StartGame()
             player->IncreaseStat(HP, 999 - player->GetHealth()); // 현재 체력을 999로 설정
             player->IncreaseStat(ATTACK, 999 - player->GetAttack()); // 공격력을 999로 설정
 
-            /*
+            
             cout << "==========================================" << endl;
             cout << "Enable CHEAT" << endl;
             cout << "==========================================" << endl;
         }
-        */
+        
 
         if (choice[0] == 'Y' || choice[0] == 'y')
         {
@@ -77,10 +76,38 @@ void GameManager::CreateCharacter()
 {
     string playerName;
     int playerJobNum;
+    bool _isfirst = true;
 
     cout << "플레이어 캐릭터의 이름을 입력하세요: ";
-    cin >> playerName;
-    //getline(cin, playerName); // 캐릭터 이름 입력 받기
+    do
+    {
+        getline(cin, playerName);
+
+        if (playerName.empty() || playerName.find_first_not_of(' ') == string::npos)
+        {
+            if (!_isfirst)
+            {
+                cout << "이름을 다시 작성해주세요." << endl;
+            }
+        }
+        _isfirst = false;
+    } while (playerName.empty() || playerName.find_first_not_of(' ') == string::npos);
+
+   /* while (true)
+    {
+        cout << "플레이어 캐릭터의 이름을 입력하세요: ";
+        cin >> playerName;
+
+        if (!playerName.empty() && playerName.find_first_not_of(' ') != string::npos)
+        {
+            break; 
+        }
+        else
+        {
+            cout << "이름을 다시 작성해주세요." << endl;
+        }
+    }*/
+   
 
     cout << "직업을 선택하세요: " << endl;
     cout << "1.전사 2.마법사 " << endl;
