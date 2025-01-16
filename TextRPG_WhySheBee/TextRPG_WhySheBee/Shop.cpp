@@ -277,7 +277,7 @@ void Shop::UpgradeEquipment()
 			+ "\n--> 강화 비용 : " + to_string(UpgradeCost) + " 골드 (현재 소지 골드: " + to_string(character->GetGold()) + ")"
 			+ "\n1: 강화하기 / 0: 상점 메뉴로 돌아가기";
 		Console.ClearConsoleSizeScreen();
-		Console.DisplayDialogue(UPGRADE_CONFIRM, WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - (CHOICE_HEIGHT + 2) / 2 - 1, CHOICE_WIDTH, CHOICE_HEIGHT + 2, OFFSET, 0);
+		Console.DisplayDialogue(UPGRADE_CONFIRM, WINDOW_WIDTH / 2 - CHOICE_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - (CHOICE_HEIGHT + 2) / 2 - 3, CHOICE_WIDTH, CHOICE_HEIGHT + 4, OFFSET, 0);
 
 		// 커서 이동하여 입력 받기
 		Console.SetCursorPosition(INPUT_CURSOR_X, INPUT_CURSOR_Y - 1);
