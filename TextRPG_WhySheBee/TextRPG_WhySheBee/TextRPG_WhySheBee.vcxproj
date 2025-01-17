@@ -19,12 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Armor.cpp" />
+    <ClCompile Include="ArmorUpgrade.cpp" />
     <ClCompile Include="AttackBoost.cpp" />
     <ClCompile Include="BaseMonster.cpp" />
-    <ClCompile Include="BattleManager_ver1.cpp" />
-    <ClCompile Include="BattleManager_ver2.cpp" />
+    <ClCompile Include="BattleManager.cpp" />
+    <ClCompile Include="BossMonster.cpp" />
+    <ClCompile Include="ColorPrinter.cpp" />
+    <ClCompile Include="ConsoleManager.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="EnragedState.cpp" />
+    <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="EquipmentDecorator.cpp" />
     <ClCompile Include="Framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -32,33 +39,65 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="HealthPotion.cpp" />
-    <ClCompile Include="IBattleManager.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="LastStrike.cpp" />
+    <ClCompile Include="Mage.cpp" />
+    <ClCompile Include="MagicArrow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="NormalState.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="PowerStrike.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="SwordUpgrade.cpp" />
+    <ClCompile Include="Troll.cpp" />
+    <ClCompile Include="UniquePotion.cpp" />
+    <ClCompile Include="Warrior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Armor.h" />
+    <ClInclude Include="ArmorUpgrade.h" />
     <ClInclude Include="AttackBoost.h" />
+    <ClInclude Include="ColorPrinter.h" />
+    <ClInclude Include="ConsoleManager.h" />
+    <ClInclude Include="LastStrike.h" />
+    <ClInclude Include="Mage.h" />
+    <ClInclude Include="Meteor.h" />
+    <ClInclude Include="PowerStrike.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SwordUpgrade.h" />
     <ClInclude Include="BaseMonster.h" />
-    <ClInclude Include="BattleManager_ver1.h" />
-    <ClInclude Include="BattleManager_ver2.h" />
+    <ClInclude Include="BattleManager.h" />
+    <ClInclude Include="BossMonster.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="EnragedState.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="Equipment.h" />
+    <ClInclude Include="EquipmentDecorator.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="HealthPotion.h" />
-    <ClInclude Include="IBattleManager.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="NormalState.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="PlayerCharacter.h" />
+    <ClInclude Include="Slime.h" />
+    <ClInclude Include="Sword.h" />
+    <ClInclude Include="Troll.h" />
+    <ClInclude Include="UniquePotion.h" />
+    <ClInclude Include="Warrior.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="MagicArrow.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -148,6 +187,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Framework.h</PrecompiledHeaderFile>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

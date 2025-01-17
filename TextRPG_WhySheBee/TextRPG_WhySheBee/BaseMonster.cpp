@@ -3,13 +3,16 @@
 
 BaseMonster::BaseMonster(const string& name, const int& PlayerLevel)
 {
+	Name = name;
+	IsDead = false;
+	Speed = 6;
+	Damage = 10;
+	MaxHP = 100;
+	CurrentState = new NormalState(); //상태 객체 동적 생성
+
 	Calculate_HPandDamage(PlayerLevel);
 
-	Name = name;
 	CurrentHP = MaxHP;
-	IsDead = false;
-
-	CurrentState = new NormalState(); //상태 객체 동적 생성
 }
 
 BaseMonster::~BaseMonster()
@@ -20,29 +23,31 @@ BaseMonster::~BaseMonster()
 // MaxHP와 Damage 초기화 메서드
 void BaseMonster::Calculate_HPandDamage(const int& PlayerLevel)
 {
-	//srand(time(0)); 추후 메인함수에서 한 번만 사용
-	int HP_Multiplier = (rand() % 11) + 20;
-	int Damage_Multiplier = (rand() % 6) + 5;
+	int HP_Multiplier = (rand() % 51) + 50;
+	int Damage_Multiplier = (rand() % 5) + 10;
 
-	MaxHP = PlayerLevel * HP_Multiplier;
-	Damage = PlayerLevel * Damage_Multiplier;
+	MaxHP += PlayerLevel * HP_Multiplier;
+	Damage += PlayerLevel * Damage_Multiplier;
 }
 
 // 데미지 적용 메서드
-void BaseMonster::TakeDamage(const int& DamagedAmount)
+string BaseMonster::TakeDamaged(const int& DamagedAmount)
 {
 	CurrentHP -= DamagedAmount;
-	if (CurrentHP < 0)
+	if (CurrentHP <= 0)
 	{
 		CurrentHP = 0;
 		IsDead = true;
-		return;
+		return "";
 	}
 
-	if (CurrentHP <= MaxHP / 2)
+	if (CurrentHP <= MaxHP / 2 && dynamic_cast<NormalState*>(CurrentState) != nullptr	)
 	{
 		SetState(new EnragedState());
+
+		return CurrentState->HandleState(this);
 	}
+	return "";
 }
 
 // 몬스터 상태 변경 메서드
@@ -54,3 +59,4 @@ void BaseMonster::SetState(IState* NewState)
 	}
 	CurrentState = NewState;
 }
+

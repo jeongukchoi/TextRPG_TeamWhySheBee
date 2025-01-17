@@ -1,5 +1,6 @@
 #pragma once
 class EnragedState : public IState
 {
-	void HandleState(BaseMonster* Monster) override;
+	string HandleState(BaseMonster* Monster) override;
 };
+

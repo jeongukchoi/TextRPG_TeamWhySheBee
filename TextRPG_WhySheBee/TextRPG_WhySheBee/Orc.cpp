@@ -1,8 +1,9 @@
 #include "Framework.h"
-#include "Orc.h"
 
-void Orc::UseSkill()
+string Orc::EnragedSkill()
 {
-	cout << GetName() << "." << endl;
 	CurrentHP += (MaxHP - CurrentHP) / 2;
+	return Name + "가 잃은 체력의 절반을 회복합니다!";
 }
+
+

@@ -7,13 +7,11 @@ public:
     GameManager();
     void StartGame();
     void CreateCharacter();
-    void GenerateMonster();
     void Battle();
     void DisplayInventory();
-    void VisitShop();
+    void VisitShop(Shop* shop);
     void ShowEnding();
-
 private:
-    bool bossCleared;
-    // bool over;
+    bool over;
 };
+

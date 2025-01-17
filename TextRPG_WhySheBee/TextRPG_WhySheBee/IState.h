@@ -6,6 +6,7 @@ class IState
 {
 public:
 	virtual ~IState() = default;
-	virtual void HandleState(BaseMonster* Monster) = 0;
+	virtual string HandleState(BaseMonster* Monster) = 0;
 };
+
 

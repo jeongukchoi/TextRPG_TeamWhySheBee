@@ -2,6 +2,7 @@
 class NormalState : public IState
 {
 public:
-	void HandleState(BaseMonster* Monster) override;
+	string HandleState(BaseMonster* Monster) override;
 };
+
 
